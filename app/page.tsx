@@ -42,11 +42,6 @@ export default function Home() {
               Experience the ultimate in luxury travel. Professional chauffeurs, premium fleet, and exceptional service for every journey.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
-              <Link href="/booking">
-                <Button type="primary" size="large" className="bg-action h-14 px-8 text-lg font-bold border-none hover:bg-blue-600">
-                  Book Now
-                </Button>
-              </Link>
               <Link href="/services">
                 <Button size="large" ghost className="h-14 px-8 text-lg font-bold border-2 hover:text-primary hover:border-primary">
                   View Services

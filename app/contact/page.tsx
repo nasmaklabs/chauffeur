@@ -1,13 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Form, message } from 'antd';
+import { Form, App } from 'antd';
 import { MailOutlined, PhoneOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import Section from '@/components/ui/Section';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 
 const ContactPage = () => {
+    const { message } = App.useApp();
     const onFinish = (values: any) => {
         console.log('Success:', values);
         message.success('Message sent successfully!');

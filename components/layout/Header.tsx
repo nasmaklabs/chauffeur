@@ -15,6 +15,7 @@ const Header = () => {
         { key: 'fleet', label: <Link href="/fleet">Fleet</Link> },
         { key: 'about', label: <Link href="/about">About</Link> },
         { key: 'contact', label: <Link href="/contact">Contact</Link> },
+        { key: 'track', label: <Link href="/track-booking">Track Booking</Link> },
     ];
 
     return (

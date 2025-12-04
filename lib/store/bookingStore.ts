@@ -1,11 +1,19 @@
 import { createStore } from 'zustand-x';
 
+export interface Coordinates {
+    lat: number;
+    lng: number;
+}
+
 export interface BookingState {
     currentStep: number;
     tripDetails: {
         type: 'one-way' | 'round-trip' | 'hourly';
         pickupLocation: string;
         dropoffLocation: string;
+        pickupCoordinates?: Coordinates | null;
+        dropoffCoordinates?: Coordinates | null;
+        distance?: number | null;
         date: string;
         time: string;
         returnDate?: string;
@@ -13,6 +21,7 @@ export interface BookingState {
         duration?: string;
         passengers: number;
         luggage: number;
+        vehicleType?: string;
     };
     selectedVehicle: string | null;
     passengerDetails: {
@@ -58,7 +67,20 @@ const initialState: BookingState = {
 export const bookingStore = createStore<BookingState>(initialState, {
     name: 'booking',
     devtools: { enabled: true },
+    persist: {
+        enabled: true,
+        name: 'luxeride-booking',
+    },
 });
+
+// Reset function to clear the entire state
+export const resetBookingStore = () => {
+    bookingStore.set('currentStep', initialState.currentStep);
+    bookingStore.set('tripDetails', initialState.tripDetails);
+    bookingStore.set('selectedVehicle', initialState.selectedVehicle);
+    bookingStore.set('passengerDetails', initialState.passengerDetails);
+    bookingStore.set('extras', initialState.extras);
+};
 
 export const useBookingStore = bookingStore.useStore;
 export const useBookingTrackedStore = bookingStore.useTrackedStore;

@@ -68,6 +68,18 @@ body {
   font-family: var(--font-inter);
 }
 
+/* Reset link colors globally */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Footer specific link styling */
+footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
 @keyframes taxi-move {
   0%, 100% {
     transform: translateX(0) translateY(0);

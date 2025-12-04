@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Booking {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  bookingReference  String   @unique
+  
+  // Trip Details
+  tripType          String   // one-way, round-trip, hourly
+  pickupLocation    String
+  dropoffLocation   String?
+  pickupLat         Float?
+  pickupLng         Float?
+  dropoffLat        Float?
+  dropoffLng        Float?
+  distance          Float?
+  
+  // Date & Time
+  date              String
+  time              String
+  returnDate        String?
+  returnTime        String?
+  duration          String?
+  
+  // Vehicle
+  vehicleType       String?
+  selectedVehicle   String?
+  
+  // Passenger Details
+  passengers        Int      @default(1)
+  luggage           Int      @default(0)
+  firstName         String?
+  lastName          String?
+  email             String?
+  phone             String?
+  flightNumber      String?
+  notes             String?
+  
+  // Pricing
+  baseFare          Float?
+  distanceCharge    Float?
+  totalPrice        Float?
+  
+  // Booking Status
+  status            String   @default("pending") // pending, confirmed, completed, cancelled
+  
+  // Timestamps
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([email])
+  @@index([phone])
+  @@index([status])
+  @@index([createdAt])
+}

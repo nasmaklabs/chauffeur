@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ConfigProvider } from "antd";
+import { ConfigProvider, App } from "antd";
 import theme from "@/theme/themeConfig";
 import AntdRegistry from "@/lib/providers/AntdRegistry";
-import QueryProvider from "@/lib/providers/QueryProvider";
+import TRPCProvider from "@/lib/trpc/Provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,11 +13,11 @@ export const metadata: Metadata = {
   description: "Book luxury taxis and chauffeur services for airport transfers, corporate travel, and special events. Experience comfort and style with LuxeRide.",
 };
 
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import Loader from "@/components/ui/Loader";
 import InitialLoader from "@/components/ui/InitialLoader";
 import NavigationProvider from "@/lib/providers/NavigationProvider";
+import GoogleMapsProvider from "@/lib/providers/GoogleMapsProvider";
+import ConditionalLayout from "@/components/layout/ConditionalLayout";
 
 export default function RootLayout({
   children,
@@ -28,22 +28,22 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <InitialLoader />
-        <QueryProvider>
+        <TRPCProvider>
           <AntdRegistry>
             <ConfigProvider theme={theme}>
-              <NavigationProvider>
-                <Loader />
-                <div className="flex flex-col min-h-screen">
-                  <Header />
-                  <main className="flex-grow">
-                    {children}
-                  </main>
-                  <Footer />
-                </div>
-              </NavigationProvider>
+              <App>
+                <GoogleMapsProvider>
+                  <NavigationProvider>
+                    <Loader />
+                    <ConditionalLayout>
+                      {children}
+                    </ConditionalLayout>
+                  </NavigationProvider>
+                </GoogleMapsProvider>
+              </App>
             </ConfigProvider>
           </AntdRegistry>
-        </QueryProvider>
+        </TRPCProvider>
       </body>
     </html>
   );
