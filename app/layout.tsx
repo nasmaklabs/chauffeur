@@ -15,6 +15,9 @@ export const metadata: Metadata = {
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import Loader from "@/components/ui/Loader";
+import InitialLoader from "@/components/ui/InitialLoader";
+import NavigationProvider from "@/lib/providers/NavigationProvider";
 
 export default function RootLayout({
   children,
@@ -24,16 +27,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <InitialLoader />
         <QueryProvider>
           <AntdRegistry>
             <ConfigProvider theme={theme}>
-              <div className="flex flex-col min-h-screen">
-                <Header />
-                <main className="flex-grow">
-                  {children}
-                </main>
-                <Footer />
-              </div>
+              <NavigationProvider>
+                <Loader />
+                <div className="flex flex-col min-h-screen">
+                  <Header />
+                  <main className="flex-grow">
+                    {children}
+                  </main>
+                  <Footer />
+                </div>
+              </NavigationProvider>
             </ConfigProvider>
           </AntdRegistry>
         </QueryProvider>

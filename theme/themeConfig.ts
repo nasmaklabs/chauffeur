@@ -31,6 +31,11 @@ const theme: ThemeConfig = {
         Tabs: {
             itemSelectedColor: '#1A1A1A', // Fix contrast for active tab text
             itemHoverColor: '#1A1A1A',
+        },
+        Menu: {
+            itemBg: 'transparent',
+            subMenuItemBg: 'transparent',
+            itemBorderRadius: 0,
         }
     }
 };

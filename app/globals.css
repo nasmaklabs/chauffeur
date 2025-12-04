@@ -67,3 +67,36 @@ body {
   color: var(--foreground);
   font-family: var(--font-inter);
 }
+
+@keyframes taxi-move {
+  0%, 100% {
+    transform: translateX(0) translateY(0);
+  }
+  25% {
+    transform: translateX(10px) translateY(-5px);
+  }
+  50% {
+    transform: translateX(0) translateY(-10px);
+  }
+  75% {
+    transform: translateX(-10px) translateY(-5px);
+  }
+}
+
+@keyframes wheel-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.taxi-animation {
+  animation: taxi-move 2s ease-in-out infinite;
+}
+
+.wheel-spin {
+  animation: wheel-spin 1s linear infinite;
+  transform-origin: center;
+}

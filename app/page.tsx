@@ -33,7 +33,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="container mx-auto px-4 relative z-20 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto px-4 relative z-20 grid lg:grid-cols-[1fr_1.3fr] xl:grid-cols-[1fr_1.4fr] gap-12 items-center">
           <div className="text-white space-y-6">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
               Premium <span className="text-primary">Chauffeur</span> Service

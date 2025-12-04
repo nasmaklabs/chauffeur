@@ -18,7 +18,7 @@ const Header = () => {
     ];
 
     return (
-        <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm shadow-sm border-b border-gray-100">
+        <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm shadow-sm">
             <div className="container mx-auto px-4 h-20 flex items-center justify-between">
                 {/* Logo */}
                 <Link href="/" className="flex items-center gap-2">
@@ -36,6 +36,7 @@ const Header = () => {
                         mode="horizontal"
                         items={menuItems}
                         className="border-none bg-transparent min-w-[400px] justify-center"
+                        style={{ border: 'none' }}
                         disabledOverflow
                     />
                 </nav>
