@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
 import { useState } from 'react';
 import { trpc } from './client';
+import superjson from 'superjson';
 
 function getBaseUrl() {
     // Browser should use relative URL
@@ -39,6 +40,7 @@ export default function TRPCProvider({ children }: { children: React.ReactNode }
             links: [
                 httpBatchLink({
                     url: `${getBaseUrl()}/api/trpc`,
+                    transformer: superjson,
                 }),
             ],
         })

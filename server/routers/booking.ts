@@ -44,47 +44,52 @@ export const bookingRouter = createTRPCRouter({
     create: publicProcedure
         .input(createBookingSchema)
         .mutation(async ({ input }) => {
-            const bookingReference = generateBookingReference();
-            const finalVehicle = input.selectedVehicle || input.vehicleType;
-            
-            const booking = await prisma.booking.create({
-                data: {
-                    bookingReference,
-                    tripType: input.tripType,
-                    pickupLocation: input.pickupLocation,
-                    dropoffLocation: input.dropoffLocation || null,
-                    pickupLat: input.pickupCoordinates?.lat,
-                    pickupLng: input.pickupCoordinates?.lng,
-                    dropoffLat: input.dropoffCoordinates?.lat,
-                    dropoffLng: input.dropoffCoordinates?.lng,
-                    distance: input.distance,
-                    date: input.date,
-                    time: input.time,
-                    returnDate: input.returnDate,
-                    returnTime: input.returnTime,
-                    duration: input.duration,
-                    vehicleType: finalVehicle,
-                    selectedVehicle: finalVehicle,
-                    passengers: input.passengers,
-                    luggage: input.luggage,
-                    firstName: input.firstName,
-                    lastName: input.lastName,
-                    email: input.email,
-                    phone: input.phone,
-                    flightNumber: input.flightNumber,
-                    notes: input.notes,
-                    baseFare: input.baseFare,
-                    distanceCharge: input.distanceCharge,
-                    totalPrice: input.totalPrice,
-                    status: 'pending',
-                },
-            });
-            
-            return {
-                success: true,
-                booking,
-                message: 'Booking created successfully',
-            };
+            try {
+                const bookingReference = generateBookingReference();
+                const finalVehicle = input.selectedVehicle || input.vehicleType;
+                
+                const booking = await prisma.booking.create({
+                    data: {
+                        bookingReference,
+                        tripType: input.tripType,
+                        pickupLocation: input.pickupLocation,
+                        dropoffLocation: input.dropoffLocation || null,
+                        pickupLat: input.pickupCoordinates?.lat,
+                        pickupLng: input.pickupCoordinates?.lng,
+                        dropoffLat: input.dropoffCoordinates?.lat,
+                        dropoffLng: input.dropoffCoordinates?.lng,
+                        distance: input.distance,
+                        date: input.date,
+                        time: input.time,
+                        returnDate: input.returnDate,
+                        returnTime: input.returnTime,
+                        duration: input.duration,
+                        vehicleType: finalVehicle,
+                        selectedVehicle: finalVehicle,
+                        passengers: input.passengers,
+                        luggage: input.luggage,
+                        firstName: input.firstName,
+                        lastName: input.lastName,
+                        email: input.email,
+                        phone: input.phone,
+                        flightNumber: input.flightNumber,
+                        notes: input.notes,
+                        baseFare: input.baseFare,
+                        distanceCharge: input.distanceCharge,
+                        totalPrice: input.totalPrice,
+                        status: 'pending',
+                    },
+                });
+                
+                return {
+                    success: true,
+                    booking,
+                    message: 'Booking created successfully',
+                };
+            } catch (error) {
+                console.error('Error creating booking:', error);
+                throw new Error('Failed to create booking. Please try again.');
+            }
         }),
 
     getByReference: publicProcedure
