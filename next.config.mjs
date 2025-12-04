@@ -15,6 +15,8 @@ const nextConfig = {
         "rc-tree",
         "rc-table",
     ],
+    // Explicitly set output for Netlify (optional but recommended)
+    // The @netlify/plugin-nextjs will handle the build
 };
 
 export default nextConfig;
