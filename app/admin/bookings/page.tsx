@@ -7,7 +7,6 @@ import Section from '@/components/ui/Section';
 import { trpc } from '@/lib/trpc/client';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
-import type { Booking } from '@prisma/client';
 
 const statusColors: Record<string, string> = {
     pending: 'gold',
@@ -33,8 +32,7 @@ export default function AdminBookingsPage() {
 
     const bookings = data?.bookings || [];
 
-    // Filter bookings by search term
-    const filteredBookings = bookings.filter((booking: Booking) => {
+    const filteredBookings = bookings.filter((booking) => {
         const search = searchTerm.toLowerCase();
         return (
             booking.bookingReference.toLowerCase().includes(search) ||
@@ -50,7 +48,7 @@ export default function AdminBookingsPage() {
             title: 'Reference',
             dataIndex: 'bookingReference',
             key: 'bookingReference',
-            render: (ref: string, record: Booking) => (
+            render: (ref: string, record: any) => (
                 <Link href={`/admin/bookings/${record.id}`} className="text-primary font-semibold hover:underline">
                     {ref}
                 </Link>
@@ -59,7 +57,7 @@ export default function AdminBookingsPage() {
         {
             title: 'Passenger',
             key: 'passenger',
-            render: (_: any, record: Booking) => (
+            render: (_: any, record: any) => (
                 <div>
                     <div className="font-semibold">{record.firstName} {record.lastName}</div>
                     <div className="text-xs text-gray-500">{record.email}</div>
@@ -69,7 +67,7 @@ export default function AdminBookingsPage() {
         {
             title: 'Trip',
             key: 'trip',
-            render: (_: any, record: Booking) => (
+            render: (_: any, record: any) => (
                 <div className="text-sm">
                     <div className="text-gray-600 truncate max-w-xs">{record.pickupLocation}</div>
                     {record.dropoffLocation && (
@@ -81,7 +79,7 @@ export default function AdminBookingsPage() {
         {
             title: 'Date & Time',
             key: 'datetime',
-            render: (_: any, record: Booking) => (
+            render: (_: any, record: any) => (
                 <div className="text-sm">
                     <div>{record.date}</div>
                     <div className="text-gray-500 text-xs">{record.time}</div>
@@ -104,10 +102,12 @@ export default function AdminBookingsPage() {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
-            render: (status: string, record: Booking) => (
+            render: (status: string, record: any) => (
                 <Select
-                    value={status}
-                    onChange={(newStatus) => updateStatus.mutate({ id: record.id, status: newStatus })}
+                    value={status as 'pending' | 'confirmed' | 'completed' | 'cancelled'}
+                    onChange={(newStatus: 'pending' | 'confirmed' | 'completed' | 'cancelled') => 
+                        updateStatus.mutate({ id: record.id, status: newStatus })
+                    }
                     size="small"
                     className="w-32"
                     disabled={updateStatus.isPending}
@@ -130,7 +130,7 @@ export default function AdminBookingsPage() {
         {
             title: 'Actions',
             key: 'actions',
-            render: (_: any, record: Booking) => (
+            render: (_: any, record: any) => (
                 <Link href={`/admin/bookings/${record.id}`}>
                     <Button size="small">View</Button>
                 </Link>

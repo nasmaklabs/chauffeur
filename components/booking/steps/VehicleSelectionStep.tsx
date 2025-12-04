@@ -3,21 +3,15 @@
 import React, { useMemo } from 'react';
 import VehicleCard from '@/components/fleet/VehicleCard';
 import { bookingStore, useBookingStore } from '@/lib/store/bookingStore';
+import { 
+    getVehicles, 
+    calculateVehiclePrice, 
+    isVehicleSuitable, 
+    getRecommendedBadge 
+} from '@/lib/services/vehicle-service';
 
 interface VehicleSelectionStepProps {
     onNext?: () => void;
-}
-
-interface Vehicle {
-    id: string;
-    name: string;
-    description: string;
-    image: string;
-    passengers: number;
-    luggage: number;
-    baseFare: number;
-    perKmRate: number;
-    features: string[];
 }
 
 const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({ onNext }) => {
@@ -26,16 +20,12 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({ onNext }) =
     
     const handleVehicleSelect = (vehicleId: string | null) => {
         if (vehicleId) {
-            // Set the selected vehicle
             bookingStore.set('selectedVehicle', vehicleId);
-            
-            // Also update vehicleType in tripDetails to match selected vehicle
             bookingStore.set('tripDetails', {
                 ...tripDetails,
                 vehicleType: vehicleId,
             });
             
-            // Automatically proceed to next step after a short delay
             if (onNext) {
                 setTimeout(() => {
                     onNext();
@@ -44,95 +34,26 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({ onNext }) =
         }
     };
 
-    const vehicles: Vehicle[] = [
-        { 
-            id: 'sedan', 
-            name: 'Executive Sedan', 
-            description: 'Perfect for business trips and airport transfers',
-            image: '/placeholder-car.png', 
-            passengers: 3, 
-            luggage: 2, 
-            baseFare: 25,
-            perKmRate: 1.5,
-            features: ['Free WiFi', 'Bottled Water', 'Leather Seats', 'Climate Control']
-        },
-        { 
-            id: 'luxury', 
-            name: 'Luxury Sedan', 
-            description: 'Premium comfort for special occasions',
-            image: '/placeholder-car.png', 
-            passengers: 3, 
-            luggage: 2, 
-            baseFare: 40,
-            perKmRate: 2.0,
-            features: ['Premium WiFi', 'Champagne Service', 'Nappa Leather', 'Privacy Glass']
-        },
-        { 
-            id: 'suv', 
-            name: 'Luxury SUV', 
-            description: 'Spacious and comfortable for families',
-            image: '/placeholder-car.png', 
-            passengers: 5, 
-            luggage: 4, 
-            baseFare: 45,
-            perKmRate: 2.2,
-            features: ['Free WiFi', 'Extra Luggage Space', 'Panoramic Roof', 'Premium Sound']
-        },
-        { 
-            id: 'van', 
-            name: 'Luxury Van', 
-            description: 'Ideal for groups and extra luggage',
-            image: '/placeholder-car.png', 
-            passengers: 7, 
-            luggage: 7, 
-            baseFare: 60,
-            perKmRate: 2.5,
-            features: ['Conference Seating', 'Electric Doors', 'Tables', 'Extra Luggage Space']
-        },
-    ];
-
-    // Calculate pricing and suitability
     const vehiclesWithPricing = useMemo(() => {
+        const vehicles = getVehicles();
         const distance = tripDetails.distance || 0;
         const requiredPassengers = tripDetails.passengers || 1;
         const requiredLuggage = tripDetails.luggage || 0;
 
         return vehicles.map(vehicle => {
-            const isSuitable = vehicle.passengers >= requiredPassengers && vehicle.luggage >= requiredLuggage;
-            const distanceCharge = distance * vehicle.perKmRate;
-            const total = vehicle.baseFare + distanceCharge;
-
-            // Determine badge
-            let badge: 'recommended' | 'popular' | null = null;
-            if (isSuitable) {
-                // Recommend the most economical suitable vehicle
-                if (vehicle.id === 'sedan' && requiredPassengers <= 3 && requiredLuggage <= 2) {
-                    badge = 'recommended';
-                } else if (vehicle.id === 'suv' && requiredPassengers > 3 && requiredPassengers <= 5) {
-                    badge = 'recommended';
-                } else if (vehicle.id === 'van' && requiredPassengers > 5) {
-                    badge = 'recommended';
-                }
-                // Mark luxury sedan as popular
-                if (vehicle.id === 'luxury') {
-                    badge = 'popular';
-                }
-            }
+            const suitable = isVehicleSuitable(vehicle, requiredPassengers, requiredLuggage);
+            const priceBreakdown = calculateVehiclePrice(vehicle, distance);
+            const badge = getRecommendedBadge(vehicle, suitable, requiredPassengers);
 
             return {
                 ...vehicle,
-                isSuitable,
-                priceBreakdown: {
-                    baseFare: vehicle.baseFare,
-                    distanceCharge,
-                    total,
-                },
+                isSuitable: suitable,
+                priceBreakdown,
                 badge,
             };
         });
     }, [tripDetails.distance, tripDetails.passengers, tripDetails.luggage]);
 
-    // Sort: suitable first, then by price
     const sortedVehicles = useMemo(() => {
         return [...vehiclesWithPricing].sort((a, b) => {
             if (a.isSuitable && !b.isSuitable) return -1;

@@ -22,15 +22,10 @@ import TestimonialCard from '@/components/ui/TestimonialCard';
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center pt-20 pb-16 overflow-hidden">
-        {/* Background Image Overlay */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40 z-10" />
-          {/* Placeholder for Hero Image - In production use a real high-res image */}
-          <div className="w-full h-full bg-gray-900 relative">
-            {/* <Image src="/hero-bg.jpg" alt="Luxury Chauffeur" fill className="object-cover" priority /> */}
-          </div>
+          <div className="w-full h-full bg-gray-900 relative" />
         </div>
 
         <div className="container mx-auto px-4 relative z-20 grid lg:grid-cols-[1fr_1.3fr] xl:grid-cols-[1fr_1.4fr] gap-12 items-center">
@@ -56,7 +51,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section */}
       <Section id="services" background="white">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">World-Class Services</h2>
@@ -93,7 +87,7 @@ export default function Home() {
           <ServiceCard
             title="City Tours"
             description="Explore the city with our knowledgeable chauffeurs and customized itineraries."
-            icon={<EnvironmentOutlined />} // Need to import this
+            icon={<EnvironmentOutlined />}
             link="/services#tours"
           />
           <ServiceCard
@@ -105,7 +99,6 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Fleet Showcase */}
       <Section id="fleet" background="gray">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <div className="max-w-2xl">
@@ -124,7 +117,7 @@ export default function Home() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           <VehicleCard
             name="Mercedes-Benz S-Class"
-            image="/placeholder-car.png" // Placeholder
+            image="/placeholder-car.png"
             passengers={3}
             luggage={2}
             price="$120"
@@ -132,7 +125,7 @@ export default function Home() {
           />
           <VehicleCard
             name="BMW 7 Series"
-            image="/placeholder-car.png" // Placeholder
+            image="/placeholder-car.png"
             passengers={3}
             luggage={2}
             price="$110"
@@ -140,7 +133,7 @@ export default function Home() {
           />
           <VehicleCard
             name="Mercedes-Benz V-Class"
-            image="/placeholder-car.png" // Placeholder
+            image="/placeholder-car.png"
             passengers={7}
             luggage={7}
             price="$150"
@@ -149,11 +142,9 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Why Choose Us */}
       <Section id="why-us" background="white">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="relative h-[600px] rounded-2xl overflow-hidden bg-gray-100 hidden lg:block">
-            {/* <Image src="/driver.jpg" alt="Professional Chauffeur" fill className="object-cover" /> */}
             <div className="absolute inset-0 bg-gray-200 flex items-center justify-center text-gray-400">
               Placeholder Image: Professional Chauffeur
             </div>
@@ -200,7 +191,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Stats */}
             <div className="grid grid-cols-3 gap-8 mt-12 pt-12 border-t border-gray-100">
               <div>
                 <div className="text-4xl font-bold text-primary mb-1">10+</div>
@@ -219,7 +209,6 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Testimonials */}
       <Section id="testimonials" background="gray">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">Client Testimonials</h2>
@@ -249,7 +238,6 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* CTA Section */}
       <section className="py-24 bg-secondary text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-primary/5 pattern-grid-lg opacity-10" />
         <div className="container mx-auto px-4 relative z-10 text-center">
@@ -275,7 +263,6 @@ export default function Home() {
   );
 }
 
-// Helper for the missing icon in ServiceCard
 function EnvironmentOutlined(props: any) {
   return <span role="img" aria-label="environment" className="anticon anticon-environment" {...props}>
     <svg viewBox="64 64 896 896" focusable="false" data-icon="environment" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path><path d="M512 140c-205.4 0-372 166.6-372 372s166.6 372 372 372 372-166.6 372-372-166.6-372-372-372z" opacity="0"></path><path d="M512 232c-123.7 0-224 100.3-224 224 0 123.7 100.3 224 224 224s224-100.3 224-224c0-123.7-100.3-224-224-224zm0 392c-92.8 0-168-75.2-168-168s75.2-168 168-168 168 75.2 168 168-75.2 168-168 168z"></path></svg>

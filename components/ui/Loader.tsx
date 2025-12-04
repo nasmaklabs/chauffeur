@@ -36,26 +36,21 @@ const Loader = () => {
                         className="taxi-animation"
                     >
                         <defs>
-                            {/* Gradient for body highlight */}
                             <linearGradient id="carBodyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                                 <stop offset="0%" stopColor="#FFD700" stopOpacity="1" />
                                 <stop offset="50%" stopColor="#F7C600" stopOpacity="1" />
                                 <stop offset="100%" stopColor="#E6B800" stopOpacity="1" />
                             </linearGradient>
-                            {/* Gradient for windows */}
                             <linearGradient id="windowGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                                 <stop offset="0%" stopColor="#2A2A2A" stopOpacity="0.6" />
                                 <stop offset="50%" stopColor="#1A1A1A" stopOpacity="0.7" />
                                 <stop offset="100%" stopColor="#0A0A0A" stopOpacity="0.8" />
                             </linearGradient>
-                            {/* Highlight for top of car */}
                             <linearGradient id="topHighlight" x1="0%" y1="0%" x2="0%" y2="100%">
                                 <stop offset="0%" stopColor="#FFE066" stopOpacity="0.8" />
                                 <stop offset="100%" stopColor="#F7C600" stopOpacity="0" />
                             </linearGradient>
                         </defs>
-                        
-                        {/* Main Body with Realistic Proportions */}
                         <path
                             d="M 25 65 Q 28 48, 38 52 Q 55 58, 75 55 Q 95 53, 115 55 Q 135 58, 145 52 Q 152 48, 155 65 L 155 82 L 25 82 Z"
                             fill="url(#carBodyGradient)"
@@ -63,13 +58,11 @@ const Loader = () => {
                             strokeWidth="0.5"
                         />
                         
-                        {/* Body Highlight - Top Shine */}
                         <path
                             d="M 30 60 Q 35 50, 45 52 Q 60 54, 80 52 Q 100 50, 120 52 Q 135 54, 150 52 Q 152 50, 155 60"
                             fill="url(#topHighlight)"
                         />
                         
-                        {/* Front Bumper Area */}
                         <ellipse
                             cx="32"
                             cy="60"
@@ -78,7 +71,6 @@ const Loader = () => {
                             fill="url(#carBodyGradient)"
                         />
                         
-                        {/* Rear Bumper Area */}
                         <ellipse
                             cx="148"
                             cy="60"
@@ -87,7 +79,6 @@ const Loader = () => {
                             fill="url(#carBodyGradient)"
                         />
                         
-                        {/* Roof - More Realistic Curve */}
                         <path
                             d="M 45 55 Q 60 42, 80 44 Q 100 42, 135 44 Q 145 42, 150 55"
                             stroke="url(#carBodyGradient)"
@@ -96,7 +87,6 @@ const Loader = () => {
                             strokeLinecap="round"
                         />
                         
-                        {/* Windshield with Reflection */}
                         <path
                             d="M 50 53 Q 62 45, 75 47"
                             stroke="#1A1A1A"
@@ -107,7 +97,6 @@ const Loader = () => {
                             d="M 50 53 L 75 47 L 75 56 L 50 60 Z"
                             fill="url(#windowGradient)"
                         />
-                        {/* Windshield Reflection */}
                         <path
                             d="M 52 54 L 73 48"
                             stroke="#FFFFFF"
@@ -115,7 +104,6 @@ const Loader = () => {
                             opacity="0.3"
                         />
                         
-                        {/* Side Window with Reflection */}
                         <path
                             d="M 75 47 Q 95 45, 130 47"
                             stroke="#1A1A1A"
@@ -126,7 +114,6 @@ const Loader = () => {
                             d="M 75 47 L 130 47 L 130 56 L 75 56 Z"
                             fill="url(#windowGradient)"
                         />
-                        {/* Window Reflection */}
                         <path
                             d="M 77 48 L 128 48"
                             stroke="#FFFFFF"
@@ -134,7 +121,6 @@ const Loader = () => {
                             opacity="0.3"
                         />
                         
-                        {/* Door Line */}
                         <line
                             x1="75"
                             y1="56"
@@ -145,7 +131,6 @@ const Loader = () => {
                             opacity="0.3"
                         />
                         
-                        {/* Side Air Intake/Vent */}
                         <path
                             d="M 80 60 L 95 60 L 95 72 L 80 72 Z"
                             fill="#1A1A1A"
@@ -160,7 +145,6 @@ const Loader = () => {
                             strokeWidth="0.5"
                         />
                         
-                        {/* Front Grille */}
                         <path
                             d="M 22 63 Q 24 60, 28 63"
                             stroke="#1A1A1A"
@@ -194,9 +178,7 @@ const Loader = () => {
                             strokeWidth="0.5"
                         />
                         
-                        {/* Realistic Wheels with Tire Detail */}
                         <g className="wheel-spin" style={{ transformOrigin: '38px 88px' }}>
-                            {/* Tire */}
                             <circle
                                 cx="38"
                                 cy="88"
@@ -239,7 +221,6 @@ const Loader = () => {
                                 r="3"
                                 fill="#1A1A1A"
                             />
-                            {/* Spokes - More Realistic */}
                             <line
                                 x1="38"
                                 y1="88"
@@ -275,7 +256,6 @@ const Loader = () => {
                         </g>
                         
                         <g className="wheel-spin" style={{ transformOrigin: '142px 88px' }}>
-                            {/* Tire */}
                             <circle
                                 cx="142"
                                 cy="88"
@@ -318,7 +298,6 @@ const Loader = () => {
                                 r="3"
                                 fill="#1A1A1A"
                             />
-                            {/* Spokes */}
                             <line
                                 x1="142"
                                 y1="88"
@@ -353,7 +332,6 @@ const Loader = () => {
                             />
                         </g>
                         
-                        {/* Badge on Hood */}
                         <circle
                             cx="85"
                             cy="50"
@@ -369,7 +347,6 @@ const Loader = () => {
                             strokeWidth="0.5"
                         />
                         
-                        {/* Headlights - More Realistic */}
                         <ellipse
                             cx="20"
                             cy="62"
@@ -387,7 +364,6 @@ const Loader = () => {
                             opacity="0.8"
                         />
                         
-                        {/* Taillights - More Realistic */}
                         <ellipse
                             cx="158"
                             cy="62"
@@ -405,7 +381,6 @@ const Loader = () => {
                             opacity="0.6"
                         />
                         
-                        {/* Rear Spoiler */}
                         <rect
                             x="150"
                             y="52"
@@ -425,7 +400,6 @@ const Loader = () => {
                             rx="1"
                         />
                         
-                        {/* Side Skirt/Trim Line */}
                         <line
                             x1="30"
                             y1="75"
@@ -436,7 +410,6 @@ const Loader = () => {
                             opacity="0.3"
                         />
                         
-                        {/* Side Mirror */}
                         <ellipse
                             cx="75"
                             cy="48"

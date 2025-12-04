@@ -1,34 +1,27 @@
 import { z } from 'zod';
 import { createTRPCRouter, publicProcedure } from '../trpc';
 import { prisma } from '@/lib/prisma';
+import { generateBookingReference } from '@/lib/utils/booking-reference';
 
-// Zod validation schemas
 const coordinatesSchema = z.object({
     lat: z.number(),
     lng: z.number(),
 }).nullable().optional();
 
 const createBookingSchema = z.object({
-    // Trip Details
     tripType: z.enum(['one-way', 'round-trip', 'hourly']),
     pickupLocation: z.string().min(1, 'Pickup location is required'),
     dropoffLocation: z.string().optional(),
     pickupCoordinates: coordinatesSchema,
     dropoffCoordinates: coordinatesSchema,
     distance: z.number().nullable().optional(),
-    
-    // Date & Time
     date: z.string().min(1, 'Date is required'),
     time: z.string().min(1, 'Time is required'),
     returnDate: z.string().optional(),
     returnTime: z.string().optional(),
     duration: z.string().optional(),
-    
-    // Vehicle
     vehicleType: z.string().optional(),
     selectedVehicle: z.string().optional(),
-    
-    // Passenger Details
     passengers: z.number().int().min(1).default(1),
     luggage: z.number().int().min(0).default(0),
     firstName: z.string().min(1, 'First name is required'),
@@ -37,8 +30,6 @@ const createBookingSchema = z.object({
     phone: z.string().min(10, 'Phone number is required'),
     flightNumber: z.string().optional(),
     notes: z.string().optional(),
-    
-    // Pricing
     baseFare: z.number().optional(),
     distanceCharge: z.number().optional(),
     totalPrice: z.number().optional(),
@@ -49,21 +40,11 @@ const updateStatusSchema = z.object({
     status: z.enum(['pending', 'confirmed', 'completed', 'cancelled']),
 });
 
-// Generate unique booking reference
-function generateBookingReference(): string {
-    const timestamp = Date.now().toString(36).toUpperCase();
-    const random = Math.random().toString(36).substring(2, 6).toUpperCase();
-    return `LUX-${timestamp}-${random}`;
-}
-
 export const bookingRouter = createTRPCRouter({
-    // Create a new booking
     create: publicProcedure
         .input(createBookingSchema)
         .mutation(async ({ input }) => {
             const bookingReference = generateBookingReference();
-            
-            // Use selectedVehicle if available, otherwise fall back to vehicleType
             const finalVehicle = input.selectedVehicle || input.vehicleType;
             
             const booking = await prisma.booking.create({
@@ -82,8 +63,8 @@ export const bookingRouter = createTRPCRouter({
                     returnDate: input.returnDate,
                     returnTime: input.returnTime,
                     duration: input.duration,
-                    vehicleType: finalVehicle, // Store the correct vehicle
-                    selectedVehicle: finalVehicle, // Store in both fields for consistency
+                    vehicleType: finalVehicle,
+                    selectedVehicle: finalVehicle,
                     passengers: input.passengers,
                     luggage: input.luggage,
                     firstName: input.firstName,
@@ -106,7 +87,6 @@ export const bookingRouter = createTRPCRouter({
             };
         }),
 
-    // Get booking by reference
     getByReference: publicProcedure
         .input(z.object({ reference: z.string() }))
         .query(async ({ input }) => {
@@ -121,7 +101,6 @@ export const bookingRouter = createTRPCRouter({
             return booking;
         }),
 
-    // Get booking by ID
     getById: publicProcedure
         .input(z.object({ id: z.string() }))
         .query(async ({ input }) => {
@@ -136,7 +115,6 @@ export const bookingRouter = createTRPCRouter({
             return booking;
         }),
 
-    // List all bookings (for admin)
     list: publicProcedure
         .input(
             z.object({
@@ -167,7 +145,6 @@ export const bookingRouter = createTRPCRouter({
             };
         }),
 
-    // Update booking status
     updateStatus: publicProcedure
         .input(updateStatusSchema)
         .mutation(async ({ input }) => {
@@ -183,7 +160,6 @@ export const bookingRouter = createTRPCRouter({
             };
         }),
 
-    // Delete/Cancel booking
     delete: publicProcedure
         .input(z.object({ id: z.string() }))
         .mutation(async ({ input }) => {
@@ -197,7 +173,6 @@ export const bookingRouter = createTRPCRouter({
             };
         }),
 
-    // Get booking statistics (for admin dashboard)
     stats: publicProcedure.query(async () => {
         const [total, pending, confirmed, completed, cancelled] = await Promise.all([
             prisma.booking.count(),

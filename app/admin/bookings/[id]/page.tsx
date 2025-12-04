@@ -260,8 +260,10 @@ export default function BookingDetailsPage() {
                         <div className="flex-1">
                             <label className="block text-sm font-semibold text-gray-700 mb-2">Update Status</label>
                             <Select
-                                value={booking.status}
-                                onChange={(newStatus) => updateStatus.mutate({ id: booking.id, status: newStatus })}
+                                value={booking.status as 'pending' | 'confirmed' | 'completed' | 'cancelled'}
+                                onChange={(newStatus: 'pending' | 'confirmed' | 'completed' | 'cancelled') => 
+                                    updateStatus.mutate({ id: booking.id, status: newStatus })
+                                }
                                 className="w-full"
                                 size="large"
                                 disabled={updateStatus.isPending}

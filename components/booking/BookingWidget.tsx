@@ -4,42 +4,23 @@ import React, { useState, useEffect } from 'react';
 import { Tabs, DatePicker, TimePicker, Form } from 'antd';
 import { EnvironmentOutlined, CalendarOutlined, ClockCircleOutlined, CarOutlined } from '@ant-design/icons';
 import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import LocationAutocomplete from './LocationAutocomplete';
 import { useRouter } from 'next/navigation';
-import { bookingStore } from '@/lib/store/bookingStore';
+import { bookingStore, Coordinates } from '@/lib/store/bookingStore';
 import dayjs from 'dayjs';
-
-const TRIP_TYPES = {
-    ONE_WAY: 'one-way',
-    ROUND_TRIP: 'round-trip',
-    HOURLY: 'hourly',
-} as const;
-
-type TripType = typeof TRIP_TYPES[keyof typeof TRIP_TYPES];
-
-const TRIP_TYPE_OPTIONS = [
-    { label: 'One Way', key: TRIP_TYPES.ONE_WAY },
-    { label: 'Round Trip', key: TRIP_TYPES.ROUND_TRIP },
-    { label: 'Hourly', key: TRIP_TYPES.HOURLY },
-];
-
-const DURATION_OPTIONS = [
-    { value: '3', label: '3 Hours' },
-    { value: '4', label: '4 Hours' },
-    { value: '8', label: '8 Hours' },
-    { value: '12', label: '12 Hours' },
-] as const;
-
-const VEHICLE_OPTIONS = [
-    { value: 'sedan', label: 'Executive Sedan' },
-    { value: 'luxury', label: 'Luxury Sedan' },
-    { value: 'suv', label: 'SUV' },
-    { value: 'van', label: 'Luxury Van' },
-] as const;
-
-const TIME_FORMAT = 'HH:mm';
+import { calculateDistance, formatDistance } from '@/lib/utils/distance';
+import { 
+    TRIP_TYPES, 
+    TRIP_TYPE_OPTIONS, 
+    DURATION_OPTIONS, 
+    TIME_FORMAT,
+    DATE_FORMAT,
+    type TripType 
+} from '@/lib/constants/booking';
+import { VEHICLE_OPTIONS } from '@/lib/constants/vehicles';
+import { validateLocationWithCoordinates } from '@/lib/validators/location-validator';
+import { validateTimeNotInPast, validateReturnDate, validateReturnTime } from '@/lib/validators/date-time-validator';
 
 const CONTAINER_CLASSES = 'bg-white rounded-xl shadow-xl p-6 md:p-8 w-full max-w-full lg:max-w-[750px] xl:max-w-[650px]';
 const FORM_GRID_CLASSES = 'grid grid-cols-1 md:grid-cols-2 gap-4';
@@ -51,21 +32,6 @@ interface BookingWidgetProps {
     className?: string;
     onSubmit?: (formData: unknown) => void;
 }
-
-interface Coordinates {
-    lat: number;
-    lng: number;
-}
-
-const calculateDistance = (coord1: Coordinates, coord2: Coordinates): number => {
-    if (typeof window !== 'undefined' && window.google?.maps?.geometry) {
-        const point1 = new window.google.maps.LatLng(coord1.lat, coord1.lng);
-        const point2 = new window.google.maps.LatLng(coord2.lat, coord2.lng);
-        const distanceInMeters = window.google.maps.geometry.spherical.computeDistanceBetween(point1, point2);
-        return distanceInMeters / 1000; // Convert to kilometers
-    }
-    return 0;
-};
 
 const BookingWidget: React.FC<BookingWidgetProps> = ({ className = '', onSubmit }) => {
     const [activeTripType, setActiveTripType] = useState<TripType>(TRIP_TYPES.ONE_WAY);
@@ -108,38 +74,25 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ className = '', onSubmit 
             distance,
         };
 
-        // Map trip type to booking store format
-        const tripTypeMap = {
-            [TRIP_TYPES.ONE_WAY]: 'one-way' as const,
-            [TRIP_TYPES.ROUND_TRIP]: 'round-trip' as const,
-            [TRIP_TYPES.HOURLY]: 'hourly' as const,
-        };
-
-        // Update booking store with form data
         bookingStore.set('tripDetails', {
-            type: tripTypeMap[activeTripType],
+            type: activeTripType,
             pickupLocation,
             dropoffLocation,
             pickupCoordinates,
             dropoffCoordinates,
             distance,
-            date: values.date ? values.date.format('YYYY-MM-DD') : '',
-            time: values.time ? values.time.format('HH:mm') : '',
-            returnDate: values.returnDate ? values.returnDate.format('YYYY-MM-DD') : undefined,
-            returnTime: values.returnTime ? values.returnTime.format('HH:mm') : undefined,
+            date: values.date ? values.date.format(DATE_FORMAT) : '',
+            time: values.time ? values.time.format(TIME_FORMAT) : '',
+            returnDate: values.returnDate ? values.returnDate.format(DATE_FORMAT) : undefined,
+            returnTime: values.returnTime ? values.returnTime.format(TIME_FORMAT) : undefined,
             duration: values.duration,
             vehicleType: values.vehicleType,
             passengers: 1,
             luggage: 1,
         });
 
-        // Reset to first step
         bookingStore.set('currentStep', 0);
-
-        // Call onSubmit callback if provided
         onSubmit?.(formData);
-
-        // Navigate to booking page
         router.push('/booking');
     };
 
@@ -165,14 +118,7 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ className = '', onSubmit 
                         name="pickupLocation"
                         rules={[
                             { required: true, message: 'Please enter pickup location' },
-                            { 
-                                validator: (_, value) => {
-                                    if (value && !pickupCoordinates) {
-                                        return Promise.reject(new Error('Please select a valid location from suggestions'));
-                                    }
-                                    return Promise.resolve();
-                                }
-                            }
+                            { validator: () => validateLocationWithCoordinates(pickupLocation, pickupCoordinates) }
                         ]}
                     >
                         <LocationAutocomplete
@@ -188,14 +134,7 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ className = '', onSubmit 
                             name="dropoffLocation"
                             rules={[
                                 { required: true, message: 'Please enter drop-off location' },
-                                { 
-                                    validator: (_, value) => {
-                                        if (value && !dropoffCoordinates) {
-                                            return Promise.reject(new Error('Please select a valid location from suggestions'));
-                                        }
-                                        return Promise.resolve();
-                                    }
-                                }
+                                { validator: () => validateLocationWithCoordinates(dropoffLocation, dropoffCoordinates) }
                             ]}
                         >
                             <LocationAutocomplete
@@ -211,8 +150,7 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ className = '', onSubmit 
                             <div className="text-sm text-gray-600 bg-blue-50 border border-blue-200 rounded-lg px-4 py-2 flex items-center gap-2">
                                 <EnvironmentOutlined className="text-primary" />
                                 <span>
-                                    Distance: <strong>{distance.toFixed(2)} km</strong>
-                                    {distance < 1 && ` (${(distance * 1000).toFixed(0)} meters)`}
+                                    Distance: <strong>{formatDistance(distance)}</strong>
                                 </span>
                             </div>
                         </div>
@@ -254,18 +192,7 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ className = '', onSubmit 
                                 { required: true, message: 'Please select time' },
                                 ({ getFieldValue }) => ({
                                     validator(_, value) {
-                                        if (!value) return Promise.resolve();
-                                        const selectedDate = getFieldValue('date');
-                                        if (!selectedDate) return Promise.resolve();
-                                        
-                                        // Check if selected date is today
-                                        if (selectedDate.isSame(dayjs(), 'day')) {
-                                            const selectedDateTime = selectedDate.hour(value.hour()).minute(value.minute());
-                                            if (selectedDateTime.isBefore(dayjs())) {
-                                                return Promise.reject(new Error('Time cannot be in the past'));
-                                            }
-                                        }
-                                        return Promise.resolve();
+                                        return validateTimeNotInPast(getFieldValue('date'), value);
                                     },
                                 }),
                             ]}
@@ -288,13 +215,7 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ className = '', onSubmit 
                                     { required: true, message: 'Please select return date' },
                                     ({ getFieldValue }) => ({
                                         validator(_, value) {
-                                            const pickupDate = getFieldValue('date');
-                                            if (!value || !pickupDate) return Promise.resolve();
-                                            
-                                            if (value.isBefore(pickupDate, 'day')) {
-                                                return Promise.reject(new Error('Return date cannot be before pickup date'));
-                                            }
-                                            return Promise.resolve();
+                                            return validateReturnDate(value, getFieldValue('date'));
                                         },
                                     }),
                                 ]}
@@ -320,33 +241,12 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ className = '', onSubmit 
                                     { required: true, message: 'Please select return time' },
                                     ({ getFieldValue }) => ({
                                         validator(_, value) {
-                                            if (!value) return Promise.resolve();
-                                            
-                                            const returnDate = getFieldValue('returnDate');
-                                            const pickupDate = getFieldValue('date');
-                                            const pickupTime = getFieldValue('time');
-                                            
-                                            if (!returnDate || !pickupDate || !pickupTime) return Promise.resolve();
-                                            
-                                            // If return date is same as pickup date, return time must be after pickup time
-                                            if (returnDate.isSame(pickupDate, 'day')) {
-                                                const pickupDateTime = pickupDate.hour(pickupTime.hour()).minute(pickupTime.minute());
-                                                const returnDateTime = returnDate.hour(value.hour()).minute(value.minute());
-                                                
-                                                if (returnDateTime.isBefore(pickupDateTime) || returnDateTime.isSame(pickupDateTime)) {
-                                                    return Promise.reject(new Error('Return time must be after pickup time'));
-                                                }
-                                            }
-                                            
-                                            // If return date is today, check it's not in the past
-                                            if (returnDate.isSame(dayjs(), 'day')) {
-                                                const returnDateTime = returnDate.hour(value.hour()).minute(value.minute());
-                                                if (returnDateTime.isBefore(dayjs())) {
-                                                    return Promise.reject(new Error('Return time cannot be in the past'));
-                                                }
-                                            }
-                                            
-                                            return Promise.resolve();
+                                            return validateReturnTime(
+                                                getFieldValue('returnDate'),
+                                                value,
+                                                getFieldValue('date'),
+                                                getFieldValue('time')
+                                            );
                                         },
                                     }),
                                 ]}

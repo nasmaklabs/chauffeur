@@ -18,11 +18,9 @@ const updateUserSchema = z.object({
 });
 
 export const userRouter = createTRPCRouter({
-    // Create a new user
     create: publicProcedure
         .input(createUserSchema)
         .mutation(async ({ input }) => {
-            // Check if user already exists
             const existingUser = await prisma.user.findUnique({
                 where: { email: input.email },
             });
@@ -31,7 +29,6 @@ export const userRouter = createTRPCRouter({
                 throw new Error('User with this email already exists');
             }
 
-            // Hash password
             const hashedPassword = await bcrypt.hash(input.password, 10);
 
             const user = await prisma.user.create({
@@ -57,7 +54,6 @@ export const userRouter = createTRPCRouter({
             };
         }),
 
-    // List all users
     list: publicProcedure.query(async () => {
         const users = await prisma.user.findMany({
             select: {
@@ -74,7 +70,6 @@ export const userRouter = createTRPCRouter({
         return users;
     }),
 
-    // Get user by ID
     getById: publicProcedure
         .input(z.object({ id: z.string() }))
         .query(async ({ input }) => {
@@ -97,13 +92,11 @@ export const userRouter = createTRPCRouter({
             return user;
         }),
 
-    // Update user
     update: publicProcedure
         .input(updateUserSchema)
         .mutation(async ({ input }) => {
             const { id, password, ...data } = input;
 
-            // If password is provided, hash it
             const updateData: any = { ...data };
             if (password) {
                 updateData.password = await bcrypt.hash(password, 10);
@@ -128,7 +121,6 @@ export const userRouter = createTRPCRouter({
             };
         }),
 
-    // Delete user
     delete: publicProcedure
         .input(z.object({ id: z.string() }))
         .mutation(async ({ input }) => {
@@ -142,13 +134,11 @@ export const userRouter = createTRPCRouter({
             };
         }),
 
-    // Get user count
     count: publicProcedure.query(async () => {
         const count = await prisma.user.count();
         return count;
     }),
 
-    // Change password (for logged-in user)
     changePassword: publicProcedure
         .input(z.object({
             currentPassword: z.string().min(6),
@@ -156,7 +146,6 @@ export const userRouter = createTRPCRouter({
             email: z.string().email(),
         }))
         .mutation(async ({ input }) => {
-            // Get user by email
             const user = await prisma.user.findUnique({
                 where: { email: input.email },
             });
@@ -165,16 +154,13 @@ export const userRouter = createTRPCRouter({
                 throw new Error('User not found');
             }
 
-            // Verify current password
             const passwordsMatch = await bcrypt.compare(input.currentPassword, user.password);
             if (!passwordsMatch) {
                 throw new Error('Current password is incorrect');
             }
 
-            // Hash new password
             const hashedPassword = await bcrypt.hash(input.newPassword, 10);
 
-            // Update password
             await prisma.user.update({
                 where: { id: user.id },
                 data: { password: hashedPassword },

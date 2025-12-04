@@ -3,10 +3,10 @@
 import React from 'react';
 import Section from '@/components/ui/Section';
 import { trpc } from '@/lib/trpc/client';
-import { Card } from '@/components/ui/Card';
-import { CheckCircleOutlined, ClockCircleOutlined, CarOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined, ClockCircleOutlined, CarOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
+import { StatisticCard } from '@/components/admin/StatisticCard';
 
 export default function AdminDashboard() {
     const { data: stats, isLoading } = trpc.booking.stats.useQuery();
@@ -34,58 +34,41 @@ export default function AdminDashboard() {
                     </Link>
                 </div>
 
-                {/* Statistics Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <Card className="border-none shadow-lg">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-gray-500 text-sm mb-1">Total Bookings</p>
-                                <p className="text-3xl font-bold text-secondary">{stats?.total || 0}</p>
-                            </div>
-                            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-                                <CarOutlined className="text-2xl text-blue-600" />
-                            </div>
-                        </div>
-                    </Card>
-
-                    <Card className="border-none shadow-lg">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-gray-500 text-sm mb-1">Pending</p>
-                                <p className="text-3xl font-bold text-yellow-600">{stats?.pending || 0}</p>
-                            </div>
-                            <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
-                                <ClockCircleOutlined className="text-2xl text-yellow-600" />
-                            </div>
-                        </div>
-                    </Card>
-
-                    <Card className="border-none shadow-lg">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-gray-500 text-sm mb-1">Confirmed</p>
-                                <p className="text-3xl font-bold text-green-600">{stats?.confirmed || 0}</p>
-                            </div>
-                            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
-                                <CheckCircleOutlined className="text-2xl text-green-600" />
-                            </div>
-                        </div>
-                    </Card>
-
-                    <Card className="border-none shadow-lg">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <p className="text-gray-500 text-sm mb-1">Completed</p>
-                                <p className="text-3xl font-bold text-primary">{stats?.completed || 0}</p>
-                            </div>
-                            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-                                <CheckCircleOutlined className="text-2xl text-primary" />
-                            </div>
-                        </div>
-                    </Card>
+                    <StatisticCard
+                        label="Total Bookings"
+                        value={stats?.total || 0}
+                        icon={<CarOutlined />}
+                        valueColor="text-secondary"
+                        iconBgColor="bg-blue-100"
+                        iconColor="text-blue-600"
+                    />
+                    <StatisticCard
+                        label="Pending"
+                        value={stats?.pending || 0}
+                        icon={<ClockCircleOutlined />}
+                        valueColor="text-yellow-600"
+                        iconBgColor="bg-yellow-100"
+                        iconColor="text-yellow-600"
+                    />
+                    <StatisticCard
+                        label="Confirmed"
+                        value={stats?.confirmed || 0}
+                        icon={<CheckCircleOutlined />}
+                        valueColor="text-green-600"
+                        iconBgColor="bg-green-100"
+                        iconColor="text-green-600"
+                    />
+                    <StatisticCard
+                        label="Completed"
+                        value={stats?.completed || 0}
+                        icon={<CheckCircleOutlined />}
+                        valueColor="text-primary"
+                        iconBgColor="bg-primary/10"
+                        iconColor="text-primary"
+                    />
                 </div>
 
-                {/* Quick Actions */}
                 <div className="bg-white rounded-xl shadow-lg p-8">
                     <h2 className="text-xl font-bold text-secondary mb-6">Quick Actions</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
