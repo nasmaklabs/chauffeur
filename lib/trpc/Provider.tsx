@@ -5,6 +5,26 @@ import { httpBatchLink } from '@trpc/client';
 import { useState } from 'react';
 import { trpc } from './client';
 
+function getBaseUrl() {
+    // Browser should use relative URL
+    if (typeof window !== 'undefined') {
+        return '';
+    }
+    
+    // SSR should use production URL or localhost
+    if (process.env.NEXT_PUBLIC_APP_URL) {
+        return process.env.NEXT_PUBLIC_APP_URL;
+    }
+    
+    // Reference for Netlify deployment
+    if (process.env.NETLIFY) {
+        return `https://${process.env.DEPLOY_URL || process.env.URL}`;
+    }
+    
+    // Assume localhost
+    return 'http://localhost:3000';
+}
+
 export default function TRPCProvider({ children }: { children: React.ReactNode }) {
     const [queryClient] = useState(() => new QueryClient({
         defaultOptions: {
@@ -18,7 +38,7 @@ export default function TRPCProvider({ children }: { children: React.ReactNode }
         trpc.createClient({
             links: [
                 httpBatchLink({
-                    url: `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/trpc`,
+                    url: `${getBaseUrl()}/api/trpc`,
                 }),
             ],
         })
