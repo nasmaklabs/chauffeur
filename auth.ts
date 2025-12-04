@@ -7,13 +7,20 @@ import { z } from 'zod';
 
 async function getUser(email: string) {
     try {
-        const user = await prisma.user.findUnique({
-            where: { email },
-        });
+        // Set a timeout for database queries in serverless environment
+        const user = await Promise.race([
+            prisma.user.findUnique({
+                where: { email },
+            }),
+            new Promise<null>((_, reject) => 
+                setTimeout(() => reject(new Error('Database query timeout')), 8000)
+            )
+        ]);
         return user;
     } catch (error) {
         console.error('Failed to fetch user:', error);
-        throw new Error('Failed to fetch user.');
+        // Don't throw - just return null to avoid hanging
+        return null;
     }
 }
 

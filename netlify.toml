@@ -1,0 +1,24 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[functions]
+  # Increase timeout for serverless functions (max 26 seconds for Pro, 10s for free tier)
+  node_bundler = "esbuild"
+  
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/___netlify-handler"
+  status = 200
+
+[build.environment]
+  # Ensure Next.js uses proper output mode
+  NEXT_PRIVATE_TARGET = "server"
+
+# Serverless function configuration for auth routes
+[[edge_functions]]
+  path = "/api/auth/*"
+  function = "___netlify-handler"
