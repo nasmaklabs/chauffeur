@@ -3,6 +3,7 @@ import type { NextAuthConfig } from 'next-auth';
 export const authConfig = {
     secret: process.env.AUTH_SECRET || 'development-secret-please-change-in-production',
     trustHost: true,
+    basePath: '/api/auth',
     pages: {
         signIn: '/admin/login',
     },
