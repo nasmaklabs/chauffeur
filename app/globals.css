@@ -112,3 +112,16 @@ footer a {
   animation: wheel-spin 1s linear infinite;
   transform-origin: center;
 }
+
+@keyframes fade-in-out {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.loading-text-fade {
+  animation: fade-in-out 2s ease-in-out infinite;
+}

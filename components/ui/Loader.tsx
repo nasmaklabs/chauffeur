@@ -1,11 +1,26 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLoadingStore } from '@/lib/store/loadingStore';
 
 const Loader = () => {
     const isLoading = useLoadingStore(state => state.isLoading);
+    const [messageIndex, setMessageIndex] = useState(0);
 
+    const messages = [
+        "Your luxury ride is on the way...",
+        "Preparing your chauffeur...",
+        "Getting everything ready...",
+        "Almost there...",
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setMessageIndex((prev) => (prev + 1) % messages.length);
+        }, 2000); // Change message every 2 seconds
+
+        return () => clearInterval(interval);
+    }, [messages.length]);
 
     if (!isLoading) return null;
 
@@ -15,8 +30,8 @@ const Loader = () => {
                 <div className="relative">
                     {/* Realistic Sports Car with Shading */}
                     <svg
-                        width="180"
-                        height="110"
+                        width="90"
+                        height="55"
                         viewBox="0 0 180 110"
                         className="taxi-animation"
                     >
@@ -432,7 +447,19 @@ const Loader = () => {
                         />
                     </svg>
                 </div>
-                <div className="text-white text-lg font-semibold">Loading...</div>
+                <div className="text-white text-base font-medium loading-text-fade text-center max-w-xs px-4">
+                    {messages[messageIndex]}
+                </div>
+                <div className="flex gap-2 mt-2">
+                    {messages.map((_, idx) => (
+                        <div
+                            key={idx}
+                            className={`h-1 w-8 rounded-full transition-all duration-300 ${
+                                idx === messageIndex ? 'bg-primary' : 'bg-white/30'
+                            }`}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );

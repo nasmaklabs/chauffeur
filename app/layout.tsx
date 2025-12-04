@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 };
 
 import Loader from "@/components/ui/Loader";
-import InitialLoader from "@/components/ui/InitialLoader";
 import NavigationProvider from "@/lib/providers/NavigationProvider";
 import GoogleMapsProvider from "@/lib/providers/GoogleMapsProvider";
 import ConditionalLayout from "@/components/layout/ConditionalLayout";
@@ -27,7 +26,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <InitialLoader />
         <TRPCProvider>
           <AntdRegistry>
             <ConfigProvider theme={theme}>
