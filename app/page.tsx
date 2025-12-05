@@ -151,7 +151,7 @@ export default function Home() {
           </div>
 
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-8">Why Choose LuxeRide?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-8">Why Choose AA Comfort?</h2>
 
             <div className="space-y-8">
               <div className="flex gap-6">
@@ -228,7 +228,7 @@ export default function Home() {
             name="Michael Chen"
             role="Frequent Traveler"
             rating={5}
-            text="I use LuxeRide for all my airport transfers. Their flight tracking is a lifesaver, and I never have to worry about being late."
+            text="I use AA Comfort for all my airport transfers. Their flight tracking is a lifesaver, and I never have to worry about being late."
           />
           <TestimonialCard
             name="Emma Thompson"

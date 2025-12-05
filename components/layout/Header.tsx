@@ -21,18 +21,16 @@ const Header = () => {
     return (
         <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm shadow-sm">
             <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-                {/* Logo */}
                 <Link href="/" className="flex items-center gap-2">
                     <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-secondary font-bold text-xl">
-                        T
+                        AA
                     </div>
                     <span className="text-xl font-bold text-secondary tracking-tight">
-                        LUXE<span className="text-primary">RIDE</span>
+                        <span className="text-primary">Comfort</span>
                     </span>
                 </Link>
 
-                {/* Desktop Navigation */}
-                <nav className="hidden md:block">
+                <nav className="hidden nav-desktop-show">
                     <Menu
                         mode="horizontal"
                         items={menuItems}
@@ -42,8 +40,7 @@ const Header = () => {
                     />
                 </nav>
 
-                {/* Desktop Actions */}
-                <div className="hidden md:flex items-center gap-4">
+                <div className="hidden nav-desktop-flex items-center gap-4">
                     <div className="flex items-center gap-2 text-secondary font-medium">
                         <PhoneOutlined className="text-primary" />
                         <span>+1 (555) 123-4567</span>
@@ -55,15 +52,13 @@ const Header = () => {
                     </Link>
                 </div>
 
-                {/* Mobile Menu Toggle */}
                 <button
-                    className="md:hidden text-2xl text-secondary"
+                    className="block nav-mobile-hide text-2xl text-secondary"
                     onClick={() => setMobileMenuOpen(true)}
                 >
                     <MenuOutlined />
                 </button>
 
-                {/* Mobile Drawer */}
                 <Drawer
                     title="Menu"
                     placement="right"

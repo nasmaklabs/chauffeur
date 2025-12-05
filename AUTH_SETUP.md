@@ -29,7 +29,7 @@ npm run seed:admin
 ```
 
 This will create an admin user with:
-- **Email:** admin@luxeride.com
+- **Email:** admin@aacomfort.com
 - **Password:** admin123
 
 ⚠️ **IMPORTANT:** Change this password immediately after first login!

@@ -45,12 +45,19 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ className = '', onSubmit 
 
     useEffect(() => {
         if (pickupCoordinates && dropoffCoordinates) {
-            const calculatedDistance = calculateDistance(pickupCoordinates, dropoffCoordinates);
-            setDistance(calculatedDistance);
+            setDistance(calculateDistance(pickupCoordinates, dropoffCoordinates));
         } else {
             setDistance(null);
         }
     }, [pickupCoordinates, dropoffCoordinates]);
+
+    useEffect(() => {
+        if (pickupCoordinates && pickupLocation) form.validateFields(['pickupLocation']);
+    }, [pickupCoordinates, pickupLocation, form]);
+
+    useEffect(() => {
+        if (dropoffCoordinates && dropoffLocation) form.validateFields(['dropoffLocation']);
+    }, [dropoffCoordinates, dropoffLocation, form]);
 
     const handlePickupChange = (address: string, coordinates: Coordinates | null) => {
         setPickupLocation(address);
@@ -91,6 +98,7 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ className = '', onSubmit 
             luggage: 1,
         });
 
+        if (values.vehicleType) bookingStore.set('selectedVehicle', values.vehicleType);
         bookingStore.set('currentStep', 0);
         onSubmit?.(formData);
         router.push('/booking');
@@ -225,12 +233,11 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ className = '', onSubmit 
                                     placeholder="Return Date"
                                     suffixIcon={<CalendarOutlined className="text-primary" />}
                                     disabledDate={(current) => {
-                                        const pickupDate = form.getFieldValue('date');
                                         if (!current) return false;
-                                        // Disable past dates and dates before pickup
-                                        if (current < dayjs().startOf('day')) return true;
-                                        if (pickupDate && current.isBefore(pickupDate, 'day')) return true;
-                                        return false;
+                                        const pickupDate = form.getFieldValue('date');
+                                        const isPastDate = current < dayjs().startOf('day');
+                                        const isBeforePickup = pickupDate && current.isBefore(pickupDate, 'day');
+                                        return isPastDate || isBeforePickup;
                                     }}
                                 />
                             </Form.Item>

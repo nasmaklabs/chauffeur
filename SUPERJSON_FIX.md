@@ -224,3 +224,4 @@ SuperJSON is now configured globally for all tRPC routes. This means:
 🎉 **Your booking system should now work perfectly!**
 
 The 502 error is fixed and Date objects are properly handled.
+

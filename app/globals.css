@@ -125,3 +125,15 @@ footer a {
 .loading-text-fade {
   animation: fade-in-out 2s ease-in-out infinite;
 }
+
+@media (min-width: 1050px) {
+  .nav-desktop-show {
+    display: block !important;
+  }
+  .nav-desktop-flex {
+    display: flex !important;
+  }
+  .nav-mobile-hide {
+    display: none !important;
+  }
+}

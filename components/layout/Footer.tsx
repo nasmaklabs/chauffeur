@@ -11,10 +11,10 @@ const Footer = () => {
                     <div>
                         <div className="flex items-center gap-2 mb-6">
                             <div className="w-8 h-8 bg-primary rounded flex items-center justify-center text-secondary font-bold text-lg">
-                                T
+                                AA
                             </div>
                             <span className="text-xl font-bold tracking-tight">
-                                LUXE<span className="text-primary">RIDE</span>
+                                <span className="text-primary">Comfort</span>
                             </span>
                         </div>
                         <p className="text-gray-300 mb-6 leading-relaxed">
@@ -69,7 +69,7 @@ const Footer = () => {
                             </li>
                             <li className="flex items-center gap-3 text-gray-300">
                                 <span className="text-primary font-bold">✉️</span>
-                                <span>bookings@luxeride.com</span>
+                                <span>bookings@aacomfort.com</span>
                             </li>
                             <li className="flex items-center gap-3 text-gray-300">
                                 <span className="text-primary font-bold">🕒</span>
@@ -81,7 +81,7 @@ const Footer = () => {
 
                 <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                     <p className="text-gray-400 text-sm">
-                        © {new Date().getFullYear()} LuxeRide. All rights reserved.
+                        © {new Date().getFullYear()} AA Comfort. All rights reserved.
                     </p>
                     <div className="flex gap-6 text-sm text-gray-400">
                         <Link href="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>

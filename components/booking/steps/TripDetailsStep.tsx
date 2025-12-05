@@ -32,16 +32,28 @@ const TripDetailsStep = () => {
         }
     }, [tripDetails.pickupCoordinates, tripDetails.dropoffCoordinates]);
 
+    useEffect(() => {
+        if (tripDetails.pickupCoordinates && tripDetails.pickupLocation) form.validateFields(['pickupLocation']);
+    }, [tripDetails.pickupCoordinates, tripDetails.pickupLocation, form]);
+
+    useEffect(() => {
+        if (tripDetails.dropoffCoordinates && tripDetails.dropoffLocation) form.validateFields(['dropoffLocation']);
+    }, [tripDetails.dropoffCoordinates, tripDetails.dropoffLocation, form]);
+
     const handlePickupChange = (address: string, coordinates: Coordinates | null) => {
         setTripDetails({ ...tripDetails, pickupLocation: address, pickupCoordinates: coordinates });
+        form.setFieldsValue({ pickupLocation: address });
     };
 
     const handleDropoffChange = (address: string, coordinates: Coordinates | null) => {
         setTripDetails({ ...tripDetails, dropoffLocation: address, dropoffCoordinates: coordinates });
+        form.setFieldsValue({ dropoffLocation: address });
     };
 
     const formInitialValues = {
         ...tripDetails,
+        pickupLocation: tripDetails.pickupLocation,
+        dropoffLocation: tripDetails.dropoffLocation,
         date: tripDetails.date ? dayjs(tripDetails.date) : undefined,
         time: tripDetails.time ? dayjs(tripDetails.time, 'HH:mm') : undefined,
         returnDate: tripDetails.returnDate ? dayjs(tripDetails.returnDate) : undefined,
@@ -69,6 +81,7 @@ const TripDetailsStep = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Form.Item 
                         label="Pickup Location" 
+                        name="pickupLocation"
                         required
                         rules={[
                             { required: true, message: 'Please enter pickup location' },
@@ -85,6 +98,7 @@ const TripDetailsStep = () => {
                     {tripDetails.type !== 'hourly' && (
                         <Form.Item 
                             label="Drop-off Location" 
+                            name="dropoffLocation"
                             required
                             rules={[
                                 { required: true, message: 'Please enter drop-off location' },
@@ -140,7 +154,7 @@ const TripDetailsStep = () => {
                                 suffixIcon={<CalendarOutlined className="text-primary" />}
                                 onChange={value => {
                                     setTripDetails({ ...tripDetails, date: value ? value.format('YYYY-MM-DD') : '' });
-                                    form.validateFields(['time']); // Revalidate time when date changes
+                                    form.validateFields(['time']);
                                 }}
                                 disabledDate={(current) => current && current < dayjs().startOf('day')}
                             />
@@ -187,15 +201,14 @@ const TripDetailsStep = () => {
                                     suffixIcon={<CalendarOutlined className="text-primary" />}
                                     onChange={value => {
                                         setTripDetails({ ...tripDetails, returnDate: value ? value.format('YYYY-MM-DD') : undefined });
-                                        form.validateFields(['returnTime']); // Revalidate return time when return date changes
+                                        form.validateFields(['returnTime']);
                                     }}
                                     disabledDate={(current) => {
-                                        const pickupDate = form.getFieldValue('date');
                                         if (!current) return false;
-                                        // Disable past dates and dates before pickup
-                                        if (current < dayjs().startOf('day')) return true;
-                                        if (pickupDate && current.isBefore(pickupDate, 'day')) return true;
-                                        return false;
+                                        const pickupDate = form.getFieldValue('date');
+                                        const isPastDate = current < dayjs().startOf('day');
+                                        const isBeforePickup = pickupDate && current.isBefore(pickupDate, 'day');
+                                        return isPastDate || isBeforePickup;
                                     }}
                                 />
                             </Form.Item>

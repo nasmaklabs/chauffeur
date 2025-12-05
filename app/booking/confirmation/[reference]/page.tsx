@@ -64,7 +64,7 @@ export default function BookingConfirmationPage() {
                     <CheckCircleFilled className="text-6xl text-green-500 mb-4" />
                     <h1 className="text-3xl font-bold text-secondary mb-2">Booking Confirmed!</h1>
                     <p className="text-gray-600 mb-6">
-                        Thank you for choosing LuxeRide. Your booking has been confirmed.
+                        Thank you for choosing AA Comfort. Your booking has been confirmed.
                     </p>
                     
                     <div className="bg-primary/10 border-2 border-primary rounded-lg p-4 inline-block">

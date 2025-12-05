@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 async function main() {
     console.log('🌱 Seeding admin user...');
 
-    const email = 'admin@luxeride.com';
+    const email = 'admin@aacomfort.com';
     const password = 'admin123';
     const name = 'Admin User';
 

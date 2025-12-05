@@ -9,8 +9,8 @@ import TRPCProvider from "@/lib/trpc/Provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "LuxeRide - Premium Chauffeur Service",
-  description: "Book luxury taxis and chauffeur services for airport transfers, corporate travel, and special events. Experience comfort and style with LuxeRide.",
+  title: "AA Comfort - Premium Chauffeur Service",
+  description: "Book luxury taxis and chauffeur services for airport transfers, corporate travel, and special events. Experience comfort and style with AA Comfort.",
 };
 
 import Loader from "@/components/ui/Loader";

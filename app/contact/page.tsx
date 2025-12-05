@@ -49,8 +49,8 @@ const ContactPage = () => {
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-secondary mb-1">Email</h3>
-                                    <p className="text-gray-500">bookings@luxeride.com</p>
-                                    <p className="text-gray-500">support@luxeride.com</p>
+                                    <p className="text-gray-500">bookings@aacomfort.com</p>
+                                    <p className="text-gray-500">support@aacomfort.com</p>
                                 </div>
                             </div>
 

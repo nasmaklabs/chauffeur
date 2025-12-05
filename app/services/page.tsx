@@ -50,7 +50,7 @@ const ServicesPage = () => {
                 <div className="container mx-auto px-4 text-center">
                     <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Premium Services</h1>
                     <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                        Tailored luxury transport solutions for every occasion. Experience the difference with LuxeRide.
+                        Tailored luxury transport solutions for every occasion. Experience the difference with AA Comfort.
                     </p>
                 </div>
             </div>

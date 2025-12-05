@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
                     <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-4">
                         <span className="text-3xl font-bold text-white">T</span>
                     </div>
-                    <h1 className="text-3xl font-bold text-white mb-2">LuxeRide Admin</h1>
+                    <h1 className="text-3xl font-bold text-white mb-2">AA Comfort Admin</h1>
                     <p className="text-gray-400">Sign in to access the dashboard</p>
                 </div>
 
@@ -70,7 +70,7 @@ export default function AdminLoginPage() {
                         >
                             <Input
                                 prefix={<UserOutlined className="text-gray-400" />}
-                                placeholder="admin@luxeride.com"
+                                placeholder="admin@aacomfort.com"
                                 autoComplete="email"
                             />
                         </Form.Item>
@@ -107,7 +107,7 @@ export default function AdminLoginPage() {
 
                 {/* Footer */}
                 <p className="text-center text-gray-500 text-sm mt-6">
-                    © 2025 LuxeRide. All rights reserved.
+                    © 2025 AA Comfort. All rights reserved.
                 </p>
             </div>
         </div>

@@ -69,7 +69,7 @@ export const bookingStore = createStore<BookingState>(initialState, {
     devtools: { enabled: true },
     persist: {
         enabled: true,
-        name: 'luxeride-booking',
+        name: 'aacomfort-booking',
     },
 });
 

@@ -11,7 +11,7 @@ const AboutPage = () => {
             {/* Hero */}
             <div className="bg-secondary text-white py-20">
                 <div className="container mx-auto px-4 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-6">About LuxeRide</h1>
+                    <h1 className="text-4xl md:text-5xl font-bold mb-6">About AA Comfort</h1>
                     <p className="text-xl text-gray-400 max-w-2xl mx-auto">
                         Setting the standard for luxury chauffeur services since 2010.
                     </p>
@@ -23,7 +23,7 @@ const AboutPage = () => {
                     <div className="space-y-6">
                         <h2 className="text-3xl font-bold text-secondary">Our Story</h2>
                         <p className="text-gray-600 leading-relaxed">
-                            Founded with a vision to provide more than just transportation, LuxeRide has grown to become the premier chauffeur service in the region. We believe that the journey is just as important as the destination.
+                            Founded with a vision to provide more than just transportation, AA Comfort has grown to become the premier chauffeur service in the region. We believe that the journey is just as important as the destination.
                         </p>
                         <p className="text-gray-600 leading-relaxed">
                             Our commitment to excellence is reflected in our meticulously maintained fleet of luxury vehicles and our team of professional, highly trained chauffeurs. We cater to a diverse clientele, from corporate executives and celebrities to families and tourists, ensuring every ride is a seamless and enjoyable experience.
