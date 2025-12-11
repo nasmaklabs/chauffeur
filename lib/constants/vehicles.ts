@@ -6,7 +6,7 @@ export interface Vehicle {
   passengers: number;
   luggage: number;
   baseFare: number;
-  perKmRate: number;
+  perMileRate: number;
   features: string[];
 }
 
@@ -19,7 +19,7 @@ export const VEHICLES: Vehicle[] = [
     passengers: 4,
     luggage: 2,
     baseFare: 20,
-    perKmRate: 1.2,
+    perMileRate: 1.2,
     features: [
       "Air Conditioning",
       "Comfortable Seats",
@@ -35,7 +35,7 @@ export const VEHICLES: Vehicle[] = [
     passengers: 4,
     luggage: 2,
     baseFare: 25,
-    perKmRate: 1.5,
+    perMileRate: 1.5,
     features: [
       "Premium Seats",
       "Climate Control",
@@ -51,7 +51,7 @@ export const VEHICLES: Vehicle[] = [
     passengers: 4,
     luggage: 3,
     baseFare: 40,
-    perKmRate: 2.0,
+    perMileRate: 2.0,
     features: [
       "Leather Seats",
       "Privacy Glass",
@@ -67,7 +67,7 @@ export const VEHICLES: Vehicle[] = [
     passengers: 6,
     luggage: 4,
     baseFare: 45,
-    perKmRate: 2.2,
+    perMileRate: 2.2,
     features: [
       "Spacious Interior",
       "Extra Luggage Space",
@@ -83,7 +83,7 @@ export const VEHICLES: Vehicle[] = [
     passengers: 8,
     luggage: 6,
     baseFare: 60,
-    perKmRate: 2.5,
+    perMileRate: 2.5,
     features: [
       "Wheelchair Accessible",
       "Extra Luggage Space",

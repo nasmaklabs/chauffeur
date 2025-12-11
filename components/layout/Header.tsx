@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, Drawer } from "antd";
 import { MenuOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Button } from "@/components/ui/Button";
@@ -20,14 +21,16 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm shadow-sm">
-      <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center text-secondary font-bold text-xl">
-            AA
-          </div>
-          <span className="text-xl font-bold text-secondary tracking-tight">
-            <span className="text-primary">Comfort</span>
-          </span>
+      <div className="w-full pl-0 pr-4 md:pr-8 h-20 flex items-center justify-between">
+        <Link href="/" className="flex items-center shrink-0">
+          <Image
+            src="/images/logo.png"
+            alt="AA Comfort"
+            width={336}
+            height={100}
+            style={{ width: "336px", height: "auto", minHeight: "50px" }}
+            priority
+          />
         </Link>
 
         <nav className="hidden nav-desktop-show">
@@ -63,7 +66,15 @@ const Header = () => {
         </button>
 
         <Drawer
-          title="Menu"
+          title={
+            <Image
+              src="/images/logo.png"
+              alt="AA Comfort"
+              width={200}
+              height={60}
+              className="w-36 h-auto"
+            />
+          }
           placement="right"
           onClose={() => setMobileMenuOpen(false)}
           open={mobileMenuOpen}

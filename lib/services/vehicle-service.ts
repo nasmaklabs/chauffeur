@@ -10,7 +10,7 @@ export const calculateVehiclePrice = (
   vehicle: Vehicle,
   distance: number
 ): PricingResult => {
-  const distanceCharge = distance * vehicle.perKmRate;
+  const distanceCharge = distance * vehicle.perMileRate;
   const total = vehicle.baseFare + distanceCharge;
 
   return {

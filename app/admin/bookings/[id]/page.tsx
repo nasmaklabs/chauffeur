@@ -145,7 +145,7 @@ export default function BookingDetailsPage() {
                 <p className="text-gray-500">Distance</p>
                 <p className="font-semibold">
                   {booking.distance
-                    ? `${booking.distance.toFixed(2)} km`
+                    ? `${booking.distance.toFixed(2)} miles`
                     : "N/A"}
                 </p>
               </div>

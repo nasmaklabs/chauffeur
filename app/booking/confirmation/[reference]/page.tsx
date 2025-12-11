@@ -121,7 +121,8 @@ export default function BookingConfirmationPage() {
                 )}
                 {booking.distance && (
                   <p>
-                    <strong>Distance:</strong> {booking.distance.toFixed(2)} km
+                    <strong>Distance:</strong> {booking.distance.toFixed(2)}{" "}
+                    miles
                   </p>
                 )}
               </div>

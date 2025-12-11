@@ -194,7 +194,7 @@ export default function TrackBookingPage() {
                     {booking.distance && (
                       <p>
                         <strong>Distance:</strong> {booking.distance.toFixed(2)}{" "}
-                        km
+                        miles
                       </p>
                     )}
                   </div>

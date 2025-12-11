@@ -11,15 +11,15 @@ import { Button } from "@/components/ui/Button";
 
 interface VehiclePricing {
   baseFare: number;
-  perKmRate: number;
+  perMileRate: number;
 }
 
 const VEHICLE_PRICING: Record<string, VehiclePricing> = {
-  saloon: { baseFare: 20, perKmRate: 1.2 },
-  comfort: { baseFare: 25, perKmRate: 1.5 },
-  executive: { baseFare: 40, perKmRate: 2.0 },
-  mpv6: { baseFare: 45, perKmRate: 2.2 },
-  mpv7: { baseFare: 60, perKmRate: 2.5 },
+  saloon: { baseFare: 20, perMileRate: 1.2 },
+  comfort: { baseFare: 25, perMileRate: 1.5 },
+  executive: { baseFare: 40, perMileRate: 2.0 },
+  mpv6: { baseFare: 45, perMileRate: 2.2 },
+  mpv7: { baseFare: 60, perMileRate: 2.5 },
 };
 
 const PaymentStep = () => {
@@ -47,7 +47,7 @@ const PaymentStep = () => {
 
     const distance = tripDetails.distance || 0;
     const baseFare = vehiclePricing.baseFare;
-    const distanceCharge = distance * vehiclePricing.perKmRate;
+    const distanceCharge = distance * vehiclePricing.perMileRate;
     const subtotal = baseFare + distanceCharge;
     const taxes = subtotal * 0.1; // 10% tax
     const total = subtotal + taxes;
@@ -139,7 +139,7 @@ const PaymentStep = () => {
                 {tripDetails.distance && (
                   <p>
                     <strong>Distance:</strong> {tripDetails.distance.toFixed(2)}{" "}
-                    km
+                    miles
                   </p>
                 )}
               </div>
