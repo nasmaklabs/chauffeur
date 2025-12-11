@@ -1,66 +1,104 @@
 export interface Vehicle {
-    id: string;
-    name: string;
-    description: string;
-    image: string;
-    passengers: number;
-    luggage: number;
-    baseFare: number;
-    perKmRate: number;
-    features: string[];
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  passengers: number;
+  luggage: number;
+  baseFare: number;
+  perKmRate: number;
+  features: string[];
 }
 
 export const VEHICLES: Vehicle[] = [
-    { 
-        id: 'sedan', 
-        name: 'Executive Sedan', 
-        description: 'Perfect for business trips and airport transfers',
-        image: '/placeholder-car.png', 
-        passengers: 3, 
-        luggage: 2, 
-        baseFare: 25,
-        perKmRate: 1.5,
-        features: ['Free WiFi', 'Bottled Water', 'Leather Seats', 'Climate Control']
-    },
-    { 
-        id: 'luxury', 
-        name: 'Luxury Sedan', 
-        description: 'Premium comfort for special occasions',
-        image: '/placeholder-car.png', 
-        passengers: 3, 
-        luggage: 2, 
-        baseFare: 40,
-        perKmRate: 2.0,
-        features: ['Premium WiFi', 'Champagne Service', 'Nappa Leather', 'Privacy Glass']
-    },
-    { 
-        id: 'suv', 
-        name: 'Luxury SUV', 
-        description: 'Spacious and comfortable for families',
-        image: '/placeholder-car.png', 
-        passengers: 5, 
-        luggage: 4, 
-        baseFare: 45,
-        perKmRate: 2.2,
-        features: ['Free WiFi', 'Extra Luggage Space', 'Panoramic Roof', 'Premium Sound']
-    },
-    { 
-        id: 'van', 
-        name: 'Luxury Van', 
-        description: 'Ideal for groups and extra luggage',
-        image: '/placeholder-car.png', 
-        passengers: 7, 
-        luggage: 7, 
-        baseFare: 60,
-        perKmRate: 2.5,
-        features: ['Conference Seating', 'Electric Doors', 'Tables', 'Extra Luggage Space']
-    },
+  {
+    id: "saloon",
+    name: "Saloon",
+    description: "Standard saloon car for everyday comfortable travel",
+    image: "/images/saloon.png",
+    passengers: 4,
+    luggage: 2,
+    baseFare: 20,
+    perKmRate: 1.2,
+    features: [
+      "Air Conditioning",
+      "Comfortable Seats",
+      "Bluetooth Audio",
+      "USB Charging",
+    ],
+  },
+  {
+    id: "comfort",
+    name: "Comfort",
+    description: "Enhanced comfort for a relaxed journey",
+    image: "/images/comfort.png",
+    passengers: 4,
+    luggage: 2,
+    baseFare: 25,
+    perKmRate: 1.5,
+    features: [
+      "Premium Seats",
+      "Climate Control",
+      "Free WiFi",
+      "Bottled Water",
+    ],
+  },
+  {
+    id: "executive",
+    name: "Executive",
+    description: "Premium executive vehicles for business travel",
+    image: "/images/exacutive.png",
+    passengers: 4,
+    luggage: 3,
+    baseFare: 40,
+    perKmRate: 2.0,
+    features: [
+      "Leather Seats",
+      "Privacy Glass",
+      "Premium WiFi",
+      "Complimentary Refreshments",
+    ],
+  },
+  {
+    id: "mpv6",
+    name: "MPV 6",
+    description: "Multi-purpose vehicle for groups up to 6 passengers",
+    image: "/images/mpv6.png",
+    passengers: 6,
+    luggage: 4,
+    baseFare: 45,
+    perKmRate: 2.2,
+    features: [
+      "Spacious Interior",
+      "Extra Luggage Space",
+      "Climate Control",
+      "Sliding Doors",
+    ],
+  },
+  {
+    id: "mpv7",
+    name: "MPV 7 (Mini Bus 8 Seater)",
+    description: "Wheelchair-accessible minibus for larger groups",
+    image: "/images/minbus.png",
+    passengers: 8,
+    luggage: 6,
+    baseFare: 60,
+    perKmRate: 2.5,
+    features: [
+      "Wheelchair Accessible",
+      "Extra Luggage Space",
+      "Climate Control",
+      "Easy Access Doors",
+    ],
+  },
 ];
 
 export const VEHICLE_OPTIONS = [
-    { value: 'sedan', label: 'Executive Sedan' },
-    { value: 'luxury', label: 'Luxury Sedan' },
-    { value: 'suv', label: 'SUV' },
-    { value: 'van', label: 'Luxury Van' },
+  { value: "saloon", label: "Saloon" },
+  { value: "comfort", label: "Comfort" },
+  { value: "executive", label: "Executive" },
+  { value: "mpv6", label: "MPV 6" },
+  { value: "mpv7", label: "MPV 7 (Mini Bus 8 Seater)" },
 ] as const;
 
+export type VehicleId = "saloon" | "comfort" | "executive" | "mpv6" | "mpv7";
