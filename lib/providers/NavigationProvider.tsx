@@ -1,34 +1,45 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { loadingStore } from '@/lib/store/loadingStore';
+import { useEffect, Suspense } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { loadingStore } from "@/lib/store/loadingStore";
 
-export default function NavigationProvider({ children }: { children: React.ReactNode }) {
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
+function NavigationHandler({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-    useEffect(() => {
-        // Show loader on route change
-        loadingStore.set('isLoading', true);
+  useEffect(() => {
+    // Show loader on route change
+    loadingStore.set("isLoading", true);
 
-        // Hide loader after a short delay to ensure page is rendered
-        const timer = setTimeout(() => {
-            loadingStore.set('isLoading', false);
-        }, 300);
+    // Hide loader after a short delay to ensure page is rendered
+    const timer = setTimeout(() => {
+      loadingStore.set("isLoading", false);
+    }, 300);
 
-        return () => clearTimeout(timer);
-    }, [pathname, searchParams]);
+    return () => clearTimeout(timer);
+  }, [pathname, searchParams]);
 
-    // Hide loader on initial mount
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            loadingStore.set('isLoading', false);
-        }, 500);
+  // Hide loader on initial mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      loadingStore.set("isLoading", false);
+    }, 500);
 
-        return () => clearTimeout(timer);
-    }, []);
+    return () => clearTimeout(timer);
+  }, []);
 
-    return <>{children}</>;
+  return <>{children}</>;
 }
 
+export default function NavigationProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <Suspense fallback={null}>
+      <NavigationHandler>{children}</NavigationHandler>
+    </Suspense>
+  );
+}
