@@ -8,7 +8,6 @@ export const BRAND = {
     support: "support@aacomfort.com",
     admin: "admin@aacomfort.com",
   },
-  phone: "+1 (555) 123-4567",
   storage: {
     bookingKey: "aacomfort-booking",
   },

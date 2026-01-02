@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, Drawer } from "antd";
-import { MenuOutlined, PhoneOutlined } from "@ant-design/icons";
+import { MenuOutlined } from "@ant-design/icons";
 import { Button } from "@/components/ui/Button";
 
 const Header = () => {
@@ -44,10 +44,6 @@ const Header = () => {
         </nav>
 
         <div className="hidden nav-desktop-flex items-center gap-4">
-          <div className="flex items-center gap-2 text-secondary font-medium">
-            <PhoneOutlined className="text-primary" />
-            <span>+1 (555) 123-4567</span>
-          </div>
           <Link href="/booking">
             <Button
               type="primary"
@@ -86,10 +82,6 @@ const Header = () => {
             onClick={() => setMobileMenuOpen(false)}
           />
           <div className="mt-8 flex flex-col gap-4">
-            <div className="flex items-center gap-2 text-secondary font-medium">
-              <PhoneOutlined className="text-primary" />
-              <span>+1 (555) 123-4567</span>
-            </div>
             <Link href="/booking" onClick={() => setMobileMenuOpen(false)}>
               <Button
                 type="primary"

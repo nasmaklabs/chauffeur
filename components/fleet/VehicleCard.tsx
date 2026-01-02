@@ -15,6 +15,7 @@ interface VehicleProps {
   luggage: number;
   price?: string;
   features?: string[];
+  description?: string;
   selectionMode?: boolean;
   isSelected?: boolean;
   priceBreakdown?: {
@@ -33,6 +34,7 @@ const VehicleCard: React.FC<VehicleProps> = ({
   luggage,
   price,
   features,
+  description,
   selectionMode = false,
   isSelected = false,
   priceBreakdown,
@@ -87,7 +89,9 @@ const VehicleCard: React.FC<VehicleProps> = ({
       {/* Content */}
       <div className="p-5 flex flex-col flex-grow">
         <h3 className="text-lg font-bold text-secondary mb-2">{name}</h3>
-
+        {description && (
+          <p className="text-sm text-gray-600 mb-2">{description}</p>
+        )}
         <div className="flex gap-4 text-gray-500 mb-3 text-sm">
           <div className="flex items-center gap-1">
             <UserOutlined /> <span>{passengers}</span>
@@ -98,6 +102,26 @@ const VehicleCard: React.FC<VehicleProps> = ({
           <div className="flex items-center gap-1">
             <WifiOutlined /> <span>WiFi</span>
           </div>
+          {features?.includes("Wheelchair Accessible") && (
+            <div
+              className="flex items-center gap-1"
+              title="Wheelchair accessible"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                width="18px"
+                height="18px"
+                fill="currentColor"
+                className="text-gray-500"
+                aria-hidden="true"
+              >
+                <path d="m443.4,324.1v-149.5c0-11.3-9.1-20.4-20.4-20.4h-82.9v-40.5c0-11.3-9.1-20.4-20.4-20.4h-116c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h95.5v20.1h-135v-95.1c0-11.3-9.1-20.4-20.4-20.4h-112.3c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h91.9v168.5c-48.6,13.3-84.4,57.8-84.4,110.5 0,63.1 51.3,114.5 114.5,114.5 49,0 90.9-30.9 107.2-74.3h90.6c0.9,40.6 34.1,73.3 74.9,73.3 41.3,0 75-33.6 75-75-0.1-35.4-24.8-65.1-57.8-72.9zm-40.9,1.8c-16.9,5.6-31.1,17.1-40.2,31.9h-94.4c-0.3-59.2-45.8-107.8-103.6-113.3v-49.5h238.3v130.9zm-249.1,106.2c-40.6,0-73.6-33-73.6-73.6 0-40.6 33-73.6 73.6-73.6 40.6,0 73.6,33 73.6,73.6 0,40.6-33.1,73.6-73.6,73.6zm272.7-1c-18.8,0-34.1-15.3-34.1-34.1 0-18.8 15.3-34.1 34.1-34.1 18.8,0 34.1,15.3 34.1,34.1 0,18.8-15.3,34.1-34.1,34.1z" />
+                <path d="m276.4,290h21.2v21.2c0,11.3 9.1,20.4 20.4,20.4 11.3,0 20.4-9.1 20.4-20.4v-21.2h21.2c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4h-21.2v-21.2c0-11.3-9.1-20.4-20.4-20.4-11.3,0-20.4,9.1-20.4,20.4v21.2h-21.2c-11.3,0-20.4,9.1-20.4,20.4 2.84217e-14,11.2 9.1,20.4 20.4,20.4z" />
+              </svg>
+              <span>Wheelchair</span>
+            </div>
+          )}
         </div>
 
         {features && (

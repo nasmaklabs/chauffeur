@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import {
   FacebookFilled,
   TwitterSquareFilled,
@@ -75,14 +74,6 @@ const Footer = () => {
                   className="text-gray-300 hover:text-primary transition-colors"
                 >
                   Corporate Travel
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/services"
-                  className="text-gray-300 hover:text-primary transition-colors"
-                >
-                  Wedding Chauffeur
                 </Link>
               </li>
               <li>
@@ -187,10 +178,7 @@ const Footer = () => {
                 <span className="text-primary font-bold">📍</span>
                 <span>123 Luxury Lane, Business District, London, UK</span>
               </li>
-              <li className="flex items-center gap-3 text-gray-300">
-                <span className="text-primary font-bold">📞</span>
-                <span>+1 (555) 123-4567</span>
-              </li>
+              {/* phone removed */}
               <li className="flex items-center gap-3 text-gray-300">
                 <span className="text-primary font-bold">✉️</span>
                 <span>bookings@aacomfort.com</span>

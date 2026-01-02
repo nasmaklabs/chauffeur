@@ -15,17 +15,22 @@ const FleetPage = () => {
   const vehicleCategories: Record<string, string> = {
     saloon: "saloon",
     comfort: "comfort",
-    executive: "executive",
     mpv6: "mpv",
     mpv7: "mpv",
   };
 
   // Create fleet display data from VEHICLES constant
-  const vehicles = VEHICLES.map((vehicle) => ({
+  const vehicles = VEHICLES.map((vehicle, idx) => ({
     id: vehicle.id,
     name: vehicle.name,
     category: vehicleCategories[vehicle.id] || "other",
-    image: vehicle.image,
+    // Alternate comfort images deterministically based on index
+    image:
+      vehicle.id === "comfort"
+        ? idx % 2 === 0
+          ? "/images/comfort.png"
+          : "/images/exacutive.png"
+        : vehicle.image,
     passengers: vehicle.passengers,
     luggage: vehicle.luggage,
     price: `£${vehicle.baseFare}+`,
@@ -66,7 +71,6 @@ const FleetPage = () => {
             <Radio.Button value="all">All Vehicles</Radio.Button>
             <Radio.Button value="saloon">Saloon</Radio.Button>
             <Radio.Button value="comfort">Comfort</Radio.Button>
-            <Radio.Button value="executive">Executive</Radio.Button>
             <Radio.Button value="mpv">MPV</Radio.Button>
           </Radio.Group>
 
@@ -92,6 +96,7 @@ const FleetPage = () => {
                 luggage={vehicle.luggage}
                 price={vehicle.price}
                 features={vehicle.features}
+                description={vehicle.description}
               />
             </div>
           ))}
@@ -102,52 +107,6 @@ const FleetPage = () => {
             No vehicles found matching your criteria.
           </div>
         )}
-
-        {/* Additional Info */}
-        <div className="mt-16 bg-white rounded-xl p-8 shadow-sm">
-          <h2 className="text-2xl font-bold text-secondary mb-4">
-            Vehicle Types
-          </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 text-sm text-gray-600">
-            <div>
-              <h3 className="font-semibold text-secondary mb-2">Saloon</h3>
-              <p>
-                Standard comfortable saloon car, perfect for everyday travel
-                with up to 4 passengers.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-secondary mb-2">Comfort</h3>
-              <p>
-                Enhanced comfort vehicles with premium amenities for a more
-                relaxed journey.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-secondary mb-2">Executive</h3>
-              <p>
-                Premium executive vehicles ideal for business travel and special
-                occasions.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-secondary mb-2">MPV 6</h3>
-              <p>
-                Multi-purpose vehicle accommodating up to 6 passengers with
-                extra luggage space.
-              </p>
-            </div>
-            <div>
-              <h3 className="font-semibold text-secondary mb-2">
-                MPV 7 (Mini Bus)
-              </h3>
-              <p>
-                8-seater wheelchair-accessible minibus for larger groups and
-                special accessibility needs.
-              </p>
-            </div>
-          </div>
-        </div>
       </Section>
     </div>
   );

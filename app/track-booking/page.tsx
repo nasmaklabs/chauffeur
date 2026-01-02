@@ -8,7 +8,6 @@ import {
   EnvironmentOutlined,
   CalendarOutlined,
   UserOutlined,
-  PhoneOutlined,
   MailOutlined,
   CarOutlined,
 } from "@ant-design/icons";
@@ -249,9 +248,7 @@ export default function TrackBookingPage() {
                     <p className="flex items-center gap-2">
                       <MailOutlined /> {booking.email}
                     </p>
-                    <p className="flex items-center gap-2">
-                      <PhoneOutlined /> {booking.phone}
-                    </p>
+                    {/* phone removed */}
                     {booking.flightNumber && (
                       <p>
                         <strong>Flight:</strong> {booking.flightNumber}

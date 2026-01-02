@@ -2,39 +2,60 @@
 
 :root {
   /* Brand Colors */
-  --primary: #F7C600;
-  /* Taxi Yellow */
-  --secondary: #1A1A1A;
+  --primary: #867406;
+  /* Taxi Yellow (updated) */
+  --primary-bright: #bfae2a; /* brighter variant of brand yellow for high-contrast use */
+  --secondary: #1a1a1a;
   /* Deep Charcoal */
 
   /* Functional Colors */
-  --action: #2563EB;
+  --action: #2563eb;
   /* Trust Blue */
-  --success: #16A34A;
+  --success: #16a34a;
   /* Confirmation Green */
-  --error: #DC2626;
+  --error: #dc2626;
   /* Error Red */
-  --warning: #F59E0B;
-  /* Warning Amber */
-  --info: #3B82F6;
+  --warning: #867406;
+  /* Warning (mapped to brand yellow) */
+  --info: #3b82f6;
   /* Info Blue */
 
   /* Neutral Colors */
-  --background: #FFFFFF;
+  --background: #ffffff;
   /* Pure White */
-  --surface: #F5F5F5;
+  --surface: #f5f5f5;
   /* Light Gray */
-  --border: #E5E7EB;
+  --border: #e5e7eb;
 
   /* Text Colors */
-  --foreground: #1A1A1A;
+  --foreground: #1a1a1a;
   /* Deep Charcoal */
-  --text-secondary: #6B7280;
+  --text-secondary: #6b7280;
   /* Dark Gray */
-  --text-placeholder: #9CA3AF;
+  --text-placeholder: #9ca3af;
   /* Medium Gray */
 
-  --font-inter: 'Inter', sans-serif;
+  --font-inter: "Inter", sans-serif;
+}
+
+/* Override Tailwind's yellow palette variables so utility classes like
+   bg-yellow-50 / text-yellow-800 map to our brand yellow. These are
+   intentionally approximate tints of #867406 to preserve contrast. */
+:root {
+  /* Refined yellow palette tuned to brand #867406.
+     --color-yellow-500 delegates to --primary so the central shade
+     always matches the brand color. Lighter shades are suitable for
+     backgrounds; darker shades are for text/accents. */
+  --color-yellow-50: #fffbeb;
+  --color-yellow-100: #fff6d6;
+  --color-yellow-200: #ffecb2;
+  --color-yellow-300: #ffe28d;
+  --color-yellow-400: #ffd76a;
+  --color-yellow-500: var(--primary); /* brand */
+  --color-yellow-600: #785f05;
+  --color-yellow-700: #674a04;
+  --color-yellow-800: #4e3603;
+  --color-yellow-900: #352602;
 }
 
 @theme {
@@ -63,15 +84,20 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-inter);
-}
-
-/* Reset link colors globally */
-a {
-  color: inherit;
-  text-decoration: none;
+  /* Refined yellow palette tuned to brand #867406.
+     --color-yellow-500 delegates to --primary so the central shade
+     always matches the brand color. Lighter shades are suitable for
+     backgrounds; darker shades are for text/accents. */
+  --color-yellow-50: #fffbeb;
+  --color-yellow-100: #fff6d6;
+  --color-yellow-200: #ffecb2;
+  --color-yellow-300: #ffe28d;
+  --color-yellow-400: #ffd76a;
+  --color-yellow-500: var(--primary); /* brand */
+  --color-yellow-600: #785f05;
+  --color-yellow-700: #674a04;
+  --color-yellow-800: #4e3603;
+  --color-yellow-900: #352602;
 }
 
 /* Footer specific link styling */
@@ -81,7 +107,8 @@ footer a {
 }
 
 @keyframes taxi-move {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0) translateY(0);
   }
   25% {
@@ -114,7 +141,8 @@ footer a {
 }
 
 @keyframes fade-in-out {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.6;
   }
   50% {

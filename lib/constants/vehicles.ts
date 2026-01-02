@@ -30,7 +30,8 @@ export const VEHICLES: Vehicle[] = [
   {
     id: "comfort",
     name: "Comfort",
-    description: "Enhanced comfort for a relaxed journey",
+    description:
+      "Enhanced comfort with premium amenities. A BMW or Mercedes will be provided — one of the cars shown in the pictures will be supplied for your journey.",
     image: "/images/comfort.png",
     passengers: 4,
     luggage: 2,
@@ -41,22 +42,6 @@ export const VEHICLES: Vehicle[] = [
       "Climate Control",
       "Free WiFi",
       "Bottled Water",
-    ],
-  },
-  {
-    id: "executive",
-    name: "Executive",
-    description: "Premium executive vehicles for business travel",
-    image: "/images/exacutive.png",
-    passengers: 4,
-    luggage: 3,
-    baseFare: 40,
-    perMileRate: 2.0,
-    features: [
-      "Leather Seats",
-      "Privacy Glass",
-      "Premium WiFi",
-      "Complimentary Refreshments",
     ],
   },
   {
@@ -79,7 +64,7 @@ export const VEHICLES: Vehicle[] = [
     id: "mpv7",
     name: "MPV 7 (Mini Bus 8 Seater)",
     description: "Wheelchair-accessible minibus for larger groups",
-    image: "/images/minbus.png",
+    image: "/images/mpv7.png",
     passengers: 8,
     luggage: 6,
     baseFare: 60,
@@ -96,9 +81,8 @@ export const VEHICLES: Vehicle[] = [
 export const VEHICLE_OPTIONS = [
   { value: "saloon", label: "Saloon" },
   { value: "comfort", label: "Comfort" },
-  { value: "executive", label: "Executive" },
   { value: "mpv6", label: "MPV 6" },
   { value: "mpv7", label: "MPV 7 (Mini Bus 8 Seater)" },
 ] as const;
 
-export type VehicleId = "saloon" | "comfort" | "executive" | "mpv6" | "mpv7";
+export type VehicleId = "saloon" | "comfort" | "mpv6" | "mpv7";

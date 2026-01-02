@@ -8,7 +8,6 @@ import {
   ClockCircleOutlined,
   GlobalOutlined,
   DollarOutlined,
-  CarOutlined,
   CoffeeOutlined,
   ArrowRightOutlined,
 } from "@ant-design/icons";
@@ -25,14 +24,22 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       <section className="relative min-h-[90vh] flex items-center justify-center pt-20 pb-16 overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40 z-10" />
-          <div className="w-full h-full bg-gray-900 relative" />
+          <Image
+            src="/images/bg.png"
+            alt="Hero background"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-black/30 z-10" />
         </div>
 
         <div className="container mx-auto px-4 relative z-20 grid lg:grid-cols-[1fr_1.3fr] xl:grid-cols-[1fr_1.4fr] gap-12 items-center">
           <div className="text-white space-y-6">
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-              Premium <span className="text-primary">Chauffeur</span> Service
+              Premium{" "}
+              <span style={{ color: "var(--primary-bright)" }}>Chauffeur</span>{" "}
+              Service
             </h1>
             <p className="text-xl text-gray-200 max-w-xl leading-relaxed">
               Experience the ultimate in luxury travel. Professional chauffeurs,
@@ -82,12 +89,6 @@ export default function Home() {
             link="/services#corporate"
           />
           <ServiceCard
-            title="Wedding Chauffeur"
-            description="Make your special day perfect with our luxury wedding car hire service."
-            icon={<CarOutlined />}
-            link="/services#wedding"
-          />
-          <ServiceCard
             title="Events & Occasions"
             description="Arrive in style at sporting events, concerts, proms, and special celebrations."
             icon={<CoffeeOutlined />}
@@ -127,15 +128,22 @@ export default function Home() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {VEHICLES.slice(0, 3).map((vehicle) => (
+          {VEHICLES.slice(0, 3).map((vehicle, idx) => (
             <VehicleCard
               key={vehicle.id}
               name={vehicle.name}
-              image={vehicle.image}
+              image={
+                vehicle.id === "comfort"
+                  ? idx % 2 === 0
+                    ? "/images/comfort.png"
+                    : "/images/exacutive.png"
+                  : vehicle.image
+              }
               passengers={vehicle.passengers}
               luggage={vehicle.luggage}
               price={`£${vehicle.baseFare}+`}
               features={vehicle.features}
+              description={vehicle.description}
             />
           ))}
         </div>
@@ -257,7 +265,7 @@ export default function Home() {
           <TestimonialCard
             name="Emma Thompson"
             rating={5}
-            text="Booked a vintage Rolls Royce for my wedding. It was the highlight of the day! The chauffeur was so professional and kind."
+            text="Booked a vintage Rolls Royce — it was the highlight of the day! The chauffeur was so professional and kind."
           />
         </div>
       </Section>
@@ -282,15 +290,7 @@ export default function Home() {
                 Book Online Now
               </Button>
             </Link>
-            <a href="tel:+15551234567">
-              <Button
-                size="large"
-                ghost
-                className="h-14 px-10 text-lg font-bold border-2 w-full sm:w-auto hover:text-primary hover:border-primary"
-              >
-                Call +1 (555) 123-4567
-              </Button>
-            </a>
+            {/* phone call button removed */}
           </div>
         </div>
       </section>

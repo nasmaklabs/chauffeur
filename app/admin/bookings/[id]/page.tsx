@@ -7,7 +7,6 @@ import {
   EnvironmentOutlined,
   CalendarOutlined,
   UserOutlined,
-  PhoneOutlined,
   MailOutlined,
   CarOutlined,
 } from "@ant-design/icons";
@@ -215,12 +214,7 @@ export default function BookingDetailsPage() {
                   {booking.firstName} {booking.lastName}
                 </p>
               </div>
-              <div>
-                <p className="text-gray-500">Phone</p>
-                <p className="font-semibold flex items-center gap-1">
-                  <PhoneOutlined /> {booking.phone}
-                </p>
-              </div>
+              {/* phone removed */}
               <div>
                 <p className="text-gray-500">Email</p>
                 <p className="font-semibold flex items-center gap-1">

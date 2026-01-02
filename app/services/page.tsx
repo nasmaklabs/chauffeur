@@ -38,20 +38,6 @@ const ServicesPage = () => {
       reverse: true,
     },
     {
-      id: "wedding",
-      title: "Wedding Chauffeur",
-      description:
-        "Make your special day unforgettable with our luxury wedding car hire service. We offer a range of premium vehicles to suit your style, complete with ribbons and a professional chauffeur.",
-      features: [
-        "Decorated Vehicles",
-        "Uniformed Chauffeurs",
-        "Champagne Service",
-        "Red Carpet Arrival",
-      ],
-      image: "/images/weddings.png",
-      reverse: false,
-    },
-    {
       id: "events",
       title: "Events & Occasions",
       description:

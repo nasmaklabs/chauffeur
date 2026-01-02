@@ -42,7 +42,7 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
     const requiredPassengers = tripDetails.passengers || 1;
     const requiredLuggage = tripDetails.luggage || 0;
 
-    return vehicles.map((vehicle) => {
+    return vehicles.map((vehicle, idx) => {
       const suitable = isVehicleSuitable(
         vehicle,
         requiredPassengers,
@@ -53,6 +53,13 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
 
       return {
         ...vehicle,
+        // Alternate comfort images between comfort and executive to reflect BMW/Mercedes
+        image:
+          vehicle.id === "comfort"
+            ? idx % 2 === 0
+              ? "/images/comfort.png"
+              : "/images/exacutive.png"
+            : vehicle.image,
         isSuitable: suitable,
         priceBreakdown,
         badge,
@@ -109,6 +116,7 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
               image={vehicle.image}
               passengers={vehicle.passengers}
               luggage={vehicle.luggage}
+              description={vehicle.description}
               features={vehicle.features}
               selectionMode={true}
               isSelected={selectedVehicle === vehicle.id}

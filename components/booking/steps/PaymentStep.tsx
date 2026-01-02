@@ -1,26 +1,18 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { Form, Radio, Checkbox, Divider } from "antd";
-import { CreditCardOutlined, BankOutlined } from "@ant-design/icons";
-import { Input } from "@/components/ui/Input";
-import { useBookingStore } from "@/lib/store/bookingStore";
+import { Checkbox, Divider } from "antd";
+import {
+  useBookingStore,
+  calculateFareForTrip,
+} from "@/lib/store/bookingStore";
 import { trpc } from "@/lib/trpc/client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
 
-interface VehiclePricing {
-  baseFare: number;
-  perMileRate: number;
-}
-
-const VEHICLE_PRICING: Record<string, VehiclePricing> = {
-  saloon: { baseFare: 20, perMileRate: 1.2 },
-  comfort: { baseFare: 25, perMileRate: 1.5 },
-  executive: { baseFare: 40, perMileRate: 2.0 },
-  mpv6: { baseFare: 45, perMileRate: 2.2 },
-  mpv7: { baseFare: 60, perMileRate: 2.5 },
-};
+// Pricing is computed centrally via `calculateFareForTrip` so both vehicle
+// selection and payment pages show the same numbers. Taxes are applied on
+// the subtotal returned by the fare calculator.
 
 const PaymentStep = () => {
   const router = useRouter();
@@ -38,28 +30,53 @@ const PaymentStep = () => {
     },
   });
 
-  // Calculate pricing
+  // Calculate pricing using the shared helper. We infer airport legs from
+  // the pickup/dropoff location strings by checking for the word 'airport'.
   const pricing = useMemo(() => {
     if (!selectedVehicle) return null;
 
-    const vehiclePricing = VEHICLE_PRICING[selectedVehicle];
-    if (!vehiclePricing) return null;
-
     const distance = tripDetails.distance || 0;
-    const baseFare = vehiclePricing.baseFare;
-    const distanceCharge = distance * vehiclePricing.perMileRate;
-    const subtotal = baseFare + distanceCharge;
-    const taxes = subtotal * 0.1; // 10% tax
-    const total = subtotal + taxes;
+
+    const pickupIsAirport = !!tripDetails.pickupLocation
+      ? tripDetails.pickupLocation.toLowerCase().includes("airport")
+      : false;
+    const dropoffIsAirport = !!tripDetails.dropoffLocation
+      ? tripDetails.dropoffLocation.toLowerCase().includes("airport")
+      : false;
+
+    const fare = calculateFareForTrip({
+      vehicleId: selectedVehicle,
+      distanceMiles: distance,
+      meetAndGreet: useBookingStore.getState().extras.meetAndGreet,
+      pickupIsAirport,
+      dropoffIsAirport,
+      // waitingMinutes not captured in UI currently
+    });
+
+    if (!fare) return null;
+
+    // Subtotal (no tax applied here — taxes temporarily disabled per request)
+    const subtotal =
+      fare.baseFare +
+      fare.distanceCharge +
+      fare.meetAndGreetCharge +
+      fare.airportCharge +
+      fare.waitingCharge;
+    // const taxes = parseFloat((subtotal * 0.1).toFixed(2)); // 10% tax (disabled)
+    const total = parseFloat(subtotal.toFixed(2));
 
     return {
-      baseFare,
-      distanceCharge,
+      ...fare,
       subtotal,
-      taxes,
+      // taxes,
       total,
     };
-  }, [selectedVehicle, tripDetails.distance]);
+  }, [
+    selectedVehicle,
+    tripDetails.distance,
+    tripDetails.pickupLocation,
+    tripDetails.dropoffLocation,
+  ]);
 
   const handleConfirmBooking = () => {
     if (!acceptedTerms) {
@@ -70,7 +87,7 @@ const PaymentStep = () => {
       !passengerDetails.firstName ||
       !passengerDetails.lastName ||
       !passengerDetails.email ||
-      !passengerDetails.phone
+      false
     ) {
       return;
     }
@@ -94,7 +111,6 @@ const PaymentStep = () => {
       firstName: passengerDetails.firstName,
       lastName: passengerDetails.lastName,
       email: passengerDetails.email,
-      phone: passengerDetails.phone,
       flightNumber: passengerDetails.flightNumber,
       notes: passengerDetails.notes,
       baseFare: pricing?.baseFare,
@@ -159,9 +175,7 @@ const PaymentStep = () => {
                 <p>
                   <strong>Email:</strong> {passengerDetails.email}
                 </p>
-                <p>
-                  <strong>Phone:</strong> {passengerDetails.phone}
-                </p>
+                {/* phone removed */}
                 {passengerDetails.flightNumber && (
                   <p>
                     <strong>Flight:</strong> {passengerDetails.flightNumber}
@@ -219,12 +233,14 @@ const PaymentStep = () => {
                   £{pricing.distanceCharge.toFixed(2)}
                 </span>
               </div>
+              {/* Taxes & Fees (10%) - temporarily disabled per request
               <div className="flex justify-between text-gray-600">
                 <span>Taxes & Fees (10%)</span>
                 <span className="font-semibold">
                   £{pricing.taxes.toFixed(2)}
                 </span>
               </div>
+              */}
               <Divider className="my-2" />
               <div className="flex justify-between text-lg font-bold text-secondary">
                 <span>Total</span>
