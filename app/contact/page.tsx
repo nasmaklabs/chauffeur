@@ -6,6 +6,8 @@ import { MailOutlined, EnvironmentOutlined } from "@ant-design/icons";
 import Section from "@/components/ui/Section";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
+import { ADDRESS } from "@/lib/constants/address";
+import { BRAND } from "@/lib/constants/brand";
 
 const ContactPage = () => {
   const { message } = App.useApp();
@@ -43,8 +45,14 @@ const ContactPage = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-secondary mb-1">Email</h3>
-                  <p className="text-gray-500">bookings@aacomfort.com</p>
-                  <p className="text-gray-500">support@aacomfort.com</p>
+                  <p className="text-gray-500">
+                    <a
+                      href={`mailto:${BRAND.email.bookings}`}
+                      className="hover:underline"
+                    >
+                      {BRAND.email.bookings}
+                    </a>
+                  </p>
                 </div>
               </div>
 
@@ -54,15 +62,24 @@ const ContactPage = () => {
                 </div>
                 <div>
                   <h3 className="font-bold text-secondary mb-1">Office</h3>
-                  <p className="text-gray-500">123 Luxury Lane, Suite 100</p>
-                  <p className="text-gray-500">Beverly Hills, CA 90210</p>
+                  <p className="text-gray-500">{ADDRESS}</p>
                 </div>
               </div>
             </div>
 
-            {/* Map Placeholder */}
-            <div className="w-full h-64 bg-gray-200 rounded-xl flex items-center justify-center text-gray-400 font-bold">
-              Google Maps Integration
+            {/* Map Preview (embedded iframe using the address constant) */}
+            <div className="w-full h-64 rounded-xl overflow-hidden">
+              <iframe
+                title="Office location"
+                src={`https://www.google.com/maps?q=${encodeURIComponent(
+                  ADDRESS
+                )}&output=embed`}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </div>
           </div>
 

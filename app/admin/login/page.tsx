@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+// Image import removed (unused)
 import { Form, App } from "antd";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
@@ -70,7 +70,7 @@ export default function AdminLoginPage() {
             >
               <Input
                 prefix={<UserOutlined className="text-gray-400" />}
-                placeholder="admin@aacomfort.com"
+                placeholder="info.aaccltd@gmail.com"
                 autoComplete="email"
               />
             </Form.Item>

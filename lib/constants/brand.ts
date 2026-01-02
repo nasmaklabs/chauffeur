@@ -4,9 +4,9 @@ export const BRAND = {
   domain: "aacomfort.com",
   logo: "/images/logo.png",
   email: {
-    bookings: "bookings@aacomfort.com",
-    support: "support@aacomfort.com",
-    admin: "admin@aacomfort.com",
+    bookings: "info.aaccltd@gmail.com",
+    support: "info.aaccltd@gmail.com",
+    admin: "info.aaccltd@gmail.com",
   },
   storage: {
     bookingKey: "aacomfort-booking",

@@ -6,6 +6,8 @@ import {
   InstagramFilled,
   LinkedinFilled,
 } from "@ant-design/icons";
+import { ADDRESS } from "@/lib/constants/address";
+import { BRAND } from "@/lib/constants/brand";
 
 const Footer = () => {
   return (
@@ -176,12 +178,19 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-gray-300">
                 <span className="text-primary font-bold">📍</span>
-                <span>123 Luxury Lane, Business District, London, UK</span>
+                <span>{ADDRESS}</span>
               </li>
               {/* phone removed */}
               <li className="flex items-center gap-3 text-gray-300">
                 <span className="text-primary font-bold">✉️</span>
-                <span>bookings@aacomfort.com</span>
+                <span>
+                  <a
+                    href={`mailto:${BRAND.email.bookings}`}
+                    className="hover:underline"
+                  >
+                    {BRAND.email.bookings}
+                  </a>
+                </span>
               </li>
               <li className="flex items-center gap-3 text-gray-300">
                 <span className="text-primary font-bold">🕒</span>

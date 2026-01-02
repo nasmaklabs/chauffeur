@@ -233,6 +233,14 @@ const PaymentStep = () => {
                   £{pricing.distanceCharge.toFixed(2)}
                 </span>
               </div>
+              {pricing.airportCharge > 0 && (
+                <div className="flex justify-between text-gray-600">
+                  <span>Airport Charge</span>
+                  <span className="font-semibold">
+                    £{pricing.airportCharge.toFixed(2)}
+                  </span>
+                </div>
+              )}
               {/* Taxes & Fees (10%) - temporarily disabled per request
               <div className="flex justify-between text-gray-600">
                 <span>Taxes & Fees (10%)</span>

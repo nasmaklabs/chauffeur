@@ -42,13 +42,24 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
     const requiredPassengers = tripDetails.passengers || 1;
     const requiredLuggage = tripDetails.luggage || 0;
 
+    // Detect if pickup or dropoff is an airport
+    const pickupIsAirport = tripDetails.pickupLocation
+      ? tripDetails.pickupLocation.toLowerCase().includes("airport")
+      : false;
+    const dropoffIsAirport = tripDetails.dropoffLocation
+      ? tripDetails.dropoffLocation.toLowerCase().includes("airport")
+      : false;
+
     return vehicles.map((vehicle, idx) => {
       const suitable = isVehicleSuitable(
         vehicle,
         requiredPassengers,
         requiredLuggage
       );
-      const priceBreakdown = calculateVehiclePrice(vehicle, distance);
+      const priceBreakdown = calculateVehiclePrice(vehicle, distance, {
+        pickupIsAirport,
+        dropoffIsAirport,
+      });
       const badge = getRecommendedBadge(vehicle, suitable, requiredPassengers);
 
       return {
@@ -65,7 +76,13 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
         badge,
       };
     });
-  }, [tripDetails.distance, tripDetails.passengers, tripDetails.luggage]);
+  }, [
+    tripDetails.distance,
+    tripDetails.passengers,
+    tripDetails.luggage,
+    tripDetails.pickupLocation,
+    tripDetails.dropoffLocation,
+  ]);
 
   const sortedVehicles = useMemo(() => {
     return [...vehiclesWithPricing].sort((a, b) => {

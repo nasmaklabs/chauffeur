@@ -22,13 +22,18 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-sm shadow-sm">
       <div className="w-full pl-0 pr-4 md:pr-8 h-20 flex items-center justify-between">
-        <Link href="/" className="flex items-center shrink-0">
+        <Link href="/" className="flex items-center shrink-0 pl-4">
           <Image
             src="/images/logo.png"
             alt="AA Comfort"
             width={336}
             height={100}
-            style={{ width: "336px", height: "auto", minHeight: "50px" }}
+            style={{
+              width: "12rem",
+              height: "auto",
+              minHeight: "45px",
+              paddingLeft: "1rem",
+            }}
             priority
           />
         </Link>
