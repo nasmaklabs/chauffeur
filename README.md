@@ -20,6 +20,49 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Email Notifications Configuration
+
+The application sends email notifications for:
+
+- **Booking confirmations** - Sent to customers when they make a booking
+- **New booking alerts** - Sent to internal team when a new booking is received
+- **Contact form submissions** - Sent to internal team when someone submits the contact form
+- **Contact form auto-reply** - Sent to customers acknowledging their inquiry
+
+### Required Environment Variables
+
+Add these to your `.env` file (see `.env.example` for reference):
+
+```bash
+# SMTP Configuration
+SMTP_HOST=smtp.gmail.com          # Your SMTP server
+SMTP_PORT=587                      # SMTP port (587 for TLS)
+SMTP_SECURE=false                  # true for 465, false for 587
+SMTP_USER=your-email@gmail.com    # SMTP username
+SMTP_PASSWORD=your-app-password    # SMTP password or App Password
+SMTP_FROM_EMAIL=your-email@gmail.com
+
+# Internal notification recipient
+INTERNAL_NOTIFICATION_EMAIL=admin@yourdomain.com
+```
+
+### Gmail Setup (Recommended for Development)
+
+1. Enable 2-Step Verification on your Google Account
+2. Go to: Google Account → Security → 2-Step Verification → App passwords
+3. Generate a new App Password for "Mail"
+4. Use this App Password as `SMTP_PASSWORD`
+
+### Email Deliverability Best Practices
+
+For production, ensure:
+
+1. **SPF Record** - Add an SPF record to your domain DNS
+2. **DKIM** - Configure DKIM signing (handled by email provider)
+3. **DMARC** - Set up DMARC policy for your domain
+4. **Consistent From Address** - Use the same email for `SMTP_USER` and `SMTP_FROM_EMAIL`
+5. **Valid Reply-To** - All emails include proper reply-to addresses
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

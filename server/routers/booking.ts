@@ -2,6 +2,12 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { prisma } from "@/lib/prisma";
 import { generateBookingReference } from "@/lib/utils/booking-reference";
+import { sendEmail, getInternalEmail } from "@/lib/services/email-service";
+import {
+  generateBookingConfirmationEmail,
+  generateNewBookingNotificationEmail,
+  type BookingEmailData,
+} from "@/lib/services/email-templates";
 
 const coordinatesSchema = z
   .object({
@@ -80,6 +86,50 @@ export const bookingRouter = createTRPCRouter({
             totalPrice: input.totalPrice,
             status: "pending",
           },
+        });
+
+        // Prepare email data
+        const emailData: BookingEmailData = {
+          bookingReference: booking.bookingReference,
+          firstName: booking.firstName || input.firstName,
+          lastName: booking.lastName || input.lastName,
+          email: booking.email || input.email,
+          tripType: booking.tripType,
+          pickupLocation: booking.pickupLocation,
+          dropoffLocation: booking.dropoffLocation,
+          date: booking.date,
+          time: booking.time,
+          returnDate: booking.returnDate,
+          returnTime: booking.returnTime,
+          duration: booking.duration,
+          vehicleType: booking.vehicleType,
+          passengers: booking.passengers,
+          luggage: booking.luggage,
+          flightNumber: booking.flightNumber,
+          notes: booking.notes,
+          totalPrice: booking.totalPrice,
+          status: booking.status,
+        };
+
+        const customerEmail = booking.email || input.email;
+
+        // Send confirmation email to customer (non-blocking)
+        sendEmail({
+          to: customerEmail,
+          subject: `Booking Confirmation - ${booking.bookingReference} | AA Comfort`,
+          html: generateBookingConfirmationEmail(emailData),
+        }).catch((error) => {
+          console.error("Failed to send customer confirmation email:", error);
+        });
+
+        // Send notification email to internal team (non-blocking)
+        sendEmail({
+          to: getInternalEmail(),
+          subject: `New Booking: ${booking.bookingReference} - ${emailData.firstName} ${emailData.lastName}`,
+          html: generateNewBookingNotificationEmail(emailData),
+          replyTo: customerEmail,
+        }).catch((error) => {
+          console.error("Failed to send internal notification email:", error);
         });
 
         return {

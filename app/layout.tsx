@@ -10,7 +10,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "AA Comfort - Premium Chauffeur Service",
-  description: "Book luxury taxis and chauffeur services for airport transfers, corporate travel, and special events. Experience comfort and style with AA Comfort.",
+  description:
+    "Book luxury taxis and chauffeur services for airport transfers, corporate travel, and special events. Experience comfort and style with AA Comfort.",
+  icons: {
+    icon: "/images/logo.ico",
+  },
 };
 
 import Loader from "@/components/ui/Loader";
@@ -33,9 +37,7 @@ export default function RootLayout({
                 <GoogleMapsProvider>
                   <NavigationProvider>
                     <Loader />
-                    <ConditionalLayout>
-                      {children}
-                    </ConditionalLayout>
+                    <ConditionalLayout>{children}</ConditionalLayout>
                   </NavigationProvider>
                 </GoogleMapsProvider>
               </App>

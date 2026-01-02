@@ -8,12 +8,34 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { ADDRESS } from "@/lib/constants/address";
 import { BRAND } from "@/lib/constants/brand";
+import { trpc } from "@/lib/trpc/client";
+
+interface ContactFormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  subject?: string;
+  message: string;
+}
 
 const ContactPage = () => {
   const { message } = App.useApp();
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-    message.success("Message sent successfully!");
+  const [form] = Form.useForm();
+
+  const contactMutation = trpc.contact.submit.useMutation({
+    onSuccess: (data) => {
+      message.success(data.message);
+      form.resetFields();
+    },
+    onError: (error) => {
+      message.error(
+        error.message || "Failed to send message. Please try again."
+      );
+    },
+  });
+
+  const onFinish = (values: ContactFormValues) => {
+    contactMutation.mutate(values);
   };
 
   return (
@@ -87,7 +109,12 @@ const ContactPage = () => {
             <h3 className="text-2xl font-bold text-secondary mb-6">
               Send us a Message
             </h3>
-            <Form layout="vertical" size="large" onFinish={onFinish}>
+            <Form
+              form={form}
+              layout="vertical"
+              size="large"
+              onFinish={onFinish}
+            >
               <div className="grid grid-cols-2 gap-4">
                 <Form.Item
                   name="firstName"
@@ -138,6 +165,7 @@ const ContactPage = () => {
                 block
                 size="large"
                 className="bg-action h-12 font-bold"
+                loading={contactMutation.isPending}
               >
                 Send Message
               </Button>
