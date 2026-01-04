@@ -19,6 +19,7 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
 }) => {
   const selectedVehicle = useBookingStore((state) => state.selectedVehicle);
   const tripDetails = useBookingStore((state) => state.tripDetails);
+  const extras = useBookingStore((state) => state.extras);
 
   const handleVehicleSelect = (vehicleId: string | null) => {
     if (vehicleId) {
@@ -57,6 +58,7 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
         requiredLuggage
       );
       const priceBreakdown = calculateVehiclePrice(vehicle, distance, {
+        meetAndGreet: extras.meetAndGreet,
         pickupIsAirport,
         dropoffIsAirport,
       });
@@ -82,6 +84,7 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
     tripDetails.luggage,
     tripDetails.pickupLocation,
     tripDetails.dropoffLocation,
+    extras.meetAndGreet,
   ]);
 
   const sortedVehicles = useMemo(() => {

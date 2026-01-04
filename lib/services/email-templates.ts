@@ -232,6 +232,11 @@ export interface BookingEmailData {
   luggage: number;
   flightNumber?: string | null;
   notes?: string | null;
+  // Pricing breakdown
+  baseFare?: number | null;
+  distanceCharge?: number | null;
+  meetAndGreetCharge?: number | null;
+  airportCharge?: number | null;
   totalPrice?: number | null;
   meetAndGreet?: boolean;
   status: string;
@@ -260,6 +265,49 @@ const formatTripType = (tripType: string): string => {
 const formatPrice = (price: number | null | undefined): string => {
   if (!price) return "To be confirmed";
   return `£${price.toFixed(2)}`;
+};
+
+// Generate price breakdown HTML
+const generatePriceBreakdown = (booking: BookingEmailData): string => {
+  const rows: string[] = [];
+
+  if (booking.baseFare) {
+    rows.push(detailRow("Base Fare", `£${booking.baseFare.toFixed(2)}`));
+  }
+  if (booking.distanceCharge && booking.distanceCharge > 0) {
+    rows.push(
+      detailRow("Distance Charge", `£${booking.distanceCharge.toFixed(2)}`)
+    );
+  }
+  if (booking.airportCharge && booking.airportCharge > 0) {
+    rows.push(
+      detailRow("Airport Charge", `£${booking.airportCharge.toFixed(2)}`)
+    );
+  }
+  if (booking.meetAndGreetCharge && booking.meetAndGreetCharge > 0) {
+    rows.push(
+      detailRow("Meet & Greet", `£${booking.meetAndGreetCharge.toFixed(2)}`)
+    );
+  }
+
+  // Add separator row before total
+  rows.push(`
+    <tr>
+      <td colspan="2" style="padding: 8px 0; border-bottom: 2px solid #c9a227;"></td>
+    </tr>
+  `);
+
+  // Total row with bold styling
+  rows.push(`
+    <tr>
+      <td style="color: #1a1a2e; font-size: 16px; font-weight: 700; padding: 12px 0;">Total</td>
+      <td style="color: #1a1a2e; font-size: 16px; font-weight: 700; padding: 12px 0; text-align: right;">${formatPrice(
+        booking.totalPrice
+      )}</td>
+    </tr>
+  `);
+
+  return rows.join("");
 };
 
 // ============================================
@@ -330,14 +378,13 @@ export const generateBookingConfirmationEmail = (
         
         <!-- Fare Details -->
         <div style="${emailStyles.detailsBox}">
-          <h3 style="${emailStyles.detailsTitle}">Fare Details</h3>
+          <h3 style="${emailStyles.detailsTitle}">Fare Breakdown</h3>
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            ${detailRow("Total Fare", formatPrice(booking.totalPrice))}
-            ${detailRow(
-              "Status",
-              booking.status.charAt(0).toUpperCase() + booking.status.slice(1)
-            )}
+            ${generatePriceBreakdown(booking)}
           </table>
+          <p style="color: #6b7280; font-size: 12px; margin: 12px 0 0 0;">
+            Payment Method: Cash to driver on arrival
+          </p>
         </div>
         
         ${
@@ -452,10 +499,13 @@ export const generateNewBookingNotificationEmail = (
         
         <!-- Fare Details -->
         <div style="${emailStyles.detailsBox}">
-          <h3 style="${emailStyles.detailsTitle}">Fare Information</h3>
+          <h3 style="${emailStyles.detailsTitle}">Fare Breakdown</h3>
           <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-            ${detailRow("Quoted Price", formatPrice(booking.totalPrice))}
+            ${generatePriceBreakdown(booking)}
           </table>
+          <p style="color: #6b7280; font-size: 12px; margin: 12px 0 0 0;">
+            Payment Method: Cash to driver on arrival
+          </p>
         </div>
         
         ${

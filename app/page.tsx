@@ -217,6 +217,7 @@ export default function Home() {
         </div>
       </Section>
 
+      {/* Testimonials section hidden for now
       <Section id="testimonials" background="gray">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
@@ -248,6 +249,7 @@ export default function Home() {
           />
         </div>
       </Section>
+      */}
 
       <section className="py-24 bg-secondary text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-primary/5 pattern-grid-lg opacity-10" />

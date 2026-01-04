@@ -21,6 +21,7 @@ interface VehicleProps {
   priceBreakdown?: {
     baseFare: number;
     distanceCharge: number;
+    meetAndGreetCharge?: number;
     airportCharge?: number;
     total: number;
   };
@@ -150,6 +151,15 @@ const VehicleCard: React.FC<VehicleProps> = ({
                     <div className="flex justify-between">
                       <span>Airport charge:</span>
                       <span>£{priceBreakdown.airportCharge.toFixed(2)}</span>
+                    </div>
+                  )}
+                {priceBreakdown.meetAndGreetCharge !== undefined &&
+                  priceBreakdown.meetAndGreetCharge > 0 && (
+                    <div className="flex justify-between">
+                      <span>Meet & Greet:</span>
+                      <span>
+                        £{priceBreakdown.meetAndGreetCharge.toFixed(2)}
+                      </span>
                     </div>
                   )}
                 <div className="border-t pt-1 flex justify-between font-semibold text-sm text-gray-700">

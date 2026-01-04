@@ -73,14 +73,21 @@ export default function BookingConfirmationPage() {
 
   return (
     <Section className="min-h-screen bg-surface py-12">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-3xl mx-auto print-content">
+        {/* Print Header - Only visible when printing */}
+        <div className="hidden print:block print-header mb-6">
+          <h1 className="text-2xl font-bold">AA Comfort</h1>
+          <p className="text-sm text-gray-600">Premium Chauffeur Service</p>
+          <p className="text-xs text-gray-500 mt-1">Booking Confirmation</p>
+        </div>
+
         {/* Success Header */}
         <div className="bg-white rounded-xl shadow-lg p-8 mb-6 text-center">
-          <CheckCircleFilled className="text-6xl text-green-500 mb-4" />
-          <h1 className="text-3xl font-bold text-secondary mb-2">
+          <CheckCircleFilled className="text-6xl text-green-500 mb-4 print:hidden" />
+          <h1 className="text-3xl font-bold text-secondary mb-2 print:hidden">
             Booking Confirmed!
           </h1>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-6 print:hidden">
             Thank you for choosing AA Comfort. Your booking has been confirmed.
           </p>
 
@@ -212,18 +219,34 @@ export default function BookingConfirmationPage() {
                       <strong>Base Fare:</strong> £{booking.baseFare.toFixed(2)}
                     </p>
                   )}
-                  {booking.distanceCharge && (
+                  {booking.distanceCharge && booking.distanceCharge > 0 && (
                     <p>
                       <strong>Distance Charge:</strong> £
                       {booking.distanceCharge.toFixed(2)}
                     </p>
                   )}
+                  {booking.airportCharge && booking.airportCharge > 0 && (
+                    <p>
+                      <strong>Airport Charge:</strong> £
+                      {booking.airportCharge.toFixed(2)}
+                    </p>
+                  )}
+                  {booking.meetAndGreetCharge &&
+                    booking.meetAndGreetCharge > 0 && (
+                      <p>
+                        <strong>Meet & Greet:</strong> £
+                        {booking.meetAndGreetCharge.toFixed(2)}
+                      </p>
+                    )}
                   <div className="border-t pt-2 mt-2">
                     <p className="text-lg">
                       <strong>Total:</strong>{" "}
                       <span className="text-primary font-bold">
                         £{booking.totalPrice.toFixed(2)}
                       </span>
+                    </p>
+                    <p className="text-sm text-gray-500 mt-1">
+                      Payment: Cash to driver on arrival
                     </p>
                   </div>
                 </div>
@@ -232,8 +255,8 @@ export default function BookingConfirmationPage() {
           </div>
         </div>
 
-        {/* Confirmation Email Notice */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+        {/* Confirmation Email Notice - Hidden when printing */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6 no-print">
           <h3 className="font-semibold text-secondary mb-2">What's Next?</h3>
           <ul className="text-sm text-gray-600 space-y-2 list-disc list-inside">
             <li>
@@ -253,8 +276,8 @@ export default function BookingConfirmationPage() {
           </ul>
         </div>
 
-        {/* Track Booking Notice */}
-        <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6 text-center">
+        {/* Track Booking Notice - Hidden when printing */}
+        <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6 text-center no-print">
           <h3 className="font-semibold text-secondary mb-2">
             📍 Track Your Booking Anytime
           </h3>
@@ -272,8 +295,8 @@ export default function BookingConfirmationPage() {
           </Link>
         </div>
 
-        {/* Actions */}
-        <div className="flex gap-4 justify-center">
+        {/* Actions - Hidden when printing */}
+        <div className="flex gap-4 justify-center no-print">
           <Link href="/">
             <Button size="large" className="h-12 px-8">
               Back to Home
@@ -287,6 +310,17 @@ export default function BookingConfirmationPage() {
           >
             Print Confirmation
           </Button>
+        </div>
+
+        {/* Print Footer - Only visible when printing */}
+        <div className="hidden print:block mt-8 pt-4 border-t text-center text-sm text-gray-600">
+          <p className="font-semibold">
+            AA Comfort - Premium Chauffeur Service
+          </p>
+          <p>Email: info.aaccltd@gmail.com | Website: aacomfort.com</p>
+          <p className="mt-2 text-xs">
+            Thank you for choosing AA Comfort. We look forward to serving you.
+          </p>
         </div>
       </div>
     </Section>

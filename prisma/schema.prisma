@@ -61,6 +61,8 @@ model Booking {
   // Pricing
   baseFare          Float?
   distanceCharge    Float?
+  meetAndGreetCharge Float?
+  airportCharge     Float?
   totalPrice        Float?
   
   // Extras

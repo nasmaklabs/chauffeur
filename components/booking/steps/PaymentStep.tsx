@@ -116,6 +116,8 @@ const PaymentStep = () => {
       notes: passengerDetails.notes,
       baseFare: pricing?.baseFare,
       distanceCharge: pricing?.distanceCharge,
+      meetAndGreetCharge: pricing?.meetAndGreetCharge,
+      airportCharge: pricing?.airportCharge,
       totalPrice: pricing?.total,
       meetAndGreet: useBookingStore.getState().extras.meetAndGreet,
     });
@@ -240,6 +242,14 @@ const PaymentStep = () => {
                   <span>Airport Charge</span>
                   <span className="font-semibold">
                     £{pricing.airportCharge.toFixed(2)}
+                  </span>
+                </div>
+              )}
+              {pricing.meetAndGreetCharge > 0 && (
+                <div className="flex justify-between text-gray-600">
+                  <span>Meet & Greet</span>
+                  <span className="font-semibold">
+                    £{pricing.meetAndGreetCharge.toFixed(2)}
                   </span>
                 </div>
               )}

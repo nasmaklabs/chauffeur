@@ -165,3 +165,197 @@ footer a {
     display: none !important;
   }
 }
+
+/* Print styles for booking confirmation */
+@media print {
+  /* Hide everything by default */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Only show the print content area */
+  .print-content,
+  .print-content * {
+    visibility: visible;
+  }
+
+  /* Hide non-essential elements */
+  header,
+  footer,
+  nav,
+  .no-print,
+  .bg-blue-50,
+  .bg-green-50 {
+    display: none !important;
+  }
+
+  /* Show print-only elements */
+  .print\:block {
+    display: block !important;
+  }
+
+  /* Hide elements with print:hidden */
+  .print\:hidden {
+    display: none !important;
+  }
+
+  /* Position the print content */
+  .print-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 15px !important;
+    margin: 0 !important;
+  }
+
+  /* Reset body and background */
+  body {
+    background: white !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    font-size: 11px !important;
+  }
+
+  /* Compact the success header for print */
+  .print-content .bg-white:first-of-type {
+    padding: 15px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .print-content .text-6xl {
+    font-size: 30px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .print-content .text-3xl {
+    font-size: 18px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .print-content .text-2xl {
+    font-size: 16px !important;
+  }
+
+  .print-content .text-xl {
+    font-size: 14px !important;
+  }
+
+  .print-content .mb-6 {
+    margin-bottom: 8px !important;
+  }
+
+  .print-content .mb-4 {
+    margin-bottom: 5px !important;
+  }
+
+  .print-content .mb-3 {
+    margin-bottom: 4px !important;
+  }
+
+  .print-content .mb-2 {
+    margin-bottom: 3px !important;
+  }
+
+  .print-content .p-8 {
+    padding: 12px !important;
+  }
+
+  .print-content .p-4 {
+    padding: 8px !important;
+  }
+
+  .print-content .space-y-6 > * + * {
+    margin-top: 8px !important;
+  }
+
+  .print-content .space-y-2 > * + * {
+    margin-top: 2px !important;
+  }
+
+  .print-content .pl-6 {
+    padding-left: 12px !important;
+  }
+
+  /* Compact line height */
+  .print-content p,
+  .print-content li {
+    line-height: 1.3 !important;
+    margin-bottom: 2px !important;
+  }
+
+  /* Ensure good contrast for printing */
+  .bg-surface {
+    background: white !important;
+  }
+
+  /* Remove shadows for printing */
+  .shadow-lg,
+  .shadow-md,
+  .shadow-sm {
+    box-shadow: none !important;
+  }
+
+  .rounded-xl,
+  .rounded-lg {
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+  }
+
+  /* Ensure text is readable */
+  .text-gray-600,
+  .text-gray-500 {
+    color: #333 !important;
+  }
+
+  .text-primary {
+    color: #867406 !important;
+  }
+
+  /* Print header styling */
+  .print-header {
+    text-align: center;
+    margin-bottom: 10px !important;
+    padding-bottom: 8px !important;
+    border-bottom: 2px solid #867406;
+  }
+
+  .print-header h1 {
+    font-size: 20px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .print-header p {
+    font-size: 10px !important;
+  }
+
+  /* Print footer */
+  .print-content .print\:block:last-child {
+    margin-top: 10px !important;
+    padding-top: 8px !important;
+    font-size: 9px !important;
+  }
+
+  /* Hide buttons */
+  button {
+    display: none !important;
+  }
+
+  /* Booking reference box */
+  .bg-primary\/10 {
+    background-color: #f9f9e8 !important;
+    border: 1px solid #867406 !important;
+    padding: 8px !important;
+  }
+
+  /* Prevent page breaks inside sections */
+  .bg-white {
+    page-break-inside: avoid;
+  }
+
+  /* Page setup for single A4 page */
+  @page {
+    margin: 0.5cm;
+    size: A4;
+  }
+}
