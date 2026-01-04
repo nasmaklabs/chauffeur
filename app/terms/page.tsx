@@ -56,8 +56,8 @@ export default function TermsPage() {
                     2.
                   </Text>{" "}
                   We request a minimum of 3 hours notice for any online
-                  bookings. If your booking is less than 3 hours, please call
-                  our office to check availability.
+                  bookings. If your booking is less than 3 hours, please contact
+                  our office through email to check availability.
                 </Paragraph>
               </div>
 
@@ -161,8 +161,9 @@ export default function TermsPage() {
                     10.
                   </Text>{" "}
                   We take complaints very seriously and investigate every
-                  complaint thoroughly. Please email or call us quoting your
-                  reference number and as much information as possible.
+                  complaint thoroughly. Please contact our office through email
+                  quoting your reference number and as much information as
+                  possible.
                 </Paragraph>
               </div>
 
@@ -291,11 +292,11 @@ export default function TermsPage() {
                     20.
                   </Text>{" "}
                   In the event that our driver does not show up at the scheduled
-                  time for collection, please contact our office. If you leave
-                  the pickup point without informing us we will not be liable
-                  for any compensation to you. If you take a minicab or a black
-                  cab from another company without our consent we will not be
-                  liable to pay you the price for it or refund you.
+                  time for collection, please contact our office through email.
+                  If you leave the pickup point without informing us we will not
+                  be liable for any compensation to you. If you take a minicab
+                  or a black cab from another company without our consent we
+                  will not be liable to pay you the price for it or refund you.
                 </Paragraph>
               </div>
 
