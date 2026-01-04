@@ -1,14 +1,45 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Form } from "antd";
 import { Input } from "@/components/ui/Input";
 import { bookingStore, useBookingStore } from "@/lib/store/bookingStore";
 
+// UK phone number validation
+const validateUKPhoneNumber = (phone: string): boolean => {
+  if (!phone) return true; // Optional field
+  const ukPhoneRegex = /^(?:\+44|0)(?:\d\s?){9,10}$/;
+  return ukPhoneRegex.test(phone.replace(/\s/g, ""));
+};
+
+const formatUKPhoneNumber = (phone: string): string => {
+  // Remove all non-digit characters except +
+  const cleaned = phone.replace(/[^\d+]/g, "");
+  return cleaned;
+};
+
 const PassengerDetailsStep = () => {
   const passengerDetails = useBookingStore((state) => state.passengerDetails);
+  const [phoneError, setPhoneError] = useState<string>("");
+
   const setPassengerDetails = (details: typeof passengerDetails) =>
     bookingStore.set("passengerDetails", details);
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = formatUKPhoneNumber(e.target.value);
+    setPassengerDetails({
+      ...passengerDetails,
+      phoneNumber: value,
+    });
+
+    if (value && !validateUKPhoneNumber(value)) {
+      setPhoneError(
+        "Please enter a valid phone number (e.g., 07123 456789 or +44 7123 456789)"
+      );
+    } else {
+      setPhoneError("");
+    }
+  };
 
   return (
     <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
@@ -53,6 +84,18 @@ const PassengerDetailsStep = () => {
                   email: e.target.value,
                 })
               }
+            />
+          </Form.Item>
+          <Form.Item
+            label="Phone Number (Optional)"
+            validateStatus={phoneError ? "error" : ""}
+            help={phoneError || "07123 456789 or +44 7123 456789"}
+          >
+            <Input
+              type="tel"
+              placeholder="e.g., 07123 456789"
+              value={passengerDetails.phoneNumber || ""}
+              onChange={handlePhoneChange}
             />
           </Form.Item>
           <Form.Item label="Flight Number (Optional)">

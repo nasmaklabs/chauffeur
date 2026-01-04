@@ -10,37 +10,51 @@ export const DEFAULT_WAITING_RATE_PER_MINUTE = 0.5; // ASSUMPTION: £0.50 per mi
 
 export const FARE_RULES: Record<string, VehicleFareRule> = {
   saloon: {
-    minFareForFirstN: 35,
+    minFareForFirstN: 30,
     firstNMiles: 6,
-    perMileAfterFirstN: 1.8,
+    perMileAfterFirstN: 1.6,
     meetAndGreetCharge: 15,
     waitingRatePerMinute: DEFAULT_WAITING_RATE_PER_MINUTE,
   },
   comfort: {
     // 'Executive' equivalent
-    minFareForFirstN: 45,
+    minFareForFirstN: 35,
     firstNMiles: 6,
-    perMileAfterFirstN: 3.5,
+    perMileAfterFirstN: 2.8,
     meetAndGreetCharge: 20,
     waitingRatePerMinute: DEFAULT_WAITING_RATE_PER_MINUTE,
   },
   mpv6: {
-    minFareForFirstN: 45,
+    minFareForFirstN: 35,
     firstNMiles: 6,
-    perMileAfterFirstN: 3.5,
+    perMileAfterFirstN: 2.8,
+    meetAndGreetCharge: 20,
+    waitingRatePerMinute: DEFAULT_WAITING_RATE_PER_MINUTE,
+  },
+  wheelchair: {
+    minFareForFirstN: 35,
+    firstNMiles: 6,
+    perMileAfterFirstN: 2.8,
+    meetAndGreetCharge: 20,
+    waitingRatePerMinute: DEFAULT_WAITING_RATE_PER_MINUTE,
+  },
+  caddy: {
+    minFareForFirstN: 35,
+    firstNMiles: 6,
+    perMileAfterFirstN: 2.8,
     meetAndGreetCharge: 20,
     waitingRatePerMinute: DEFAULT_WAITING_RATE_PER_MINUTE,
   },
   mpv7: {
     minFareForFirstN: 50,
     firstNMiles: 6,
-    perMileAfterFirstN: 4.3,
+    perMileAfterFirstN: 3.5,
     meetAndGreetCharge: 20,
     waitingRatePerMinute: DEFAULT_WAITING_RATE_PER_MINUTE,
   },
 };
 
-export const AIRPORT_CHARGE_PER_LEG = 8; // £8 for airport pickup OR dropoff (per leg)
+export const AIRPORT_CHARGE_PER_LEG = 7; // £7 for airport pickup OR dropoff (per leg)
 export const MEET_AND_GREET_FREE_WAIT_MINUTES = 60; // first 60 minutes waiting included
 
 // Note on assumptions:

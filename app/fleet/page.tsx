@@ -11,19 +11,20 @@ const FleetPage = () => {
   const [category, setCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Map vehicle IDs to categories for filtering
-  const vehicleCategories: Record<string, string> = {
-    saloon: "saloon",
-    comfort: "comfort",
-    mpv6: "mpv",
-    mpv7: "mpv",
+  // Map vehicle IDs to categories for filtering (supports multiple categories per vehicle)
+  const vehicleCategories: Record<string, string[]> = {
+    saloon: ["saloon"],
+    comfort: ["comfort"],
+    mpv6: ["mpv", "wheelchair"],
+    mpv7: ["mpv", "wheelchair"],
+    caddy: ["wheelchair"],
   };
 
   // Create fleet display data from VEHICLES constant
   const vehicles = VEHICLES.map((vehicle, idx) => ({
     id: vehicle.id,
     name: vehicle.name,
-    category: vehicleCategories[vehicle.id] || "other",
+    categories: vehicleCategories[vehicle.id] || ["other"],
     // Alternate comfort images deterministically based on index
     image:
       vehicle.id === "comfort"
@@ -39,7 +40,8 @@ const FleetPage = () => {
   }));
 
   const filteredVehicles = vehicles.filter((v) => {
-    const matchesCategory = category === "all" || v.category === category;
+    const matchesCategory =
+      category === "all" || v.categories.includes(category);
     const matchesSearch =
       v.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       v.description?.toLowerCase().includes(searchTerm.toLowerCase());
@@ -72,6 +74,7 @@ const FleetPage = () => {
             <Radio.Button value="saloon">Saloon</Radio.Button>
             <Radio.Button value="comfort">Comfort</Radio.Button>
             <Radio.Button value="mpv">MPV</Radio.Button>
+            <Radio.Button value="wheelchair">Wheelchair</Radio.Button>
           </Radio.Group>
 
           <div className="w-full md:w-auto">

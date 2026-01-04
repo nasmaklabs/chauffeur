@@ -37,17 +37,6 @@ const AboutPage = () => {
               corporate executives and celebrities to families and tourists,
               ensuring every ride is a seamless and enjoyable experience.
             </p>
-
-            <div className="grid grid-cols-2 gap-4 pt-4">
-              <div className="bg-gray-50 p-6 rounded-lg text-center">
-                <div className="text-3xl font-bold text-primary mb-2">10+</div>
-                <div className="text-sm text-gray-500">Years of Excellence</div>
-              </div>
-              <div className="bg-gray-50 p-6 rounded-lg text-center">
-                <div className="text-3xl font-bold text-primary mb-2">50+</div>
-                <div className="text-sm text-gray-500">Luxury Vehicles</div>
-              </div>
-            </div>
           </div>
 
           <div className="relative h-[500px] bg-gray-200 rounded-2xl overflow-hidden">

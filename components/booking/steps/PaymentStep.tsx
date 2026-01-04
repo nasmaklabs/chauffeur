@@ -111,11 +111,13 @@ const PaymentStep = () => {
       firstName: passengerDetails.firstName,
       lastName: passengerDetails.lastName,
       email: passengerDetails.email,
+      phoneNumber: passengerDetails.phoneNumber || undefined,
       flightNumber: passengerDetails.flightNumber,
       notes: passengerDetails.notes,
       baseFare: pricing?.baseFare,
       distanceCharge: pricing?.distanceCharge,
       totalPrice: pricing?.total,
+      meetAndGreet: useBookingStore.getState().extras.meetAndGreet,
     });
   };
 

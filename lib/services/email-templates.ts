@@ -218,6 +218,7 @@ export interface BookingEmailData {
   firstName: string;
   lastName: string;
   email: string;
+  phoneNumber?: string | null;
   tripType: string;
   pickupLocation: string;
   dropoffLocation?: string | null;
@@ -232,6 +233,7 @@ export interface BookingEmailData {
   flightNumber?: string | null;
   notes?: string | null;
   totalPrice?: number | null;
+  meetAndGreet?: boolean;
   status: string;
 }
 
@@ -315,7 +317,14 @@ export const generateBookingConfirmationEmail = (
             ${detailRow("Vehicle", booking.vehicleType)}
             ${detailRow("Passengers", booking.passengers)}
             ${detailRow("Luggage", booking.luggage)}
+            ${detailRow("Phone Number", booking.phoneNumber)}
             ${detailRow("Flight Number", booking.flightNumber)}
+            ${detailRow(
+              "Meet & Greet",
+              booking.meetAndGreet
+                ? "Yes - Driver will hold a placard with passenger name"
+                : "No"
+            )}
           </table>
         </div>
         
@@ -430,7 +439,14 @@ export const generateNewBookingNotificationEmail = (
             ${detailRow("Vehicle", booking.vehicleType)}
             ${detailRow("Passengers", booking.passengers)}
             ${detailRow("Luggage", booking.luggage)}
+            ${detailRow("Phone Number", booking.phoneNumber)}
             ${detailRow("Flight Number", booking.flightNumber)}
+            ${detailRow(
+              "Meet & Greet",
+              booking.meetAndGreet
+                ? "Yes - Driver will hold a placard with passenger name"
+                : "No"
+            )}
           </table>
         </div>
         

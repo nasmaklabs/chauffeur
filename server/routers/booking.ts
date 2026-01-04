@@ -36,11 +36,20 @@ const createBookingSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Invalid email address"),
+  phoneNumber: z
+    .string()
+    .regex(
+      /^(?:\+44|0)(?:\d\s?){9,10}$/,
+      "Please enter a valid UK phone number"
+    )
+    .optional()
+    .or(z.literal("")),
   flightNumber: z.string().optional(),
   notes: z.string().optional(),
   baseFare: z.number().optional(),
   distanceCharge: z.number().optional(),
   totalPrice: z.number().optional(),
+  meetAndGreet: z.boolean().optional().default(false),
 });
 
 const updateStatusSchema = z.object({
@@ -79,11 +88,13 @@ export const bookingRouter = createTRPCRouter({
             firstName: input.firstName,
             lastName: input.lastName,
             email: input.email,
+            phoneNumber: input.phoneNumber || null,
             flightNumber: input.flightNumber,
             notes: input.notes,
             baseFare: input.baseFare,
             distanceCharge: input.distanceCharge,
             totalPrice: input.totalPrice,
+            meetAndGreet: input.meetAndGreet || false,
             status: "pending",
           },
         });
@@ -94,6 +105,7 @@ export const bookingRouter = createTRPCRouter({
           firstName: booking.firstName || input.firstName,
           lastName: booking.lastName || input.lastName,
           email: booking.email || input.email,
+          phoneNumber: booking.phoneNumber,
           tripType: booking.tripType,
           pickupLocation: booking.pickupLocation,
           dropoffLocation: booking.dropoffLocation,
@@ -108,6 +120,7 @@ export const bookingRouter = createTRPCRouter({
           flightNumber: booking.flightNumber,
           notes: booking.notes,
           totalPrice: booking.totalPrice,
+          meetAndGreet: input.meetAndGreet || false,
           status: booking.status,
         };
 

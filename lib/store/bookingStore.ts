@@ -32,6 +32,7 @@ export interface BookingState {
     firstName: string;
     lastName: string;
     email: string;
+    phoneNumber?: string;
     flightNumber?: string;
     notes?: string;
   };

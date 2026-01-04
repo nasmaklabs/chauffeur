@@ -17,9 +17,9 @@ export const VEHICLES: Vehicle[] = [
     description: "Standard saloon car for everyday comfortable travel",
     image: "/images/saloon.png",
     passengers: 4,
-    luggage: 2,
-    baseFare: 20,
-    perMileRate: 1.2,
+    luggage: 4,
+    baseFare: 30,
+    perMileRate: 1.6,
     features: [
       "Air Conditioning",
       "Comfortable Seats",
@@ -34,9 +34,9 @@ export const VEHICLES: Vehicle[] = [
       "Enhanced comfort with premium amenities. A BMW or Mercedes will be provided — one of the cars shown in the pictures will be supplied for your journey.",
     image: "/images/comfort.png",
     passengers: 4,
-    luggage: 2,
-    baseFare: 25,
-    perMileRate: 1.5,
+    luggage: 4,
+    baseFare: 35,
+    perMileRate: 2.8,
     features: [
       "Premium Seats",
       "Climate Control",
@@ -45,15 +45,34 @@ export const VEHICLES: Vehicle[] = [
     ],
   },
   {
+    id: "caddy",
+    name: "VW Caddy Maxi",
+    description:
+      "Wheelchair-accessible vehicle with ramp access. Accommodates 1 wheelchair + 3 passengers, or 4 standard seats when wheelchair space is not needed.",
+    image: "/images/caddy.png",
+    passengers: 4,
+    luggage: 4,
+    baseFare: 35,
+    perMileRate: 2.8,
+    features: [
+      "1 Wheelchair Space",
+      "Ramp Access",
+      "Climate Control",
+      "Secure Wheelchair Lock",
+    ],
+  },
+  {
     id: "mpv6",
     name: "MPV 6",
-    description: "Multi-purpose vehicle for groups up to 6 passengers",
+    description:
+      "Multi-purpose vehicle for groups up to 6 passengers. Wheelchair accessible with space for up to 2 wheelchairs.",
     image: "/images/mpv6.png",
     passengers: 6,
-    luggage: 4,
-    baseFare: 45,
-    perMileRate: 2.2,
+    luggage: 6,
+    baseFare: 35,
+    perMileRate: 2.8,
     features: [
+      "2 Wheelchair Spaces",
       "Spacious Interior",
       "Extra Luggage Space",
       "Climate Control",
@@ -63,14 +82,16 @@ export const VEHICLES: Vehicle[] = [
   {
     id: "mpv7",
     name: "MPV 7 (Mini Bus 8 Seater)",
-    description: "Wheelchair-accessible minibus for larger groups",
+    description:
+      "Large minibus for groups up to 8 passengers. Wheelchair accessible with space for up to 2 wheelchairs.",
     image: "/images/mpv7.png",
     passengers: 8,
-    luggage: 6,
-    baseFare: 60,
-    perMileRate: 2.5,
+    luggage: 8,
+    baseFare: 50,
+    perMileRate: 3.5,
     features: [
-      "Wheelchair Accessible",
+      "2 Wheelchair Spaces",
+      "Spacious Interior",
       "Extra Luggage Space",
       "Climate Control",
       "Easy Access Doors",
@@ -81,8 +102,9 @@ export const VEHICLES: Vehicle[] = [
 export const VEHICLE_OPTIONS = [
   { value: "saloon", label: "Saloon" },
   { value: "comfort", label: "Comfort" },
+  { value: "caddy", label: "VW Caddy Maxi" },
   { value: "mpv6", label: "MPV 6" },
   { value: "mpv7", label: "MPV 7 (Mini Bus 8 Seater)" },
 ] as const;
 
-export type VehicleId = "saloon" | "comfort" | "mpv6" | "mpv7";
+export type VehicleId = "saloon" | "comfort" | "caddy" | "mpv6" | "mpv7";

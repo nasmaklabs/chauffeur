@@ -54,6 +54,7 @@ model Booking {
   firstName         String?
   lastName          String?
   email             String?
+  phoneNumber       String?
   flightNumber      String?
   notes             String?
   
@@ -61,6 +62,9 @@ model Booking {
   baseFare          Float?
   distanceCharge    Float?
   totalPrice        Float?
+  
+  // Extras
+  meetAndGreet      Boolean  @default(false)
   
   // Booking Status
   status            String   @default("pending") // pending, confirmed, completed, cancelled
