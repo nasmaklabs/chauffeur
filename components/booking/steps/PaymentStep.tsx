@@ -36,6 +36,12 @@ const PaymentStep = () => {
     if (!selectedVehicle) return null;
 
     const distance = tripDetails.distance || 0;
+    const isHourly = tripDetails.type === "hourly";
+    const isRoundTrip = tripDetails.type === "round-trip";
+    const hours =
+      isHourly && tripDetails.duration
+        ? parseInt(tripDetails.duration)
+        : undefined;
 
     const pickupIsAirport = !!tripDetails.pickupLocation
       ? tripDetails.pickupLocation.toLowerCase().includes("airport")
@@ -50,6 +56,9 @@ const PaymentStep = () => {
       meetAndGreet: useBookingStore.getState().extras.meetAndGreet,
       pickupIsAirport,
       dropoffIsAirport,
+      isHourly,
+      hours,
+      isRoundTrip,
       // waitingMinutes not captured in UI currently
     });
 
@@ -76,6 +85,8 @@ const PaymentStep = () => {
     tripDetails.distance,
     tripDetails.pickupLocation,
     tripDetails.dropoffLocation,
+    tripDetails.type,
+    tripDetails.duration,
   ]);
 
   const handleConfirmBooking = () => {
@@ -225,33 +236,120 @@ const PaymentStep = () => {
 
           {pricing ? (
             <div className="space-y-4 mb-6">
-              <div className="flex justify-between text-gray-600">
-                <span>Base Fare</span>
-                <span className="font-semibold">
-                  £{pricing.baseFare.toFixed(2)}
-                </span>
-              </div>
-              <div className="flex justify-between text-gray-600">
-                <span>Distance Charge</span>
-                <span className="font-semibold">
-                  £{pricing.distanceCharge.toFixed(2)}
-                </span>
-              </div>
-              {pricing.airportCharge > 0 && (
-                <div className="flex justify-between text-gray-600">
-                  <span>Airport Charge</span>
-                  <span className="font-semibold">
-                    £{pricing.airportCharge.toFixed(2)}
-                  </span>
-                </div>
-              )}
-              {pricing.meetAndGreetCharge > 0 && (
-                <div className="flex justify-between text-gray-600">
-                  <span>Meet & Greet</span>
-                  <span className="font-semibold">
-                    £{pricing.meetAndGreetCharge.toFixed(2)}
-                  </span>
-                </div>
+              {pricing.hourlyBreakdown ? (
+                // Hourly booking breakdown
+                <>
+                  <div className="flex justify-between text-gray-600">
+                    <span>
+                      First {pricing.hourlyBreakdown.minimumHours} hours
+                    </span>
+                    <span className="font-semibold">
+                      £{pricing.baseFare.toFixed(2)}
+                    </span>
+                  </div>
+                  {pricing.hourlyBreakdown.additionalHours > 0 && (
+                    <div className="flex justify-between text-gray-600">
+                      <span>
+                        Additional {pricing.hourlyBreakdown.additionalHours}{" "}
+                        hour(s)
+                      </span>
+                      <span className="font-semibold">
+                        £{pricing.distanceCharge.toFixed(2)}
+                      </span>
+                    </div>
+                  )}
+                  {pricing.airportCharge > 0 && (
+                    <div className="flex justify-between text-gray-600">
+                      <span>Airport Charge</span>
+                      <span className="font-semibold">
+                        £{pricing.airportCharge.toFixed(2)}
+                      </span>
+                    </div>
+                  )}
+                  {pricing.meetAndGreetCharge > 0 && (
+                    <div className="flex justify-between text-gray-600">
+                      <span>Meet & Greet</span>
+                      <span className="font-semibold">
+                        £{pricing.meetAndGreetCharge.toFixed(2)}
+                      </span>
+                    </div>
+                  )}
+                  <div className="text-xs text-gray-500 italic">
+                    * Tolls & private car park fees excluded
+                  </div>
+                </>
+              ) : pricing.isRoundTrip ? (
+                // Round trip booking breakdown
+                <>
+                  <div className="flex justify-between text-gray-600">
+                    <span>Outbound journey</span>
+                    <span className="font-semibold">
+                      £
+                      {(
+                        (pricing.baseFare + pricing.distanceCharge) /
+                        2
+                      ).toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-gray-600">
+                    <span>Return journey</span>
+                    <span className="font-semibold">
+                      £
+                      {(
+                        (pricing.baseFare + pricing.distanceCharge) /
+                        2
+                      ).toFixed(2)}
+                    </span>
+                  </div>
+                  {pricing.airportCharge > 0 && (
+                    <div className="flex justify-between text-gray-600">
+                      <span>Airport Charge</span>
+                      <span className="font-semibold">
+                        £{pricing.airportCharge.toFixed(2)}
+                      </span>
+                    </div>
+                  )}
+                  {pricing.meetAndGreetCharge > 0 && (
+                    <div className="flex justify-between text-gray-600">
+                      <span>Meet & Greet</span>
+                      <span className="font-semibold">
+                        £{pricing.meetAndGreetCharge.toFixed(2)}
+                      </span>
+                    </div>
+                  )}
+                </>
+              ) : (
+                // One-way booking breakdown
+                <>
+                  <div className="flex justify-between text-gray-600">
+                    <span>Base Fare</span>
+                    <span className="font-semibold">
+                      £{pricing.baseFare.toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-gray-600">
+                    <span>Distance Charge</span>
+                    <span className="font-semibold">
+                      £{pricing.distanceCharge.toFixed(2)}
+                    </span>
+                  </div>
+                  {pricing.airportCharge > 0 && (
+                    <div className="flex justify-between text-gray-600">
+                      <span>Airport Charge</span>
+                      <span className="font-semibold">
+                        £{pricing.airportCharge.toFixed(2)}
+                      </span>
+                    </div>
+                  )}
+                  {pricing.meetAndGreetCharge > 0 && (
+                    <div className="flex justify-between text-gray-600">
+                      <span>Meet & Greet</span>
+                      <span className="font-semibold">
+                        £{pricing.meetAndGreetCharge.toFixed(2)}
+                      </span>
+                    </div>
+                  )}
+                </>
               )}
               {/* Taxes & Fees (10%) - temporarily disabled per request
               <div className="flex justify-between text-gray-600">

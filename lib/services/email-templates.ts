@@ -270,24 +270,81 @@ const formatPrice = (price: number | null | undefined): string => {
 // Generate price breakdown HTML
 const generatePriceBreakdown = (booking: BookingEmailData): string => {
   const rows: string[] = [];
+  const isHourly = booking.tripType === "hourly";
+  const isRoundTrip = booking.tripType === "round-trip";
 
-  if (booking.baseFare) {
-    rows.push(detailRow("Base Fare", `£${booking.baseFare.toFixed(2)}`));
-  }
-  if (booking.distanceCharge && booking.distanceCharge > 0) {
-    rows.push(
-      detailRow("Distance Charge", `£${booking.distanceCharge.toFixed(2)}`)
-    );
-  }
-  if (booking.airportCharge && booking.airportCharge > 0) {
-    rows.push(
-      detailRow("Airport Charge", `£${booking.airportCharge.toFixed(2)}`)
-    );
-  }
-  if (booking.meetAndGreetCharge && booking.meetAndGreetCharge > 0) {
-    rows.push(
-      detailRow("Meet & Greet", `£${booking.meetAndGreetCharge.toFixed(2)}`)
-    );
+  if (isHourly) {
+    // Hourly booking breakdown
+    if (booking.baseFare) {
+      rows.push(
+        detailRow(
+          "First 3 hours (flat rate)",
+          `£${booking.baseFare.toFixed(2)}`
+        )
+      );
+    }
+    if (booking.distanceCharge && booking.distanceCharge > 0) {
+      rows.push(
+        detailRow("Additional hours", `£${booking.distanceCharge.toFixed(2)}`)
+      );
+    }
+    if (booking.airportCharge && booking.airportCharge > 0) {
+      rows.push(
+        detailRow("Airport Charge", `£${booking.airportCharge.toFixed(2)}`)
+      );
+    }
+    if (booking.meetAndGreetCharge && booking.meetAndGreetCharge > 0) {
+      rows.push(
+        detailRow("Meet & Greet", `£${booking.meetAndGreetCharge.toFixed(2)}`)
+      );
+    }
+    // Add note about excluded fees for hourly bookings
+    rows.push(`
+      <tr>
+        <td colspan="2" style="color: #6b7280; font-size: 12px; padding: 8px 0; font-style: italic;">
+          * Tolls & private car park fees excluded
+        </td>
+      </tr>
+    `);
+  } else if (isRoundTrip) {
+    // Round trip booking breakdown
+    const baseFare = booking.baseFare || 0;
+    const distanceCharge = booking.distanceCharge || 0;
+    const oneWayFare = (baseFare + distanceCharge) / 2;
+
+    rows.push(detailRow("Outbound journey", `£${oneWayFare.toFixed(2)}`));
+    rows.push(detailRow("Return journey", `£${oneWayFare.toFixed(2)}`));
+
+    if (booking.airportCharge && booking.airportCharge > 0) {
+      rows.push(
+        detailRow("Airport Charge", `£${booking.airportCharge.toFixed(2)}`)
+      );
+    }
+    if (booking.meetAndGreetCharge && booking.meetAndGreetCharge > 0) {
+      rows.push(
+        detailRow("Meet & Greet", `£${booking.meetAndGreetCharge.toFixed(2)}`)
+      );
+    }
+  } else {
+    // Distance-based booking breakdown
+    if (booking.baseFare) {
+      rows.push(detailRow("Base Fare", `£${booking.baseFare.toFixed(2)}`));
+    }
+    if (booking.distanceCharge && booking.distanceCharge > 0) {
+      rows.push(
+        detailRow("Distance Charge", `£${booking.distanceCharge.toFixed(2)}`)
+      );
+    }
+    if (booking.airportCharge && booking.airportCharge > 0) {
+      rows.push(
+        detailRow("Airport Charge", `£${booking.airportCharge.toFixed(2)}`)
+      );
+    }
+    if (booking.meetAndGreetCharge && booking.meetAndGreetCharge > 0) {
+      rows.push(
+        detailRow("Meet & Greet", `£${booking.meetAndGreetCharge.toFixed(2)}`)
+      );
+    }
   }
 
   // Add separator row before total

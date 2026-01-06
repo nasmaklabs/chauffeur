@@ -30,6 +30,7 @@ interface VehicleProps {
       additionalHours: number;
       perHourAfterMinimum: number;
     };
+    isRoundTrip?: boolean;
   };
   isSuitable?: boolean;
   badge?: "recommended" | "popular" | null;
@@ -110,7 +111,7 @@ const VehicleCard: React.FC<VehicleProps> = ({
           <div className="flex items-center gap-1">
             <WifiOutlined /> <span>WiFi</span>
           </div>
-          {features?.includes("Wheelchair Accessible") && (
+          {features?.some((f) => f.toLowerCase().includes("wheelchair")) && (
             <div
               className="flex items-center gap-1"
               title="Wheelchair accessible"
@@ -133,11 +134,11 @@ const VehicleCard: React.FC<VehicleProps> = ({
         </div>
 
         {features && (
-          <ul className="text-sm text-gray-500 mb-3 space-y-1">
-            {features.slice(0, 3).map((feature, idx) => (
-              <li key={idx}>• {feature}</li>
+          <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500 mb-3">
+            {features.slice(0, 4).map((feature, idx) => (
+              <span key={idx}>• {feature}</span>
             ))}
-          </ul>
+          </div>
         )}
 
         <div className="mt-auto">
@@ -164,12 +165,74 @@ const VehicleCard: React.FC<VehicleProps> = ({
                         <span>£{priceBreakdown.distanceCharge.toFixed(2)}</span>
                       </div>
                     )}
+                    {priceBreakdown.airportCharge !== undefined &&
+                      priceBreakdown.airportCharge > 0 && (
+                        <div className="flex justify-between">
+                          <span>Airport charge:</span>
+                          <span>
+                            £{priceBreakdown.airportCharge.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+                    {priceBreakdown.meetAndGreetCharge !== undefined &&
+                      priceBreakdown.meetAndGreetCharge > 0 && (
+                        <div className="flex justify-between">
+                          <span>Meet & Greet:</span>
+                          <span>
+                            £{priceBreakdown.meetAndGreetCharge.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
                     <div className="text-xs text-gray-500 italic mt-1">
-                      Excludes airport fee, tolls & private car park fees
+                      * Tolls & private car park fees excluded
                     </div>
                   </>
+                ) : priceBreakdown.isRoundTrip ? (
+                  // Round trip pricing display
+                  <>
+                    <div className="flex justify-between">
+                      <span>Outbound journey:</span>
+                      <span>
+                        £
+                        {(
+                          (priceBreakdown.baseFare +
+                            priceBreakdown.distanceCharge) /
+                          2
+                        ).toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Return journey:</span>
+                      <span>
+                        £
+                        {(
+                          (priceBreakdown.baseFare +
+                            priceBreakdown.distanceCharge) /
+                          2
+                        ).toFixed(2)}
+                      </span>
+                    </div>
+                    {priceBreakdown.airportCharge !== undefined &&
+                      priceBreakdown.airportCharge > 0 && (
+                        <div className="flex justify-between">
+                          <span>Airport charge:</span>
+                          <span>
+                            £{priceBreakdown.airportCharge.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+                    {priceBreakdown.meetAndGreetCharge !== undefined &&
+                      priceBreakdown.meetAndGreetCharge > 0 && (
+                        <div className="flex justify-between">
+                          <span>Meet & Greet:</span>
+                          <span>
+                            £{priceBreakdown.meetAndGreetCharge.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+                  </>
                 ) : (
-                  // Distance-based pricing display
+                  // One-way pricing display
                   <>
                     <div className="flex justify-between">
                       <span>Base fare:</span>

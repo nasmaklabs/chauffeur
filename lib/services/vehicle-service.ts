@@ -24,6 +24,7 @@ export interface PricingResult {
     additionalHours: number;
     perHourAfterMinimum: number;
   };
+  isRoundTrip?: boolean;
 }
 
 type CalculateOptions = {
@@ -33,6 +34,7 @@ type CalculateOptions = {
   waitingMinutes?: number; // total waiting minutes (first MEET_AND_GREET_FREE_WAIT_MINUTES free when meet & greet?)
   isHourly?: boolean; // whether this is an hourly booking
   hours?: number; // number of hours for hourly booking
+  isRoundTrip?: boolean; // whether this is a round trip (doubles distance charges)
 };
 
 const getFareRuleForVehicle = (vehicle: Vehicle): VehicleFareRule => {
@@ -73,13 +75,27 @@ export const calculateVehiclePrice = (
       distanceCharge = additionalHours * perHourAfterMinimum;
     }
 
-    const total = parseFloat((baseFare + distanceCharge).toFixed(2));
+    // Calculate airport charges (excluded from hourly flat rate but added separately)
+    const airportCharge =
+      (options.pickupIsAirport ? 1 : 0) * AIRPORT_CHARGE_PER_LEG +
+      (options.dropoffIsAirport ? 1 : 0) * AIRPORT_CHARGE_PER_LEG;
+
+    // Calculate meet and greet charge if applicable
+    const meetAndGreetCharge = options.meetAndGreet
+      ? rule.meetAndGreetCharge || 0
+      : 0;
+
+    const total = parseFloat(
+      (baseFare + distanceCharge + airportCharge + meetAndGreetCharge).toFixed(
+        2
+      )
+    );
 
     return {
       baseFare,
       distanceCharge,
-      meetAndGreetCharge: 0,
-      airportCharge: 0,
+      meetAndGreetCharge,
+      airportCharge,
       waitingCharge: 0,
       total,
       breakdown: {
@@ -93,25 +109,30 @@ export const calculateVehiclePrice = (
         additionalHours: hours > minimumHours ? hours - minimumHours : 0,
         perHourAfterMinimum,
       },
+      isRoundTrip: false,
     };
   }
 
   // Regular distance-based pricing
   const extraMiles = Math.max(0, distance - rule.firstNMiles);
+  const tripMultiplier = options.isRoundTrip ? 2 : 1;
 
-  // base fare covers firstN miles
-  const baseFare = rule.minFareForFirstN;
+  // base fare covers firstN miles (doubled for round trip)
+  const baseFare = rule.minFareForFirstN * tripMultiplier;
   const distanceCharge = parseFloat(
-    (extraMiles * rule.perMileAfterFirstN).toFixed(2)
+    (extraMiles * rule.perMileAfterFirstN * tripMultiplier).toFixed(2)
   );
 
   const meetAndGreetCharge = options.meetAndGreet
     ? rule.meetAndGreetCharge || 0
     : 0;
 
+  // Airport charges: for round trips, each airport leg is charged twice (outbound + return)
+  const airportMultiplier = options.isRoundTrip ? 2 : 1;
   const airportCharge =
-    (options.pickupIsAirport ? 1 : 0) * AIRPORT_CHARGE_PER_LEG +
-    (options.dropoffIsAirport ? 1 : 0) * AIRPORT_CHARGE_PER_LEG;
+    ((options.pickupIsAirport ? 1 : 0) * AIRPORT_CHARGE_PER_LEG +
+      (options.dropoffIsAirport ? 1 : 0) * AIRPORT_CHARGE_PER_LEG) *
+    airportMultiplier;
 
   const waitingMinutes = Math.max(0, options.waitingMinutes || 0);
   // Free waiting window
@@ -145,6 +166,7 @@ export const calculateVehiclePrice = (
       firstNMiles: rule.firstNMiles,
       perMileAfterFirstN: rule.perMileAfterFirstN,
     },
+    isRoundTrip: options.isRoundTrip || false,
   };
 };
 

@@ -43,6 +43,7 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
     const requiredPassengers = tripDetails.passengers || 1;
     const requiredLuggage = tripDetails.luggage || 0;
     const isHourly = tripDetails.type === "hourly";
+    const isRoundTrip = tripDetails.type === "round-trip";
     const hours =
       isHourly && tripDetails.duration
         ? parseInt(tripDetails.duration)
@@ -68,6 +69,7 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
         dropoffIsAirport,
         isHourly,
         hours,
+        isRoundTrip,
       });
       const badge = getRecommendedBadge(vehicle, suitable, requiredPassengers);
 

@@ -99,6 +99,9 @@ export const calculateFareForTrip = (opts: {
   pickupIsAirport?: boolean;
   dropoffIsAirport?: boolean;
   waitingMinutes?: number;
+  isHourly?: boolean;
+  hours?: number;
+  isRoundTrip?: boolean;
 }) => {
   const vehicleId = opts.vehicleId || null;
   const distance = Math.max(0, opts.distanceMiles || 0);
@@ -114,6 +117,9 @@ export const calculateFareForTrip = (opts: {
     pickupIsAirport: opts.pickupIsAirport,
     dropoffIsAirport: opts.dropoffIsAirport,
     waitingMinutes: opts.waitingMinutes,
+    isHourly: opts.isHourly,
+    hours: opts.hours,
+    isRoundTrip: opts.isRoundTrip,
   });
 
   return pricing;
