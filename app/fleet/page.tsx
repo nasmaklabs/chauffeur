@@ -17,7 +17,7 @@ const FleetPage = () => {
     comfort: ["comfort"],
     mpv6: ["mpv", "wheelchair"],
     mpv7: ["mpv", "wheelchair"],
-    caddy: ["wheelchair"],
+    wheelchair: ["wheelchair"],
   };
 
   // Create fleet display data from VEHICLES constant

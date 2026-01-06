@@ -24,6 +24,12 @@ interface VehicleProps {
     meetAndGreetCharge?: number;
     airportCharge?: number;
     total: number;
+    hourlyBreakdown?: {
+      minimumHours: number;
+      flatRate: number;
+      additionalHours: number;
+      perHourAfterMinimum: number;
+    };
   };
   isSuitable?: boolean;
   badge?: "recommended" | "popular" | null;
@@ -138,30 +144,61 @@ const VehicleCard: React.FC<VehicleProps> = ({
           {priceBreakdown ? (
             <div className="mb-3">
               <div className="text-xs text-gray-400 space-y-1 mb-2">
-                <div className="flex justify-between">
-                  <span>Base fare:</span>
-                  <span>£{priceBreakdown.baseFare.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Distance charge:</span>
-                  <span>£{priceBreakdown.distanceCharge.toFixed(2)}</span>
-                </div>
-                {priceBreakdown.airportCharge !== undefined &&
-                  priceBreakdown.airportCharge > 0 && (
+                {priceBreakdown.hourlyBreakdown ? (
+                  // Hourly pricing display
+                  <>
                     <div className="flex justify-between">
-                      <span>Airport charge:</span>
-                      <span>£{priceBreakdown.airportCharge.toFixed(2)}</span>
-                    </div>
-                  )}
-                {priceBreakdown.meetAndGreetCharge !== undefined &&
-                  priceBreakdown.meetAndGreetCharge > 0 && (
-                    <div className="flex justify-between">
-                      <span>Meet & Greet:</span>
                       <span>
-                        £{priceBreakdown.meetAndGreetCharge.toFixed(2)}
+                        First {priceBreakdown.hourlyBreakdown.minimumHours}{" "}
+                        hours:
                       </span>
+                      <span>£{priceBreakdown.baseFare.toFixed(2)}</span>
                     </div>
-                  )}
+                    {priceBreakdown.hourlyBreakdown.additionalHours > 0 && (
+                      <div className="flex justify-between">
+                        <span>
+                          Additional{" "}
+                          {priceBreakdown.hourlyBreakdown.additionalHours}{" "}
+                          hour(s):
+                        </span>
+                        <span>£{priceBreakdown.distanceCharge.toFixed(2)}</span>
+                      </div>
+                    )}
+                    <div className="text-xs text-gray-500 italic mt-1">
+                      Excludes airport fee, tolls & private car park fees
+                    </div>
+                  </>
+                ) : (
+                  // Distance-based pricing display
+                  <>
+                    <div className="flex justify-between">
+                      <span>Base fare:</span>
+                      <span>£{priceBreakdown.baseFare.toFixed(2)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Distance charge:</span>
+                      <span>£{priceBreakdown.distanceCharge.toFixed(2)}</span>
+                    </div>
+                    {priceBreakdown.airportCharge !== undefined &&
+                      priceBreakdown.airportCharge > 0 && (
+                        <div className="flex justify-between">
+                          <span>Airport charge:</span>
+                          <span>
+                            £{priceBreakdown.airportCharge.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+                    {priceBreakdown.meetAndGreetCharge !== undefined &&
+                      priceBreakdown.meetAndGreetCharge > 0 && (
+                        <div className="flex justify-between">
+                          <span>Meet & Greet:</span>
+                          <span>
+                            £{priceBreakdown.meetAndGreetCharge.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+                  </>
+                )}
                 <div className="border-t pt-1 flex justify-between font-semibold text-sm text-gray-700">
                   <span>Total:</span>
                   <span>£{priceBreakdown.total.toFixed(2)}</span>

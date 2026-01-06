@@ -4,6 +4,11 @@ export type VehicleFareRule = {
   perMileAfterFirstN: number; // per-mile rate after first N miles
   meetAndGreetCharge: number; // flat meet & greet fee for this vehicle class
   waitingRatePerMinute?: number; // optional waiting rate per minute after free window
+  hourlyRate?: {
+    minimumHours: number; // minimum hours required for flat rate
+    flatRate: number; // flat rate for minimum hours
+    perHourAfterMinimum: number; // per hour rate after minimum hours
+  };
 };
 
 export const DEFAULT_WAITING_RATE_PER_MINUTE = 0.5; // ASSUMPTION: £0.50 per minute after free 60 minutes
@@ -15,6 +20,11 @@ export const FARE_RULES: Record<string, VehicleFareRule> = {
     perMileAfterFirstN: 1.6,
     meetAndGreetCharge: 15,
     waitingRatePerMinute: DEFAULT_WAITING_RATE_PER_MINUTE,
+    hourlyRate: {
+      minimumHours: 3,
+      flatRate: 100,
+      perHourAfterMinimum: 30,
+    },
   },
   comfort: {
     // 'Executive' equivalent
@@ -23,6 +33,11 @@ export const FARE_RULES: Record<string, VehicleFareRule> = {
     perMileAfterFirstN: 2.8,
     meetAndGreetCharge: 15,
     waitingRatePerMinute: DEFAULT_WAITING_RATE_PER_MINUTE,
+    hourlyRate: {
+      minimumHours: 3,
+      flatRate: 125,
+      perHourAfterMinimum: 40,
+    },
   },
   mpv6: {
     minFareForFirstN: 35,
@@ -30,6 +45,11 @@ export const FARE_RULES: Record<string, VehicleFareRule> = {
     perMileAfterFirstN: 2.8,
     meetAndGreetCharge: 15,
     waitingRatePerMinute: DEFAULT_WAITING_RATE_PER_MINUTE,
+    hourlyRate: {
+      minimumHours: 3,
+      flatRate: 125,
+      perHourAfterMinimum: 40,
+    },
   },
   wheelchair: {
     minFareForFirstN: 35,
@@ -37,6 +57,11 @@ export const FARE_RULES: Record<string, VehicleFareRule> = {
     perMileAfterFirstN: 2.8,
     meetAndGreetCharge: 15,
     waitingRatePerMinute: DEFAULT_WAITING_RATE_PER_MINUTE,
+    hourlyRate: {
+      minimumHours: 3,
+      flatRate: 125,
+      perHourAfterMinimum: 40,
+    },
   },
   caddy: {
     minFareForFirstN: 35,
@@ -44,6 +69,11 @@ export const FARE_RULES: Record<string, VehicleFareRule> = {
     perMileAfterFirstN: 2.8,
     meetAndGreetCharge: 15,
     waitingRatePerMinute: DEFAULT_WAITING_RATE_PER_MINUTE,
+    hourlyRate: {
+      minimumHours: 3,
+      flatRate: 125,
+      perHourAfterMinimum: 40,
+    },
   },
   mpv7: {
     minFareForFirstN: 50,
@@ -51,6 +81,11 @@ export const FARE_RULES: Record<string, VehicleFareRule> = {
     perMileAfterFirstN: 3.5,
     meetAndGreetCharge: 20,
     waitingRatePerMinute: DEFAULT_WAITING_RATE_PER_MINUTE,
+    hourlyRate: {
+      minimumHours: 3,
+      flatRate: 150,
+      perHourAfterMinimum: 50,
+    },
   },
 };
 

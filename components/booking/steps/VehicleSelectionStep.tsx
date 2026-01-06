@@ -42,6 +42,11 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
     const distance = tripDetails.distance || 0;
     const requiredPassengers = tripDetails.passengers || 1;
     const requiredLuggage = tripDetails.luggage || 0;
+    const isHourly = tripDetails.type === "hourly";
+    const hours =
+      isHourly && tripDetails.duration
+        ? parseInt(tripDetails.duration)
+        : undefined;
 
     // Detect if pickup or dropoff is an airport
     const pickupIsAirport = tripDetails.pickupLocation
@@ -61,6 +66,8 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
         meetAndGreet: extras.meetAndGreet,
         pickupIsAirport,
         dropoffIsAirport,
+        isHourly,
+        hours,
       });
       const badge = getRecommendedBadge(vehicle, suitable, requiredPassengers);
 
@@ -84,6 +91,8 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
     tripDetails.luggage,
     tripDetails.pickupLocation,
     tripDetails.dropoffLocation,
+    tripDetails.type,
+    tripDetails.duration,
     extras.meetAndGreet,
   ]);
 
@@ -96,6 +105,7 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
   }, [vehiclesWithPricing]);
 
   const distance = tripDetails.distance || 0;
+  const isHourly = tripDetails.type === "hourly";
 
   return (
     <div className="space-y-6">
@@ -107,8 +117,11 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
           Trip requirements: {tripDetails.passengers || 1} passenger(s),{" "}
           {tripDetails.luggage || 0} bag(s)
           {distance > 0 && ` • Distance: ${distance.toFixed(2)} miles`}
+          {isHourly &&
+            tripDetails.duration &&
+            ` • Duration: ${tripDetails.duration} hours`}
         </p>
-        {distance === 0 && (
+        {distance === 0 && !isHourly && (
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-sm text-yellow-800">
             💡 Prices shown are base fares. Complete trip details to see
             accurate pricing.
@@ -140,8 +153,14 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
               features={vehicle.features}
               selectionMode={true}
               isSelected={selectedVehicle === vehicle.id}
-              priceBreakdown={distance > 0 ? vehicle.priceBreakdown : undefined}
-              price={distance === 0 ? `£${vehicle.baseFare}+` : undefined}
+              priceBreakdown={
+                distance > 0 || isHourly ? vehicle.priceBreakdown : undefined
+              }
+              price={
+                distance === 0 && !isHourly
+                  ? `£${vehicle.baseFare}+`
+                  : undefined
+              }
               isSuitable={vehicle.isSuitable}
               badge={vehicle.badge}
             />

@@ -45,11 +45,11 @@ export const VEHICLES: Vehicle[] = [
     ],
   },
   {
-    id: "caddy",
-    name: "VW Caddy Maxi",
+    id: "wheelchair",
+    name: "Wheelchair Accessible Vehicle",
     description:
       "Wheelchair-accessible vehicle with ramp access. Accommodates 1 wheelchair + 3 passengers, or 4 standard seats when wheelchair space is not needed.",
-    image: "/images/caddy.png",
+    image: "/images/wheelchair.png",
     passengers: 4,
     luggage: 4,
     baseFare: 35,
@@ -102,9 +102,9 @@ export const VEHICLES: Vehicle[] = [
 export const VEHICLE_OPTIONS = [
   { value: "saloon", label: "Saloon" },
   { value: "comfort", label: "Comfort" },
-  { value: "caddy", label: "VW Caddy Maxi" },
+  { value: "wheelchair", label: "Wheelchair Accessible Vehicle" },
   { value: "mpv6", label: "MPV 6" },
   { value: "mpv7", label: "MPV 7 (Mini Bus 8 Seater)" },
 ] as const;
 
-export type VehicleId = "saloon" | "comfort" | "caddy" | "mpv6" | "mpv7";
+export type VehicleId = "saloon" | "comfort" | "wheelchair" | "mpv6" | "mpv7";
