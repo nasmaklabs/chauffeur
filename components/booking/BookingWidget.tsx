@@ -45,7 +45,7 @@ const BookingWidget: React.FC<BookingWidgetProps> = ({ className = '', onSubmit 
 
     useEffect(() => {
         if (pickupCoordinates && dropoffCoordinates) {
-            setDistance(calculateDistance(pickupCoordinates, dropoffCoordinates));
+            calculateDistance(pickupCoordinates, dropoffCoordinates).then(setDistance);
         } else {
             setDistance(null);
         }

@@ -37,6 +37,7 @@ const TripDetailsStep = () => {
   const [distance, setDistance] = useState<number | null>(
     tripDetails.distance || null
   );
+  const [distanceLoading, setDistanceLoading] = useState(false);
   const [showMeetGreetModal, setShowMeetGreetModal] = useState(false);
   const [form] = Form.useForm();
 
@@ -48,16 +49,30 @@ const TripDetailsStep = () => {
   }, [tripDetails.pickupLocation]);
 
   useEffect(() => {
+    let cancelled = false;
+
     if (tripDetails.pickupCoordinates && tripDetails.dropoffCoordinates) {
-      const calculatedDistance = calculateDistance(
+      setDistanceLoading(true);
+      calculateDistance(
         tripDetails.pickupCoordinates,
         tripDetails.dropoffCoordinates
-      );
-      setDistance(calculatedDistance);
-      setTripDetails({ ...tripDetails, distance: calculatedDistance });
+      ).then((calculatedDistance) => {
+        if (cancelled) return;
+        setDistance(calculatedDistance);
+        // Read fresh state at resolution time to avoid stale closure overwriting
+        // any field changes (date, time, etc.) made while the API call was in flight.
+        const fresh = bookingStore.get("tripDetails");
+        bookingStore.set("tripDetails", { ...fresh, distance: calculatedDistance });
+        setDistanceLoading(false);
+      });
     } else {
       setDistance(null);
+      setDistanceLoading(false);
     }
+
+    return () => {
+      cancelled = true;
+    };
   }, [tripDetails.pickupCoordinates, tripDetails.dropoffCoordinates]);
 
   // Reset meet & greet if pickup is no longer an airport
@@ -219,16 +234,21 @@ const TripDetailsStep = () => {
             </Form.Item>
           )}
 
-          {tripDetails.type !== "hourly" && distance !== null && (
-            <div className="md:col-span-2">
-              <div className="text-sm text-gray-600 bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 flex items-center gap-2">
-                <EnvironmentOutlined className="text-primary text-lg" />
-                <span>
-                  Distance: <strong>{formatDistance(distance)}</strong>
-                </span>
+          {tripDetails.type !== "hourly" &&
+            (distanceLoading || distance !== null) && (
+              <div className="md:col-span-2">
+                <div className="text-sm text-gray-600 bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 flex items-center gap-2">
+                  <EnvironmentOutlined className="text-primary text-lg" />
+                  {distanceLoading ? (
+                    <span className="text-gray-400">Calculating distance…</span>
+                  ) : (
+                    <span>
+                      Distance: <strong>{formatDistance(distance!)}</strong>
+                    </span>
+                  )}
+                </div>
               </div>
-            </div>
-          )}
+            )}
 
           {/* Meet & Greet option - only shown for airport pickups */}
           {isPickupAirport && (

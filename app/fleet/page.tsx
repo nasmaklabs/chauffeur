@@ -15,8 +15,8 @@ const FleetPage = () => {
   const vehicleCategories: Record<string, string[]> = {
     saloon: ["saloon"],
     comfort: ["comfort"],
-    mpv6: ["mpv", "wheelchair"],
-    mpv7: ["mpv", "wheelchair"],
+    mpv6: ["mpv"],
+    mpv7: ["mpv"],
     wheelchair: ["wheelchair"],
   };
 
