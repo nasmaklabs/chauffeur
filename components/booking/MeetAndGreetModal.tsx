@@ -6,6 +6,7 @@ import {
   InfoCircleOutlined,
   MailOutlined,
   FormOutlined,
+  PoundOutlined,
 } from "@ant-design/icons";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
@@ -65,7 +66,7 @@ const MeetAndGreetModal: React.FC<MeetAndGreetModalProps> = ({
 
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
           <h4 className="font-semibold text-secondary mb-2 flex items-center gap-2">
-            <span>💷</span> Additional Charges Apply
+            <PoundOutlined className="text-primary" /> Additional Charges Apply
           </h4>
           <p className="text-gray-600 text-sm">
             The Meet & Greet service includes an additional charge which will be

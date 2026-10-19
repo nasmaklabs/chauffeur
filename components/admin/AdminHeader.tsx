@@ -31,7 +31,7 @@ export default function AdminHeader() {
           <Link href="/admin" className="flex items-center gap-3">
             <Image
               src="/images/logo.png"
-              alt="AA Comfort"
+              alt="AA Chauffeurs"
               width={240}
               height={70}
               className="w-40 h-auto"

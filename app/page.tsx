@@ -3,20 +3,11 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  SafetyCertificateOutlined,
-  ClockCircleOutlined,
-  GlobalOutlined,
-  DollarOutlined,
-  CoffeeOutlined,
-  ArrowRightOutlined,
-} from "@ant-design/icons";
+import { ArrowRightOutlined } from "@ant-design/icons";
 import { Button } from "@/components/ui/Button";
 import Section from "@/components/ui/Section";
 import BookingWidget from "@/components/booking/BookingWidget";
-import ServiceCard from "@/components/services/ServiceCard";
 import VehicleCard from "@/components/fleet/VehicleCard";
-import TestimonialCard from "@/components/ui/TestimonialCard";
 import { VEHICLES } from "@/lib/constants/vehicles";
 
 export default function Home() {
@@ -25,8 +16,8 @@ export default function Home() {
       <section className="relative min-h-[90vh] flex items-center justify-center pt-20 pb-16 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/bg.png"
-            alt="Hero background"
+            src="/images/bg.webp"
+            alt=""
             fill
             className="object-cover"
             priority
@@ -36,16 +27,27 @@ export default function Home() {
 
         <div className="container mx-auto px-4 relative z-20 grid lg:grid-cols-[1fr_1.3fr] xl:grid-cols-[1fr_1.4fr] gap-12 items-center">
           <div className="text-white space-y-6">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-              Premium{" "}
-              <span style={{ color: "var(--primary-bright)" }}>Chauffeur</span>{" "}
-              Service
+            <h1 className="font-display text-5xl lg:text-6xl font-semibold leading-[1.08]">
+              Chauffeur journeys,{" "}
+              <span style={{ color: "var(--primary-bright)" }}>
+                priced up front.
+              </span>
             </h1>
             <p className="text-xl text-gray-200 max-w-xl leading-relaxed">
-              Experience the ultimate in luxury travel. Professional chauffeurs,
-              premium fleet, and exceptional service for every journey.
+              Airport transfers, business travel and special occasions, 24 hours
+              a day. Professional, vetted drivers and flight monitoring on every
+              airport pickup.
             </p>
             <div className="flex flex-wrap gap-4 pt-4">
+              <Link href="/#book">
+                <Button
+                  type="primary"
+                  size="large"
+                  className="bg-primary text-secondary hover:bg-yellow-400 h-14 px-8 text-lg font-bold border-none"
+                >
+                  Book Your Ride
+                </Button>
+              </Link>
               <Link href="/services">
                 <Button
                   size="large"
@@ -58,53 +60,72 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="lg:pl-12">
+          <div id="book" className="lg:pl-12 scroll-mt-24">
             <BookingWidget className="shadow-2xl" />
           </div>
         </div>
       </section>
 
       <Section id="services" background="white">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
-            World-Class Services
-          </h2>
-          <p className="text-gray-500 text-lg">
-            Whether for business or leisure, we provide a comprehensive range of
-            luxury transport solutions tailored to your needs.
-          </p>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary mb-4">
+              What we do
+            </p>
+            <h2 className="font-display text-3xl md:text-5xl font-semibold text-secondary leading-tight">
+              Airport runs, boardroom mornings and big nights out.
+            </h2>
+          </div>
+          <Link
+            href="/services"
+            className="text-secondary! font-semibold underline underline-offset-8 decoration-primary hover:text-primary! shrink-0"
+          >
+            All services
+          </Link>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <ServiceCard
-            title="Airport Transfers"
-            description="Reliable and comfortable transfers to and from all major airports. Flight monitoring included."
-            icon={<GlobalOutlined />}
-            link="/services#airport"
+        <div className="grid lg:grid-cols-12 gap-6">
+          <ServicePhotoCard
+            className="lg:col-span-7 min-h-[420px] lg:min-h-[560px]"
+            index="01"
+            title="Airport transfers"
+            text="Flight monitoring, meet and greet, and 60 minutes of free waiting."
+            image="/images/airport.webp"
+            alt="Chauffeur opening the car door for passengers outside an airport"
+            href="/services#airport"
           />
-          <ServiceCard
-            title="Corporate Travel"
-            description="Professional transport for business meetings, roadshows, and corporate events."
-            icon={<SafetyCertificateOutlined />}
-            link="/services#corporate"
+          <div className="lg:col-span-5 grid gap-6">
+            <ServicePhotoCard
+              className="min-h-[300px]"
+              index="02"
+              title="Corporate travel"
+              text="Priority booking, monthly invoicing and complete discretion."
+              image="/images/corporate.webp"
+              alt="Chauffeur standing beside an executive car outside an office building"
+              href="/services#corporate"
+            />
+            <ServicePhotoCard
+              className="min-h-[300px]"
+              index="03"
+              title="Events and occasions"
+              text="Door to door for matches, concerts, proms and group nights out."
+              image="/images/events.webp"
+              alt="Group arriving at an evening event by chauffeur car"
+              href="/services#events"
+            />
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-x-12 mt-10">
+          <ServiceRow
+            index="04"
+            title="Hourly hire"
+            text="A car and driver by the hour, with a three hour minimum."
           />
-          <ServiceCard
-            title="Events & Occasions"
-            description="Arrive in style at sporting events, concerts, proms, and special celebrations."
-            icon={<CoffeeOutlined />}
-            link="/services#events"
-          />
-          <ServiceCard
-            title="City Tours"
-            description="Explore the city with our knowledgeable chauffeurs and customized itineraries."
-            icon={<EnvironmentOutlined />}
-            link="/services#tours"
-          />
-          <ServiceCard
-            title="Hourly Hire"
-            description="Flexible chauffeur service by the hour for maximum convenience and freedom."
-            icon={<ClockCircleOutlined />}
-            link="/services#hourly"
+          <ServiceRow
+            index="05"
+            title="City tours"
+            text="A car and driver for the day, on an itinerary you choose."
           />
         </div>
       </Section>
@@ -112,12 +133,12 @@ export default function Home() {
       <Section id="fleet" background="gray">
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
           <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
-              Our Luxury Fleet
+            <h2 className="font-display text-3xl md:text-5xl font-semibold text-secondary mb-4">
+              The fleet
             </h2>
-            <p className="text-gray-500 text-lg">
-              Choose from our exclusive collection of premium vehicles,
-              maintained to the highest standards of safety and comfort.
+            <p className="text-gray-600 text-lg">
+              From saloons to eight-seat minibuses, every journey comes with a
+              professional driver. Wheelchair accessible vehicles available.
             </p>
           </div>
           <Link href="/fleet">
@@ -135,8 +156,8 @@ export default function Home() {
               image={
                 vehicle.id === "comfort"
                   ? idx % 2 === 0
-                    ? "/images/comfort.png"
-                    : "/images/exacutive.png"
+                    ? "/images/comfort.webp"
+                    : "/images/exacutive.webp"
                   : vehicle.image
               }
               passengers={vehicle.passengers}
@@ -144,6 +165,7 @@ export default function Home() {
               price={`£${vehicle.baseFare}+`}
               features={vehicle.features}
               description={vehicle.description}
+              capacity={vehicle.capacity}
             />
           ))}
         </div>
@@ -151,158 +173,154 @@ export default function Home() {
 
       <Section id="why-us" background="white">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="relative h-[600px] rounded-2xl overflow-hidden bg-gray-100 hidden lg:block">
-            <div className="absolute inset-0 bg-gray-200 flex items-center justify-center text-gray-400">
-              <Image
-                src="/images/why-choose-us.png"
-                alt="Why Choose AA Comfort"
-                width={1000}
-                height={1000}
-              />
-            </div>
+          <div className="relative aspect-[4/5] rounded-lg overflow-hidden hidden lg:block">
+            <Image
+              src="/images/why-choose-us.webp"
+              alt="Uniformed AA Chauffeurs driver beside an executive saloon"
+              fill
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              className="object-cover"
+            />
           </div>
 
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-8">
-              Why Choose AA Comfort?
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary mb-4">
+              Why AA Chauffeurs
+            </p>
+            <h2 className="font-display text-3xl md:text-5xl font-semibold text-secondary leading-tight mb-10">
+              What you can count on.
             </h2>
 
-            <div className="space-y-8">
-              <div className="flex gap-6">
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl flex-shrink-0">
-                  <SafetyCertificateOutlined />
+            <dl className="border-t border-gray-200">
+              {[
+                {
+                  figure: "24/7",
+                  title: "Always available",
+                  text: "Bookings taken and journeys run every day of the year, including nights and holidays.",
+                },
+                {
+                  figure: "60 min",
+                  title: "Free airport waiting",
+                  text: "We monitor your flight and wait up to an hour at no extra charge.",
+                },
+                {
+                  figure: "Fixed",
+                  title: "Price shown first",
+                  text: "You see the price for your route before you confirm. Extra stops, tolls and holiday surcharges are listed up front.",
+                },
+              ].map((item) => (
+                <div
+                  key={item.figure}
+                  className="grid sm:grid-cols-[9rem_1fr] gap-2 sm:gap-8 py-7 border-b border-gray-200"
+                >
+                  <dt className="font-display text-4xl font-semibold text-primary">
+                    {item.figure}
+                  </dt>
+                  <dd>
+                    <p className="text-lg font-semibold text-secondary mb-1">
+                      {item.title}
+                    </p>
+                    <p className="text-gray-600 leading-relaxed">{item.text}</p>
+                  </dd>
                 </div>
-                <div>
-                  <h3 className="text-xl font-bold text-secondary mb-2">
-                    Professional Chauffeurs
-                  </h3>
-                  <p className="text-gray-500 leading-relaxed">
-                    Our drivers are licensed, vetted, and trained to provide the
-                    highest level of service and discretion.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-6">
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl flex-shrink-0">
-                  <ClockCircleOutlined />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-secondary mb-2">
-                    Punctuality Guaranteed
-                  </h3>
-                  <p className="text-gray-500 leading-relaxed">
-                    We track flights and traffic in real-time to ensure we are
-                    always there when you need us.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-6">
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary text-2xl flex-shrink-0">
-                  <DollarOutlined />
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-secondary mb-2">
-                    Fixed Transparent Pricing
-                  </h3>
-                  <p className="text-gray-500 leading-relaxed">
-                    No hidden fees or surge pricing. The price you see is the
-                    price you pay, all inclusive.
-                  </p>
-                </div>
-              </div>
-            </div>
+              ))}
+            </dl>
           </div>
         </div>
       </Section>
 
-      {/* Testimonials section hidden for now
-      <Section id="testimonials" background="gray">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-secondary mb-4">
-            Client Testimonials
-          </h2>
-          <p className="text-gray-500 text-lg">
-            Don't just take our word for it. Here is what our valued clients
-            have to say about their experience.
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          <TestimonialCard
-            name="Sarah Johnson"
-            role="CEO, TechStart"
-            rating={5}
-            text="Absolutely impeccable service. The driver was early, the car was pristine, and the ride was smooth. Highly recommended for business travel."
-          />
-          <TestimonialCard
-            name="Michael Chen"
-            role="Frequent Traveler"
-            rating={5}
-            text="I use AA Comfort for all my airport transfers. Their flight tracking is a lifesaver, and I never have to worry about being late."
-          />
-          <TestimonialCard
-            name="Emma Thompson"
-            rating={5}
-            text="Booked a vintage Rolls Royce — it was the highlight of the day! The chauffeur was so professional and kind."
-          />
-        </div>
-      </Section>
-      */}
-
-      <section className="py-24 bg-secondary text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-primary/5 pattern-grid-lg opacity-10" />
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Ready to Experience Luxury?
-          </h2>
-          <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-            Book your ride today and enjoy the ultimate in comfort, style, and
-            reliability.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/booking">
-              <Button
-                type="primary"
-                size="large"
-                className="bg-primary text-secondary hover:bg-yellow-400 h-14 px-10 text-lg font-bold border-none w-full sm:w-auto"
-              >
-                Book Online Now
-              </Button>
-            </Link>
-            {/* phone call button removed */}
+      <section className="py-24 bg-secondary text-white">
+        <div className="container mx-auto px-4 flex flex-col md:flex-row md:items-center justify-between gap-10">
+          <div className="max-w-2xl">
+            <div
+              className="w-16 h-px mb-8"
+              style={{ background: "var(--primary-bright)" }}
+            />
+            <h2 className="font-display text-4xl md:text-5xl font-semibold mb-4">
+              Book your next journey.
+            </h2>
+            <p className="text-lg text-gray-300">
+              See your price first. Pay the driver when you arrive.
+            </p>
           </div>
+          <Link href="/#book" className="shrink-0">
+            <Button
+              type="primary"
+              size="large"
+              className="bg-primary text-secondary hover:bg-yellow-400 h-14 px-10 text-lg font-bold border-none w-full sm:w-auto"
+            >
+              Get a quote
+            </Button>
+          </Link>
         </div>
       </section>
     </div>
   );
 }
 
-function EnvironmentOutlined(props: any) {
+function ServicePhotoCard({
+  className = "",
+  index,
+  title,
+  text,
+  image,
+  alt,
+  href,
+}: {
+  className?: string;
+  index: string;
+  title: string;
+  text: string;
+  image: string;
+  alt: string;
+  href: string;
+}) {
   return (
-    <span
-      role="img"
-      aria-label="environment"
-      className="anticon anticon-environment"
-      {...props}
+    <Link
+      href={href}
+      className={`group relative block overflow-hidden rounded-lg bg-secondary ${className}`}
     >
-      <svg
-        viewBox="64 64 896 896"
-        focusable="false"
-        data-icon="environment"
-        width="1em"
-        height="1em"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"></path>
-        <path
-          d="M512 140c-205.4 0-372 166.6-372 372s166.6 372 372 372 372-166.6 372-372-166.6-372-372-372z"
-          opacity="0"
-        ></path>
-        <path d="M512 232c-123.7 0-224 100.3-224 224 0 123.7 100.3 224 224 224s224-100.3 224-224c0-123.7-100.3-224-224-224zm0 392c-92.8 0-168-75.2-168-168s75.2-168 168-168 168 75.2 168 168-75.2 168-168 168z"></path>
-      </svg>
-    </span>
+      <Image
+        src={image}
+        alt={alt}
+        fill
+        sizes="(min-width: 1024px) 55vw, 100vw"
+        className="object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 text-white">
+        <span className="text-sm tracking-widest text-white/70">{index}</span>
+        <h3 className="font-display text-2xl md:text-4xl font-semibold mt-1 mb-2">
+          {title}
+        </h3>
+        <p className="text-white/85 max-w-md leading-relaxed">{text}</p>
+      </div>
+    </Link>
+  );
+}
+
+function ServiceRow({
+  index,
+  title,
+  text,
+}: {
+  index: string;
+  title: string;
+  text: string;
+}) {
+  return (
+    <Link
+      href="/services"
+      className="group flex items-baseline gap-6 py-6 border-t border-gray-200"
+    >
+      <span className="text-sm tracking-widest text-gray-400">{index}</span>
+      <div className="flex-1">
+        <h3 className="font-display text-2xl font-semibold text-secondary group-hover:text-primary transition-colors">
+          {title}
+        </h3>
+        <p className="text-gray-600 mt-1">{text}</p>
+      </div>
+      <ArrowRightOutlined className="text-gray-400! group-hover:text-primary! group-hover:translate-x-1 transition-all" />
+    </Link>
   );
 }

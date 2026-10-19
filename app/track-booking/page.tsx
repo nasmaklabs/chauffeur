@@ -30,7 +30,7 @@ export default function TrackBookingPage() {
     refetch,
   } = trpc.booking.getByReference.useQuery(
     { reference: searchedReference },
-    { enabled: !!searchedReference }
+    { enabled: !!searchedReference },
   );
 
   const handleSearch = (values: { reference: string }) => {
@@ -116,7 +116,7 @@ export default function TrackBookingPage() {
         {/* Error State - Booking Not Found */}
         {error && searchedReference && !isLoading && (
           <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-            <div className="text-6xl mb-4">🔍</div>
+            <SearchOutlined className="text-6xl text-primary mb-4" />
             <h2 className="text-2xl font-bold text-secondary mb-4">
               Booking Not Found
             </h2>
@@ -142,7 +142,7 @@ export default function TrackBookingPage() {
 
         {/* Success State - Booking Found */}
         {booking && !isLoading && (
-          <div className="space-y-6">
+          <div className="space-y-6 print-content">
             {/* Status Header */}
             <div className="bg-white rounded-xl shadow-lg p-6 text-center">
               <CheckCircleFilled className="text-5xl text-green-500 mb-3" />

@@ -137,7 +137,7 @@ export const bookingRouter = createTRPCRouter({
         // Send confirmation email to customer (non-blocking)
         sendEmail({
           to: customerEmail,
-          subject: `Booking Confirmation - ${booking.bookingReference} | AA Comfort`,
+          subject: `Booking Confirmation - ${booking.bookingReference} | AA Chauffeurs`,
           html: generateBookingConfirmationEmail(emailData),
         }).catch((error) => {
           console.error("Failed to send customer confirmation email:", error);

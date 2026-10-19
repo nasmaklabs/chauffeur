@@ -10,9 +10,9 @@ const CalculatorPage = () => {
             {/* Hero */}
             <div className="bg-secondary text-white py-20">
                 <div className="container mx-auto px-4 text-center">
-                    <h1 className="text-4xl md:text-5xl font-bold mb-6">Fare Calculator</h1>
+                    <h1 className="font-display text-4xl md:text-5xl font-semibold mb-6">Fare Calculator</h1>
                     <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-                        Get an instant quote for your journey. Transparent pricing with no hidden fees.
+                        Get an instant quote for your journey. Clear pricing shown before you book.
                     </p>
                 </div>
             </div>

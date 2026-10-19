@@ -1,10 +1,13 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   UserOutlined,
   ShoppingOutlined,
   WifiOutlined,
   CheckCircleFilled,
+  CheckOutlined,
+  StarFilled,
 } from "@ant-design/icons";
 import { Button } from "@/components/ui/Button";
 
@@ -16,6 +19,7 @@ interface VehicleProps {
   price?: string;
   features?: string[];
   description?: string;
+  capacity?: string;
   selectionMode?: boolean;
   isSelected?: boolean;
   priceBreakdown?: {
@@ -44,6 +48,7 @@ const VehicleCard: React.FC<VehicleProps> = ({
   price,
   features,
   description,
+  capacity,
   selectionMode = false,
   isSelected = false,
   priceBreakdown,
@@ -64,7 +69,17 @@ const VehicleCard: React.FC<VehicleProps> = ({
             ${badge === "recommended" ? "bg-green-500" : "bg-blue-500"}
           `}
         >
-          {badge === "recommended" ? "✓ Recommended" : "★ Popular"}
+          {badge === "recommended" ? (
+            <>
+              <CheckOutlined className="mr-1" />
+              Recommended
+            </>
+          ) : (
+            <>
+              <StarFilled className="mr-1" />
+              Popular
+            </>
+          )}
         </div>
       )}
 
@@ -132,6 +147,8 @@ const VehicleCard: React.FC<VehicleProps> = ({
             </div>
           )}
         </div>
+
+        {capacity && <p className="text-xs text-gray-500 mb-3">{capacity}</p>}
 
         {features && (
           <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500 mb-3">
@@ -278,12 +295,14 @@ const VehicleCard: React.FC<VehicleProps> = ({
           )}
 
           {!selectionMode && (
-            <Button
-              type="primary"
-              className="bg-secondary hover:bg-black border-none w-full"
-            >
-              Book Now
-            </Button>
+            <Link href="/#book">
+              <Button
+                type="primary"
+                className="bg-secondary hover:bg-black border-none w-full"
+              >
+                Book Now
+              </Button>
+            </Link>
           )}
 
           {selectionMode && isSuitable && (

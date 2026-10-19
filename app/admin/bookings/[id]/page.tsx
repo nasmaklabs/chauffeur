@@ -15,6 +15,7 @@ import { trpc } from "@/lib/trpc/client";
 import { getVehicleName } from "@/lib/services/vehicle-service";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
+import { CloseCircleFilled } from "@ant-design/icons";
 
 const statusColors: Record<string, string> = {
   pending: "gold",
@@ -71,7 +72,7 @@ export default function BookingDetailsPage() {
     return (
       <Section className="min-h-screen bg-surface flex items-center justify-center">
         <div className="max-w-md text-center">
-          <div className="text-6xl mb-4">❌</div>
+          <CloseCircleFilled className="text-6xl text-red-500 mb-4" />
           <h1 className="text-2xl font-bold text-secondary mb-4">
             Booking Not Found
           </h1>
@@ -300,13 +301,11 @@ export default function BookingDetailsPage() {
               <Select
                 value={
                   booking.status as
-                    | "pending"
-                    | "confirmed"
-                    | "completed"
-                    | "cancelled"
+                    "pending" | "confirmed" | "completed" | "cancelled"
                 }
                 onChange={(
-                  newStatus: "pending" | "confirmed" | "completed" | "cancelled"
+                  newStatus:
+                    "pending" | "confirmed" | "completed" | "cancelled",
                 ) => updateStatus.mutate({ id: booking.id, status: newStatus })}
                 className="w-full"
                 size="large"

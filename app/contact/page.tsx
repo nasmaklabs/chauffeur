@@ -2,7 +2,11 @@
 
 import React from "react";
 import { Form, App } from "antd";
-import { MailOutlined, EnvironmentOutlined } from "@ant-design/icons";
+import {
+  MailOutlined,
+  EnvironmentOutlined,
+  PhoneOutlined,
+} from "@ant-design/icons";
 import Section from "@/components/ui/Section";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
@@ -29,7 +33,7 @@ const ContactPage = () => {
     },
     onError: (error) => {
       message.error(
-        error.message || "Failed to send message. Please try again."
+        error.message || "Failed to send message. Please try again.",
       );
     },
   });
@@ -43,7 +47,9 @@ const ContactPage = () => {
       {/* Hero */}
       <div className="bg-secondary text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Contact Us</h1>
+          <h1 className="font-display text-4xl md:text-5xl font-semibold mb-6">
+            Contact Us
+          </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             We are here to help. Reach out to us for bookings, inquiries, or
             support.
@@ -59,7 +65,22 @@ const ContactPage = () => {
             </h2>
 
             <div className="space-y-8 mb-12">
-              {/* Phone contact removed */}
+              <div className="flex gap-4">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary text-xl flex-shrink-0">
+                  <PhoneOutlined />
+                </div>
+                <div>
+                  <h3 className="font-bold text-secondary mb-1">Phone</h3>
+                  <p className="text-gray-500">
+                    <a
+                      href={`tel:${BRAND.phone.tel}`}
+                      className="text-secondary! underline-offset-4 hover:text-primary! hover:underline"
+                    >
+                      {BRAND.phone.display}
+                    </a>
+                  </p>
+                </div>
+              </div>
 
               <div className="flex gap-4">
                 <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-primary text-xl flex-shrink-0">
@@ -70,7 +91,7 @@ const ContactPage = () => {
                   <p className="text-gray-500">
                     <a
                       href={`mailto:${BRAND.email.bookings}`}
-                      className="hover:underline"
+                      className="text-secondary! underline-offset-4 hover:text-primary! hover:underline"
                     >
                       {BRAND.email.bookings}
                     </a>
@@ -94,7 +115,7 @@ const ContactPage = () => {
               <iframe
                 title="Office location"
                 src={`https://www.google.com/maps?q=${encodeURIComponent(
-                  ADDRESS
+                  ADDRESS,
                 )}&output=embed`}
                 width="100%"
                 height="100%"

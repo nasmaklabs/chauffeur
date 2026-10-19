@@ -18,7 +18,7 @@ const FAQPage = () => {
     {
       question: "Are you a licensed company?",
       answer:
-        "Yes. AA Comfort is fully licensed by the Council to operate chauffeur and private hire services.",
+        "Yes. AA Chauffeurs is fully licensed by the Council to operate chauffeur and private hire services.",
     },
     {
       question: "Is your service available day and night?",
@@ -32,7 +32,7 @@ const FAQPage = () => {
     {
       question: "Who will drive the vehicle?",
       answer:
-        "AA Comfort does not typically hire out vehicles for self-drive. All journeys are driven by our professional, fully vetted chauffeurs.",
+        "AA Chauffeurs does not typically hire out vehicles for self-drive. All journeys are driven by our professional, fully vetted chauffeurs.",
     },
     {
       question: "Can I smoke in the car?",
@@ -74,7 +74,7 @@ const FAQPage = () => {
       {/* Hero */}
       <div className="bg-secondary text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+          <h1 className="font-display text-4xl md:text-5xl font-semibold mb-6">
             Frequently Asked Questions
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">

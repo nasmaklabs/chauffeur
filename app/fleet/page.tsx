@@ -29,14 +29,15 @@ const FleetPage = () => {
     image:
       vehicle.id === "comfort"
         ? idx % 2 === 0
-          ? "/images/comfort.png"
-          : "/images/exacutive.png"
+          ? "/images/comfort.webp"
+          : "/images/exacutive.webp"
         : vehicle.image,
     passengers: vehicle.passengers,
     luggage: vehicle.luggage,
     price: `£${vehicle.baseFare}+`,
     features: vehicle.features,
     description: vehicle.description,
+    capacity: vehicle.capacity,
   }));
 
   const filteredVehicles = vehicles.filter((v) => {
@@ -53,7 +54,9 @@ const FleetPage = () => {
       {/* Hero */}
       <div className="bg-secondary text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Fleet</h1>
+          <h1 className="font-display text-4xl md:text-5xl font-semibold mb-6">
+            Our Fleet
+          </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             Choose from our range of comfortable and reliable vehicles to suit
             your journey needs.
@@ -100,6 +103,7 @@ const FleetPage = () => {
                 price={vehicle.price}
                 features={vehicle.features}
                 description={vehicle.description}
+                capacity={vehicle.capacity}
               />
             </div>
           ))}

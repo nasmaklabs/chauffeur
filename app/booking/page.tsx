@@ -27,7 +27,7 @@ export default function BookingPage() {
     useEffect(() => {
         if (!hasBasicDetails) {
             message.info('Please fill in your trip details to continue booking');
-            router.push('/');
+            router.push('/#book');
         }
     }, [hasBasicDetails, router, message]);
 
@@ -101,7 +101,7 @@ export default function BookingPage() {
             <Section className="min-h-screen bg-surface flex items-center justify-center">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
-                    <p className="text-gray-600">Redirecting to homepage...</p>
+                    <p className="text-gray-600">Taking you to the booking form...</p>
                 </div>
             </Section>
         );

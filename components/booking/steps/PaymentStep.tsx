@@ -9,6 +9,7 @@ import {
 import { trpc } from "@/lib/trpc/client";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/Button";
+import { BRAND } from "@/lib/constants/brand";
 
 // Pricing is computed centrally via `calculateFareForTrip` so both vehicle
 // selection and payment pages show the same numbers. Taxes are applied on
@@ -222,8 +223,16 @@ const PaymentStep = () => {
             </Button>
 
             {createBooking.isError && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-800">
-                Failed to create booking. Please try again.
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3 mt-4 text-sm text-red-800">
+                We couldn&apos;t complete your booking. Please try again in a
+                moment. If it keeps failing, email us at{" "}
+                <a
+                  href={`mailto:${BRAND.email.bookings}`}
+                  className="underline font-semibold"
+                >
+                  {BRAND.email.bookings}
+                </a>{" "}
+                and we&apos;ll arrange your journey.
               </div>
             )}
           </div>

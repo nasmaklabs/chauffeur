@@ -107,7 +107,7 @@ export default function AdminLoginPage() {
 
         {/* Footer */}
         <p className="text-center text-gray-500 text-sm mt-6">
-          © {new Date().getFullYear()} AA Comfort. All rights reserved.
+          © {new Date().getFullYear()} AA Chauffeurs. All rights reserved.
         </p>
       </div>
     </div>

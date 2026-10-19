@@ -74,6 +74,10 @@
   --font-sans: var(--font-inter);
 }
 
+.font-display {
+  font-family: var(--font-display-face), Georgia, serif;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     /* Dark mode overrides if needed, keeping it light/luxury for now as per design */
@@ -171,6 +175,24 @@ footer a {
   /* Hide everything by default */
   body * {
     visibility: hidden;
+  }
+
+  /* Hidden content still takes up space, which printed blank pages.
+     Collapse the page chrome so only the absolutely positioned
+     .print-content is laid out. */
+  html,
+  body {
+    height: auto !important;
+  }
+
+  body > * {
+    max-height: 0 !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .min-h-screen {
+    min-height: 0 !important;
   }
 
   /* Only show the print content area */

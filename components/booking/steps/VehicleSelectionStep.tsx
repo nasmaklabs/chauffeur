@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
+import { InfoCircleOutlined, CheckCircleFilled } from "@ant-design/icons";
 import VehicleCard from "@/components/fleet/VehicleCard";
 import { bookingStore, useBookingStore } from "@/lib/store/bookingStore";
 import {
@@ -61,7 +62,7 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
       const suitable = isVehicleSuitable(
         vehicle,
         requiredPassengers,
-        requiredLuggage
+        requiredLuggage,
       );
       const priceBreakdown = calculateVehiclePrice(vehicle, distance, {
         meetAndGreet: extras.meetAndGreet,
@@ -79,8 +80,8 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
         image:
           vehicle.id === "comfort"
             ? idx % 2 === 0
-              ? "/images/comfort.png"
-              : "/images/exacutive.png"
+              ? "/images/comfort.webp"
+              : "/images/exacutive.webp"
             : vehicle.image,
         isSuitable: suitable,
         priceBreakdown,
@@ -125,8 +126,9 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
         </p>
         {distance === 0 && !isHourly && (
           <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-sm text-yellow-800">
-            💡 Prices shown are base fares. Complete trip details to see
-            accurate pricing.
+            <InfoCircleOutlined className="mr-2" />
+            Prices shown are base fares. Complete trip details to see accurate
+            pricing.
           </div>
         )}
       </div>
@@ -152,6 +154,7 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
               passengers={vehicle.passengers}
               luggage={vehicle.luggage}
               description={vehicle.description}
+              capacity={vehicle.capacity}
               features={vehicle.features}
               selectionMode={true}
               isSelected={selectedVehicle === vehicle.id}
@@ -173,7 +176,8 @@ const VehicleSelectionStep: React.FC<VehicleSelectionStepProps> = ({
       {selectedVehicle && !onNext && (
         <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
           <p className="text-green-800 font-semibold">
-            ✓ Vehicle selected! Continue to the next step.
+            <CheckCircleFilled className="mr-2" />
+            Vehicle selected! Continue to the next step.
           </p>
         </div>
       )}

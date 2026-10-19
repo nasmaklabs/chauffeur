@@ -1,59 +1,38 @@
 import React from "react";
 import Link from "next/link";
-import {
-  FacebookFilled,
-  TwitterSquareFilled,
-  InstagramFilled,
-  LinkedinFilled,
-} from "@ant-design/icons";
+import Image from "next/image";
 import { ADDRESS } from "@/lib/constants/address";
 import { BRAND } from "@/lib/constants/brand";
+import {
+  EnvironmentOutlined,
+  MailOutlined,
+  ClockCircleOutlined,
+  PhoneOutlined,
+} from "@ant-design/icons";
 
 const Footer = () => {
   return (
-    <footer className="bg-secondary text-white pt-16 pb-8">
+    <footer className="bg-secondary text-white pt-16 pb-8 border-t border-white/10">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Company Info */}
           <div>
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 bg-primary rounded flex items-center justify-center text-secondary font-bold text-lg">
-                AA
-              </div>
-              <span className="text-xl font-bold tracking-tight">
-                <span className="text-primary">Comfort</span>
-              </span>
-            </div>
+            <Link
+              href="/"
+              className="inline-block bg-white! rounded-lg px-4 py-3 mb-6"
+            >
+              <Image
+                src="/images/logo-main.png"
+                alt="AA Chauffeurs"
+                width={1920}
+                height={340}
+                className="w-56 h-auto"
+              />
+            </Link>
             <p className="text-gray-300 mb-6 leading-relaxed">
               Premium chauffeur services for discerning clients. Experience
               luxury, comfort, and reliability with our professional fleet.
             </p>
-            <div className="flex gap-4">
-              <a
-                href="#"
-                className="text-gray-300 hover:text-primary transition-colors text-xl"
-              >
-                <FacebookFilled />
-              </a>
-              <a
-                href="#"
-                className="text-gray-300 hover:text-primary transition-colors text-xl"
-              >
-                <TwitterSquareFilled />
-              </a>
-              <a
-                href="#"
-                className="text-gray-300 hover:text-primary transition-colors text-xl"
-              >
-                <InstagramFilled />
-              </a>
-              <a
-                href="#"
-                className="text-gray-300 hover:text-primary transition-colors text-xl"
-              >
-                <LinkedinFilled />
-              </a>
-            </div>
           </div>
 
           {/* Services */}
@@ -145,7 +124,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/booking"
+                  href="/#book"
                   className="text-gray-300 hover:text-primary transition-colors"
                 >
                   Book Now
@@ -177,12 +156,17 @@ const Footer = () => {
             </h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3 text-gray-300">
-                <span className="text-primary font-bold">📍</span>
+                <EnvironmentOutlined className="text-primary mt-1" />
                 <span>{ADDRESS}</span>
               </li>
-              {/* phone removed */}
               <li className="flex items-center gap-3 text-gray-300">
-                <span className="text-primary font-bold">✉️</span>
+                <PhoneOutlined className="text-primary" />
+                <a href={`tel:${BRAND.phone.tel}`} className="hover:underline">
+                  {BRAND.phone.display}
+                </a>
+              </li>
+              <li className="flex items-center gap-3 text-gray-300">
+                <MailOutlined className="text-primary" />
                 <span>
                   <a
                     href={`mailto:${BRAND.email.bookings}`}
@@ -193,7 +177,7 @@ const Footer = () => {
                 </span>
               </li>
               <li className="flex items-center gap-3 text-gray-300">
-                <span className="text-primary font-bold">🕒</span>
+                <ClockCircleOutlined className="text-primary" />
                 <span>24/7 Service Available</span>
               </li>
             </ul>
@@ -202,7 +186,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-400 text-sm">
-            © {new Date().getFullYear()} AA Comfort. All rights reserved.
+            © {new Date().getFullYear()} AA Chauffeurs. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-gray-400">
             <Link

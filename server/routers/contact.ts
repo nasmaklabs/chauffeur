@@ -41,7 +41,7 @@ export const contactRouter = createTRPCRouter({
         // Send auto-reply to customer
         const autoReplySent = await sendEmail({
           to: input.email,
-          subject: `Thank you for contacting AA Comfort`,
+          subject: `Thank you for contacting AA Chauffeurs`,
           html: generateContactAutoReplyEmail(contactData),
         });
 

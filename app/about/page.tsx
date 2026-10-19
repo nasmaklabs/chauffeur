@@ -11,8 +11,8 @@ const AboutPage = () => {
       {/* Hero */}
       <div className="bg-secondary text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            About AA Comfort
+          <h1 className="font-display text-4xl md:text-5xl font-semibold mb-6">
+            About AA Chauffeurs
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             Setting the standard for luxury chauffeur services since 2010.
@@ -41,7 +41,7 @@ const AboutPage = () => {
 
           <div className="relative h-[500px] bg-gray-200 rounded-2xl overflow-hidden">
             <Image
-              src="/images/story.png"
+              src="/images/story.webp"
               alt="Our Fleet"
               fill
               className="object-cover"

@@ -16,6 +16,7 @@ import { getVehicleName } from "@/lib/services/vehicle-service";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { resetBookingStore } from "@/lib/store/bookingStore";
+import { CloseCircleFilled } from "@ant-design/icons";
 
 export default function BookingConfirmationPage() {
   const params = useParams();
@@ -28,7 +29,7 @@ export default function BookingConfirmationPage() {
     error,
   } = trpc.booking.getByReference.useQuery(
     { reference },
-    { enabled: !!reference }
+    { enabled: !!reference },
   );
 
   // Clear booking state when confirmation page loads successfully
@@ -53,7 +54,7 @@ export default function BookingConfirmationPage() {
     return (
       <Section className="min-h-screen bg-surface flex items-center justify-center">
         <div className="max-w-md text-center">
-          <div className="text-6xl mb-4">❌</div>
+          <CloseCircleFilled className="text-6xl text-red-500 mb-4" />
           <h1 className="text-2xl font-bold text-secondary mb-4">
             Booking Not Found
           </h1>
@@ -76,7 +77,7 @@ export default function BookingConfirmationPage() {
       <div className="max-w-3xl mx-auto print-content">
         {/* Print Header - Only visible when printing */}
         <div className="hidden print:block print-header mb-6">
-          <h1 className="text-2xl font-bold">AA Comfort</h1>
+          <h1 className="text-2xl font-bold">AA Chauffeurs</h1>
           <p className="text-sm text-gray-600">Premium Chauffeur Service</p>
           <p className="text-xs text-gray-500 mt-1">Booking Confirmation</p>
         </div>
@@ -88,7 +89,8 @@ export default function BookingConfirmationPage() {
             Booking Confirmed!
           </h1>
           <p className="text-gray-600 mb-6 print:hidden">
-            Thank you for choosing AA Comfort. Your booking has been confirmed.
+            Thank you for choosing AA Chauffeurs. Your booking has been
+            confirmed.
           </p>
 
           <div className="bg-primary/10 border-2 border-primary rounded-lg p-4 inline-block">
@@ -279,7 +281,8 @@ export default function BookingConfirmationPage() {
         {/* Track Booking Notice - Hidden when printing */}
         <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6 text-center no-print">
           <h3 className="font-semibold text-secondary mb-2">
-            📍 Track Your Booking Anytime
+            <EnvironmentOutlined className="mr-2 text-primary" />
+            Track Your Booking Anytime
           </h3>
           <p className="text-sm text-gray-600 mb-4">
             You can view your booking details anytime using your booking
@@ -315,11 +318,15 @@ export default function BookingConfirmationPage() {
         {/* Print Footer - Only visible when printing */}
         <div className="hidden print:block mt-8 pt-4 border-t text-center text-sm text-gray-600">
           <p className="font-semibold">
-            AA Comfort - Premium Chauffeur Service
+            AA Chauffeurs - Premium Chauffeur Service
           </p>
-          <p>Email: info.aaccltd@gmail.com | Website: aacomfort.com</p>
+          <p>
+            Phone: 01902 246444 | Email: info@aacomfort.co.uk | Website:
+            aacomfort.com
+          </p>
           <p className="mt-2 text-xs">
-            Thank you for choosing AA Comfort. We look forward to serving you.
+            Thank you for choosing AA Chauffeurs. We look forward to serving
+            you.
           </p>
         </div>
       </div>

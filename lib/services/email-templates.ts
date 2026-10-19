@@ -182,9 +182,12 @@ const emailFooter = () => `
         ${ADDRESS}
       </p>
       <p style="${emailStyles.footerText}">
+        Phone: <a href="tel:${BRAND.phone.tel}" style="${
+          emailStyles.footerLink
+        }">${BRAND.phone.display}</a><br>
         Email: <a href="mailto:${BRAND.email.support}" style="${
-  emailStyles.footerLink
-}">${BRAND.email.support}</a>
+          emailStyles.footerLink
+        }">${BRAND.email.support}</a>
       </p>
       <p style="${emailStyles.footerText}; margin-top: 16px; font-size: 11px;">
         © ${new Date().getFullYear()} ${BRAND.name}. All rights reserved.<br>
@@ -197,7 +200,7 @@ const emailFooter = () => `
 // Detail row helper
 const detailRow = (
   label: string,
-  value: string | number | null | undefined
+  value: string | number | null | undefined,
 ) => {
   if (!value) return "";
   return `
@@ -279,23 +282,23 @@ const generatePriceBreakdown = (booking: BookingEmailData): string => {
       rows.push(
         detailRow(
           "First 3 hours (flat rate)",
-          `£${booking.baseFare.toFixed(2)}`
-        )
+          `£${booking.baseFare.toFixed(2)}`,
+        ),
       );
     }
     if (booking.distanceCharge && booking.distanceCharge > 0) {
       rows.push(
-        detailRow("Additional hours", `£${booking.distanceCharge.toFixed(2)}`)
+        detailRow("Additional hours", `£${booking.distanceCharge.toFixed(2)}`),
       );
     }
     if (booking.airportCharge && booking.airportCharge > 0) {
       rows.push(
-        detailRow("Airport Charge", `£${booking.airportCharge.toFixed(2)}`)
+        detailRow("Airport Charge", `£${booking.airportCharge.toFixed(2)}`),
       );
     }
     if (booking.meetAndGreetCharge && booking.meetAndGreetCharge > 0) {
       rows.push(
-        detailRow("Meet & Greet", `£${booking.meetAndGreetCharge.toFixed(2)}`)
+        detailRow("Meet & Greet", `£${booking.meetAndGreetCharge.toFixed(2)}`),
       );
     }
     // Add note about excluded fees for hourly bookings
@@ -317,12 +320,12 @@ const generatePriceBreakdown = (booking: BookingEmailData): string => {
 
     if (booking.airportCharge && booking.airportCharge > 0) {
       rows.push(
-        detailRow("Airport Charge", `£${booking.airportCharge.toFixed(2)}`)
+        detailRow("Airport Charge", `£${booking.airportCharge.toFixed(2)}`),
       );
     }
     if (booking.meetAndGreetCharge && booking.meetAndGreetCharge > 0) {
       rows.push(
-        detailRow("Meet & Greet", `£${booking.meetAndGreetCharge.toFixed(2)}`)
+        detailRow("Meet & Greet", `£${booking.meetAndGreetCharge.toFixed(2)}`),
       );
     }
   } else {
@@ -332,17 +335,17 @@ const generatePriceBreakdown = (booking: BookingEmailData): string => {
     }
     if (booking.distanceCharge && booking.distanceCharge > 0) {
       rows.push(
-        detailRow("Distance Charge", `£${booking.distanceCharge.toFixed(2)}`)
+        detailRow("Distance Charge", `£${booking.distanceCharge.toFixed(2)}`),
       );
     }
     if (booking.airportCharge && booking.airportCharge > 0) {
       rows.push(
-        detailRow("Airport Charge", `£${booking.airportCharge.toFixed(2)}`)
+        detailRow("Airport Charge", `£${booking.airportCharge.toFixed(2)}`),
       );
     }
     if (booking.meetAndGreetCharge && booking.meetAndGreetCharge > 0) {
       rows.push(
-        detailRow("Meet & Greet", `£${booking.meetAndGreetCharge.toFixed(2)}`)
+        detailRow("Meet & Greet", `£${booking.meetAndGreetCharge.toFixed(2)}`),
       );
     }
   }
@@ -359,7 +362,7 @@ const generatePriceBreakdown = (booking: BookingEmailData): string => {
     <tr>
       <td style="color: #1a1a2e; font-size: 16px; font-weight: 700; padding: 12px 0;">Total</td>
       <td style="color: #1a1a2e; font-size: 16px; font-weight: 700; padding: 12px 0; text-align: right;">${formatPrice(
-        booking.totalPrice
+        booking.totalPrice,
       )}</td>
     </tr>
   `);
@@ -371,7 +374,7 @@ const generatePriceBreakdown = (booking: BookingEmailData): string => {
 // BOOKING CONFIRMATION EMAIL (Customer)
 // ============================================
 export const generateBookingConfirmationEmail = (
-  booking: BookingEmailData
+  booking: BookingEmailData,
 ): string => {
   const content = `
     ${emailHeader()}
@@ -391,8 +394,8 @@ export const generateBookingConfirmationEmail = (
         <div style="${emailStyles.highlight}">
           <p style="${emailStyles.highlightLabel}">Your Booking Reference</p>
           <p style="${emailStyles.highlightValue}">${
-    booking.bookingReference
-  }</p>
+            booking.bookingReference
+          }</p>
         </div>
         
         <!-- Trip Details -->
@@ -428,7 +431,7 @@ export const generateBookingConfirmationEmail = (
               "Meet & Greet",
               booking.meetAndGreet
                 ? "Yes - Driver will hold a placard with passenger name"
-                : "No"
+                : "No",
             )}
           </table>
         </div>
@@ -468,8 +471,8 @@ export const generateBookingConfirmationEmail = (
           If you have any questions or need to make changes to your booking, please contact us at <a href="mailto:${
             BRAND.email.bookings
           }" style="${emailStyles.footerLink}">${
-    BRAND.email.bookings
-  }</a> with your booking reference.
+            BRAND.email.bookings
+          }</a> with your booking reference.
         </p>
         
         <p style="${emailStyles.text}; margin-top: 24px;">
@@ -488,7 +491,7 @@ export const generateBookingConfirmationEmail = (
 // NEW BOOKING NOTIFICATION (Internal)
 // ============================================
 export const generateNewBookingNotificationEmail = (
-  booking: BookingEmailData
+  booking: BookingEmailData,
 ): string => {
   const content = `
     ${emailHeader()}
@@ -503,8 +506,8 @@ export const generateNewBookingNotificationEmail = (
         <div style="${emailStyles.highlight}">
           <p style="${emailStyles.highlightLabel}">Booking Reference</p>
           <p style="${emailStyles.highlightValue}">${
-    booking.bookingReference
-  }</p>
+            booking.bookingReference
+          }</p>
         </div>
         
         <!-- Customer Details -->
@@ -549,7 +552,7 @@ export const generateNewBookingNotificationEmail = (
               "Meet & Greet",
               booking.meetAndGreet
                 ? "Yes - Driver will hold a placard with passenger name"
-                : "No"
+                : "No",
             )}
           </table>
         </div>
@@ -615,8 +618,8 @@ export const generateContactFormEmail = (data: ContactEmailData): string => {
         <div style="${emailStyles.detailsBox}">
           <h3 style="${emailStyles.detailsTitle}">Message</h3>
           <p style="${emailStyles.text}; margin: 0; white-space: pre-wrap;">${
-    data.message
-  }</p>
+            data.message
+          }</p>
         </div>
         
         <div style="${emailStyles.divider}"></div>
@@ -626,8 +629,8 @@ export const generateContactFormEmail = (data: ContactEmailData): string => {
         </p>
         <p style="text-align: center;">
           <a href="mailto:${data.email}?subject=Re: ${
-    data.subject || "Your Inquiry to " + BRAND.name
-  }" style="${emailStyles.button}">
+            data.subject || "Your Inquiry to " + BRAND.name
+          }" style="${emailStyles.button}">
             Reply to ${data.firstName}
           </a>
         </p>
@@ -649,7 +652,7 @@ export const generateContactFormEmail = (data: ContactEmailData): string => {
 // CONTACT FORM AUTO-REPLY (Customer)
 // ============================================
 export const generateContactAutoReplyEmail = (
-  data: ContactEmailData
+  data: ContactEmailData,
 ): string => {
   const content = `
     ${emailHeader()}
@@ -674,8 +677,8 @@ export const generateContactAutoReplyEmail = (
           <p style="${
             emailStyles.text
           }; margin: 0; white-space: pre-wrap; font-style: italic;">"${
-    data.message
-  }"</p>
+            data.message
+          }"</p>
         </div>
         
         <div style="${emailStyles.divider}"></div>
@@ -685,8 +688,8 @@ export const generateContactAutoReplyEmail = (
         </p>
         <p style="${emailStyles.text}">
           📧 <a href="mailto:${BRAND.email.bookings}" style="${
-    emailStyles.footerLink
-  }">${BRAND.email.bookings}</a>
+            emailStyles.footerLink
+          }">${BRAND.email.bookings}</a>
         </p>
         
         <p style="${emailStyles.text}; margin-top: 24px;">

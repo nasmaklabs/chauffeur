@@ -20,7 +20,7 @@ const ServicesPage = () => {
         "60 Mins Free Waiting Time",
         "Help with Luggage",
       ],
-      image: "/images/airport.png",
+      image: "/images/airport.webp",
       reverse: false,
     },
     {
@@ -34,7 +34,7 @@ const ServicesPage = () => {
         "Confidentiality Guaranteed",
         "Wi-Fi Enabled Vehicles",
       ],
-      image: "/images/corporate.png",
+      image: "/images/corporate.webp",
       reverse: true,
     },
     {
@@ -48,7 +48,7 @@ const ServicesPage = () => {
         "Flexible Hourly Hire",
         "VIP Treatment",
       ],
-      image: "/images/events.png",
+      image: "/images/events.webp",
       reverse: true,
     },
   ];
@@ -58,12 +58,12 @@ const ServicesPage = () => {
       {/* Hero */}
       <div className="bg-secondary text-white py-20">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+          <h1 className="font-display text-4xl md:text-5xl font-semibold mb-6">
             Our Premium Services
           </h1>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             Tailored luxury transport solutions for every occasion. Experience
-            the difference with AA Comfort.
+            the difference with AA Chauffeurs.
           </p>
         </div>
       </div>
@@ -113,7 +113,7 @@ const ServicesPage = () => {
               </ul>
 
               <div className="pt-4">
-                <Link href="/booking">
+                <Link href="/#book">
                   <Button
                     type="primary"
                     size="large"
